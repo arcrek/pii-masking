@@ -1,0 +1,19 @@
+{
+  "dataset": "independent_business_holdout_60",
+  "num_documents": 60,
+  "doc_type_counts": {
+    "form": 20,
+    "invoice": 20,
+    "correspondence": 20
+  },
+  "label_counts": {
+    "DATE_TIME": 114,
+    "EMAIL_ADDRESS": 62,
+    "LOCATION": 65,
+    "PERSON": 94,
+    "PHONE_NUMBER": 61,
+    "US_SSN": 61
+  },
+  "total_spans": 457,
+  "sha256": "a634d46d04b00e4bff6025c2dd0962bdc6d98748250f228b465bb90d96ba35f7"
+}
