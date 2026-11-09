@@ -69,6 +69,35 @@ class TestEvaluationSuite(unittest.TestCase):
         labels = {s["label"] for s in merged}
         self.assertEqual(labels, {"PERSON", "EMAIL_ADDRESS", "US_SSN", "DATE_TIME"})
 
+    def test_structured_payload_extraction(self) -> None:
+        payload = '{"iban": "GB02UOUQ07345637357362", "device_mac": "74-8f-8e-da-43-df", "Version": "2016-11-15", "oauth_token": "xyz123"}'
+        spans = extract_deterministic_spans(payload)
+        by_lbl = {s["label"]: payload[s["start"] : s["end"]] for s in spans}
+        self.assertEqual(
+            by_lbl,
+            {
+                "IBAN_CODE": "GB02UOUQ07345637357362",
+                "MAC_ADDRESS": "74-8f-8e-da-43-df",
+            },
+        )
+
+    def test_harmonized_scoring_mode(self) -> None:
+        doc = {
+            "id": "kiji_sample",
+            "text": "Applicant Fiona Thompson resides at 12 Kilcullen Road.",
+            "spans": [
+                {"start": 10, "end": 15, "label": "PERSON", "text": "Fiona"},
+                {"start": 16, "end": 24, "label": "PERSON", "text": "Thompson"},
+            ],
+        }
+        preds = {
+            "kiji_sample": [
+                {"start": 10, "end": 24, "label": "PERSON", "score": 0.99},
+            ]
+        }
+        res = score_predictions([doc], preds, label_list=GRAVITEE_25_LABELS, required_labels=MVP_REQUIRED_6_LABELS)
+        self.assertEqual(res["harmonized"]["per_label"]["PERSON"]["f1"], 1.0)
+
 
 if __name__ == "__main__":
     unittest.main()

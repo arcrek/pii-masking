@@ -495,15 +495,24 @@ def map_opf_disambiguated(
     docs: list[dict[str, Any]],
     raw_spans_by_doc: dict[str, list[dict[str, Any]]],
 ) -> dict[str, list[dict[str, Any]]]:
-    """Map OPF predictions with regex disambiguation on `account_number` + structured patterns."""
+    """Map OPF predictions with context-aware disambiguation + structured multi-source rules."""
+    from evaluation.hybrid_rules import (
+        is_structured_payload_doc,
+        is_tabular_employee_csv,
+        postprocess_doc_spans,
+    )
+
     mapped: dict[str, list[dict[str, Any]]] = {}
     for doc in docs:
         doc_id = str(doc["id"])
         text = doc["text"]
+        if is_structured_payload_doc(text) or is_tabular_employee_csv(text):
+            mapped[doc_id] = extract_deterministic_spans(text)
+            continue
         raw = raw_spans_by_doc.get(doc_id, [])
         refined = [refine_opf_span(text, sp["start"], sp["end"], sp["label"]) for sp in raw]
         det = extract_deterministic_spans(text)
-        mapped[doc_id] = deduplicate_spans(det + refined)
+        mapped[doc_id] = postprocess_doc_spans(text, deduplicate_spans(det + refined))
     return mapped
 
 
@@ -513,6 +522,12 @@ def evaluate_all_candidates(
     presidio_raw: dict[str, list[dict[str, Any]]],
 ) -> dict[str, Any]:
     """Score all 5 pipeline variants on a dataset."""
+    from evaluation.hybrid_rules import (
+        is_structured_payload_doc,
+        is_tabular_employee_csv,
+        postprocess_doc_spans,
+    )
+
     # 1. OPF Unchanged Baseline
     opf_unchanged_preds = map_opf_unchanged(opf_raw)
 
@@ -527,9 +542,12 @@ def evaluate_all_candidates(
     for doc in docs:
         doc_id = str(doc["id"])
         text = doc["text"]
+        if is_structured_payload_doc(text) or is_tabular_employee_csv(text):
+            presidio_targeted_preds[doc_id] = extract_deterministic_spans(text)
+            continue
         det = extract_deterministic_spans(text)
         merged_loc = merge_contiguous_locations(text, presidio_raw.get(doc_id, []))
-        presidio_targeted_preds[doc_id] = deduplicate_spans(det + merged_loc)
+        presidio_targeted_preds[doc_id] = postprocess_doc_spans(text, deduplicate_spans(det + merged_loc))
 
     # 5. Full Hybrid Pipeline (OPF + Presidio + Deterministic Business Rules)
     hybrid_preds: dict[str, list[dict[str, Any]]] = {}
@@ -569,7 +587,7 @@ def evaluate_by_slice(
     presidio_raw: dict[str, list[dict[str, Any]]],
     slice_key: str,
 ) -> dict[str, Any]:
-    """Break down required-6 exact and character metrics by document slice (e.g. `source` or `doc_type`)."""
+    """Break down required-6 exact, overlap, harmonized, and character metrics by document slice."""
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for d in docs:
         grouped[str(d.get(slice_key, "unknown"))].append(d)
@@ -583,6 +601,9 @@ def evaluate_by_slice(
                 cand: {
                     "required_6_exact_micro": sub_res[cand]["exact"]["required_6_micro"],
                     "required_6_overlap_micro": sub_res[cand]["overlap"]["required_6_micro"],
+                    "required_6_harmonized_micro": sub_res[cand]["harmonized"]["required_6_micro"],
+                    "overall_25_exact_micro": sub_res[cand]["exact"]["overall_micro"],
+                    "overall_25_harmonized_micro": sub_res[cand]["harmonized"]["overall_micro"],
                     "pii_char_recall_coverage": sub_res[cand]["character_metrics"]["pii_char_recall_coverage"],
                     "over_masking_rate": sub_res[cand]["character_metrics"]["over_masking_rate_on_non_pii"],
                 }
@@ -621,49 +642,97 @@ def main() -> None:
         encoding="utf-8",
     )
 
-    # 3. Initialize OpenAI Privacy Filter (`openai/privacy-filter`)
-    print("[benchmark] Loading OpenAI Privacy Filter (openai/privacy-filter)...")
-    from opf import OPF
+    cache_path = Path(os.environ.get("PII_RAW_CACHE_PATH", "/tmp/pii_raw_cache.json"))
+    use_cache = cache_path.exists() and ("--refresh-cache" not in sys.argv)
+    if use_cache:
+        print(f"[benchmark] Loading cached raw OPF & Presidio predictions from {cache_path}...")
+        cached = json.loads(cache_path.read_text(encoding="utf-8"))
+        opf_startup_sec = cached["opf_startup_sec"]
+        presidio_startup_sec = cached["presidio_startup_sec"]
+        opf_stock_cpu_10_perf = cached["opf_stock_cpu_10_perf"]
+        opf_bus_raw = cached["opf_bus_raw"]
+        opf_bus_perf = cached["opf_bus_perf"]
+        opf_dev_raw = cached["opf_dev_raw"]
+        opf_dev_perf = cached["opf_dev_perf"]
+        opf_test_raw = cached["opf_test_raw"]
+        opf_test_perf = cached["opf_test_perf"]
+        pres_bus_raw = cached["pres_bus_raw"]
+        pres_bus_perf = cached["pres_bus_perf"]
+        pres_dev_raw = cached["pres_dev_raw"]
+        pres_dev_perf = cached["pres_dev_perf"]
+        pres_test_raw = cached["pres_test_raw"]
+        pres_test_perf = cached["pres_test_perf"]
+    else:
+        # 3. Initialize OpenAI Privacy Filter (`openai/privacy-filter`)
+        print("[benchmark] Loading OpenAI Privacy Filter (openai/privacy-filter)...")
+        from opf import OPF
 
-    t0_load_opf = time.perf_counter()
-    device_str = "cuda" if torch.cuda.is_available() else "cpu"
-    opf_model = OPF(device=device_str, decode_mode="viterbi", trim_whitespace=True)
-    _ = opf_model.get_prediction_components()
-    opf_startup_sec = round(time.perf_counter() - t0_load_opf, 2)
-    print(f"[benchmark] OPF loaded on {device_str} in {opf_startup_sec}s.")
+        t0_load_opf = time.perf_counter()
+        device_str = "cuda" if torch.cuda.is_available() else "cpu"
+        opf_model = OPF(device=device_str, decode_mode="viterbi", trim_whitespace=True)
+        _ = opf_model.get_prediction_components()
+        opf_startup_sec = round(time.perf_counter() - t0_load_opf, 2)
+        print(f"[benchmark] OPF loaded on {device_str} in {opf_startup_sec}s.")
 
-    # First measure unpatched stock CPU latency on 10 business holdout docs for hardware comparison
-    print("[benchmark] Measuring stock unpatched OPF CPU latency on 10 business docs...")
-    _, opf_stock_cpu_10_perf = run_opf_inference(opf_model, business_docs[:10])
+        # First measure unpatched stock CPU latency on 10 business holdout docs for hardware comparison
+        print("[benchmark] Measuring stock unpatched OPF CPU latency on 10 business docs...")
+        _, opf_stock_cpu_10_perf = run_opf_inference(opf_model, business_docs[:10])
 
-    # Apply grouped MoE CPU optimization (~10x faster on CPU while preserving bfloat16/float32 MoE routing)
-    apply_grouped_moe_cpu_optimization(opf_model)
+        # Apply grouped MoE CPU optimization (~10x faster on CPU while preserving bfloat16/float32 MoE routing)
+        apply_grouped_moe_cpu_optimization(opf_model)
 
-    # Run OPF on Business Holdout, Gravitee Dev, Gravitee Test
-    print("[benchmark] Running OPF on Business Holdout (60 docs)...")
-    opf_bus_raw, opf_bus_perf = run_opf_inference(opf_model, business_docs)
+        # Run OPF on Business Holdout, Gravitee Dev, Gravitee Test
+        print("[benchmark] Running OPF on Business Holdout (60 docs)...")
+        opf_bus_raw, opf_bus_perf = run_opf_inference(opf_model, business_docs)
 
-    print("[benchmark] Running OPF on Gravitee Dev (120 docs)...")
-    opf_dev_raw, opf_dev_perf = run_opf_inference(opf_model, grav_dev_docs)
+        print("[benchmark] Running OPF on Gravitee Dev (120 docs)...")
+        opf_dev_raw, opf_dev_perf = run_opf_inference(opf_model, grav_dev_docs)
 
-    print("[benchmark] Running OPF on Gravitee Test (240 docs)...")
-    opf_test_raw, opf_test_perf = run_opf_inference(opf_model, grav_test_docs)
+        print("[benchmark] Running OPF on Gravitee Test (240 docs)...")
+        opf_test_raw, opf_test_perf = run_opf_inference(opf_model, grav_test_docs)
 
-    # 4. Initialize Presidio + spaCy (`en_core_web_lg`)
-    print("[benchmark] Loading Presidio + spaCy (en_core_web_lg)...")
-    t0_load_pres = time.perf_counter()
-    analyzer = build_presidio_analyzer()
-    presidio_startup_sec = round(time.perf_counter() - t0_load_pres, 2)
-    print(f"[benchmark] Presidio loaded in {presidio_startup_sec}s.")
+        # 4. Initialize Presidio + spaCy (`en_core_web_lg`)
+        print("[benchmark] Loading Presidio + spaCy (en_core_web_lg)...")
+        t0_load_pres = time.perf_counter()
+        analyzer = build_presidio_analyzer()
+        presidio_startup_sec = round(time.perf_counter() - t0_load_pres, 2)
+        print(f"[benchmark] Presidio loaded in {presidio_startup_sec}s.")
 
-    print("[benchmark] Running Presidio on Business Holdout (60 docs)...")
-    pres_bus_raw, pres_bus_perf = run_presidio_inference(analyzer, business_docs)
+        print("[benchmark] Running Presidio on Business Holdout (60 docs)...")
+        pres_bus_raw, pres_bus_perf = run_presidio_inference(analyzer, business_docs)
 
-    print("[benchmark] Running Presidio on Gravitee Dev (120 docs)...")
-    pres_dev_raw, pres_dev_perf = run_presidio_inference(analyzer, grav_dev_docs)
+        print("[benchmark] Running Presidio on Gravitee Dev (120 docs)...")
+        pres_dev_raw, pres_dev_perf = run_presidio_inference(analyzer, grav_dev_docs)
 
-    print("[benchmark] Running Presidio on Gravitee Test (240 docs)...")
-    pres_test_raw, pres_test_perf = run_presidio_inference(analyzer, grav_test_docs)
+        print("[benchmark] Running Presidio on Gravitee Test (240 docs)...")
+        pres_test_raw, pres_test_perf = run_presidio_inference(analyzer, grav_test_docs)
+
+        try:
+            cache_path.write_text(
+                json.dumps(
+                    {
+                        "opf_startup_sec": opf_startup_sec,
+                        "presidio_startup_sec": presidio_startup_sec,
+                        "opf_stock_cpu_10_perf": opf_stock_cpu_10_perf,
+                        "opf_bus_raw": opf_bus_raw,
+                        "opf_bus_perf": opf_bus_perf,
+                        "opf_dev_raw": opf_dev_raw,
+                        "opf_dev_perf": opf_dev_perf,
+                        "opf_test_raw": opf_test_raw,
+                        "opf_test_perf": opf_test_perf,
+                        "pres_bus_raw": pres_bus_raw,
+                        "pres_bus_perf": pres_bus_perf,
+                        "pres_dev_raw": pres_dev_raw,
+                        "pres_dev_perf": pres_dev_perf,
+                        "pres_test_raw": pres_test_raw,
+                        "pres_test_perf": pres_test_perf,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            print(f"[benchmark] Cached raw model outputs to {cache_path}")
+        except Exception as exc:
+            print(f"[benchmark] Warning: could not write cache: {exc}")
 
     # 5. Compute comprehensive metrics across all splits and slices
     print("[benchmark] Scoring all candidates on Gravitee Dev, Gravitee Test, and Business Holdout...")

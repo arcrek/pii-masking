@@ -135,6 +135,7 @@ def score_predictions(
     exact_stats = {lbl: {"tp": 0, "fp": 0, "fn": 0, "support": 0} for lbl in label_list}
     norm_stats = {lbl: {"tp": 0, "fp": 0, "fn": 0, "support": 0} for lbl in label_list}
     overlap_stats = {lbl: {"tp": 0, "fp": 0, "fn": 0, "support": 0} for lbl in label_list}
+    harmonized_stats = {lbl: {"tp": 0, "fp": 0, "fn": 0, "support": 0} for lbl in label_list}
 
     total_chars = 0
     gold_pii_chars = 0
@@ -274,6 +275,39 @@ def score_predictions(
             overlap_stats[lbl]["fp"] += len(p_list) - tp_o
             overlap_stats[lbl]["fn"] += len(g_list) - tp_o
             overlap_stats[lbl]["support"] += len(g_list)
+
+        # 4. Harmonized multi-source evaluation (handles split/merged multi-token entities
+        # such as Kiji/Gretel split First+Last PERSON or Street+City+State+Zip LOCATION,
+        # and OPF account_number / PERSON+HONORIFIC family equivalence)
+        def labels_harmonized_compatible(g_lbl_name: str, p_lbl_name: str) -> bool:
+            if g_lbl_name == p_lbl_name:
+                return True
+            if g_lbl_name in OPF_ACCOUNT_FAMILY and p_lbl_name in OPF_ACCOUNT_FAMILY:
+                return True
+            if {g_lbl_name, p_lbl_name} <= {"PERSON", "HONORIFIC"}:
+                return True
+            if {g_lbl_name, p_lbl_name} <= {"LOCATION", "COORDINATE"}:
+                return True
+            return False
+
+        matched_pred_indices: set[int] = set()
+        for g in gold_spans:
+            harmonized_stats[g.label]["support"] += 1
+            overlapping_preds = [
+                j
+                for j, p in enumerate(pred_spans)
+                if labels_harmonized_compatible(g.label, p.label)
+                and span_iou(g.start, g.end, p.start, p.end) > 0.0
+            ]
+            if overlapping_preds:
+                harmonized_stats[g.label]["tp"] += 1
+                matched_pred_indices.update(overlapping_preds)
+            else:
+                harmonized_stats[g.label]["fn"] += 1
+
+        for j, p in enumerate(pred_spans):
+            if j not in matched_pred_indices:
+                harmonized_stats[p.label]["fp"] += 1
 
         # Error taxonomy classification on gold vs pred spans
         used_preds: set[int] = set()
@@ -476,6 +510,7 @@ def score_predictions(
         "exact": summarize_table(exact_stats),
         "normalized": summarize_table(norm_stats),
         "overlap": summarize_table(overlap_stats),
+        "harmonized": summarize_table(harmonized_stats),
         "character_metrics": char_summary,
         "error_taxonomy": {
             "counts": error_counts,
