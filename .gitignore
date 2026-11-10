@@ -5,3 +5,8 @@
 .agentkit/
 .env
 .env.*
+.venv/
+__pycache__/
+.pytest_cache/
+checkpoints/opf_vn_19/model.safetensors
+

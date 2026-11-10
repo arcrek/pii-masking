@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<title>Vietnamese PII 19-Label Benchmark: Pre vs Post Fine-Tune (spaCy NER vs OPF)</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 32px auto; max-width: 1280px; color: #0f172a; background: #f8fafc; line-height: 1.5; }
+  h1, h2, h3 { color: #0f172a; }
+  .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .metric-box { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; }
+  .metric-title { font-size: 13px; color: #475569; text-transform: uppercase; letter-spacing: 0.04em; }
+  .metric-val { font-size: 26px; font-weight: 700; color: #0f172a; margin-top: 6px; }
+  .metric-sub { font-size: 13px; color: #059669; font-weight: 600; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { border-bottom: 1px solid #e2e8f0; padding: 10px 12px; text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  th { background: #f1f5f9; font-weight: 600; color: #334155; }
+  .badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+  .badge.pre { background: #fef3c7; color: #92400e; }
+  .badge.post { background: #dcfce7; color: #166534; }
+  code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+</style>
+</head>
+<body>
+  <h1>Báo Cáo Thực Nghiệm PII Tiếng Việt (19 Nhãn OpenPII): Trước vs Sau Fine-Tune</h1>
+  <p>So sánh công bằng giữa <strong>spaCy NER nhẹ (tok2vec/CNN)</strong> và <strong>Fine-Tune OpenAI Privacy Filter (OPF, 77 lớp BIESO)</strong> trên dữ liệu tiếng Việt từ <code>ai4privacy/pii-masking-openpii-1.5m</code>, huấn luyện trên <strong>Google Colab NVIDIA L4</strong> qua <code>colab-cli</code>.</p>
+
+  <div class="grid">
+    <div class="metric-box">
+      <div class="metric-title">spaCy NER (Model-Only)</div>
+      <div class="metric-val">84.68%</div>
+      <div class="metric-sub">+84.68% vs Pre-Finetune (0.00%)</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-title">OPF 19-Label (Model-Only)</div>
+      <div class="metric-val">89.39%</div>
+      <div class="metric-sub">+58.60% vs Pre-Finetune (30.79%)</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-title">spaCy NER + VN Rules</div>
+      <div class="metric-val">84.88%</div>
+      <div class="metric-sub">+39.64% vs Pre-Finetune + Rules</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-title">OPF 19-Label + VN Rules</div>
+      <div class="metric-val">89.73%</div>
+      <div class="metric-sub">+41.93% vs Pre-Finetune + Rules</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>1. Bảng So Sánh Trước vs Sau Fine-Tune (Test 600 Mẫu & Holdout Độc Lập 75 Mẫu)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Pipeline Candidate</th>
+          <th>Giai đoạn</th>
+          <th>Test Exact P</th>
+          <th>Test Exact R</th>
+          <th>Test Exact F1</th>
+          <th>Test Overlap F1</th>
+          <th>Test Char Recall</th>
+          <th>Over-Masking</th>
+          <th>Holdout 75 Exact F1</th>
+          <th>Neg 15 FP Spans</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. spaCy Blank (vi) — Pre-Finetune (Model-Only)</strong></td><td><span class='badge pre'>PRE-FINETUNE</span></td><td>0.00%</td><td>0.00%</td><td><strong>0.00%</strong></td><td>0.00%</td><td>0.00%</td><td>0.00%</td><td><strong>0.00%</strong></td><td>0</td></tr><tr><td><strong>2. spaCy Blank (vi) — Pre-Finetune (+VN Rules)</strong></td><td><span class='badge pre'>PRE-FINETUNE</span></td><td>87.62%</td><td>30.50%</td><td><strong>45.24%</strong></td><td>46.68%</td><td>36.64%</td><td>0.10%</td><td><strong>75.00%</strong></td><td>0</td></tr><tr><td><strong>3. OPF Pretrained — Pre-Finetune (Model-Only, 8→19 1:1)</strong></td><td><span class='badge pre'>PRE-FINETUNE</span></td><td>41.53%</td><td>24.46%</td><td><strong>30.79%</strong></td><td>48.27%</td><td>87.97%</td><td>4.43%</td><td><strong>29.25%</strong></td><td>1</td></tr><tr><td><strong>4. OPF Pretrained — Pre-Finetune (+Disambig & VN Rules)</strong></td><td><span class='badge pre'>PRE-FINETUNE</span></td><td>56.51%</td><td>41.42%</td><td><strong>47.80%</strong></td><td>59.91%</td><td>84.25%</td><td>2.64%</td><td><strong>70.55%</strong></td><td>0</td></tr><tr><td><strong>5. spaCy NER (tok2vec/CNN) — Post-Finetune (Model-Only, 19-lbl)</strong></td><td><span class='badge post'>POST-FINETUNE</span></td><td>86.63%</td><td>82.81%</td><td><strong>84.68%</strong></td><td>93.57%</td><td>97.93%</td><td>0.55%</td><td><strong>75.58%</strong></td><td>22</td></tr><tr><td><strong>6. spaCy NER (tok2vec/CNN) — Post-Finetune (+VN Rules, 19-lbl)</strong></td><td><span class='badge post'>POST-FINETUNE</span></td><td>86.80%</td><td>83.04%</td><td><strong>84.88%</strong></td><td>93.71%</td><td>98.03%</td><td>0.52%</td><td><strong>91.26%</strong></td><td>0</td></tr><tr><td><strong>7. OPF Fine-Tuned — Post-Finetune (Model-Only, 19-lbl / 77-BIESO)</strong></td><td><span class='badge post'>POST-FINETUNE</span></td><td>89.25%</td><td>89.53%</td><td><strong>89.39%</strong></td><td>95.33%</td><td>98.64%</td><td>0.44%</td><td><strong>84.82%</strong></td><td>16</td></tr><tr><td><strong>8. OPF Fine-Tuned — Post-Finetune (+VN Rules, 19-lbl / 77-BIESO)</strong></td><td><span class='badge post'>POST-FINETUNE</span></td><td>89.57%</td><td>89.89%</td><td><strong>89.73%</strong></td><td>95.54%</td><td>98.67%</td><td>0.43%</td><td><strong>89.99%</strong></td><td>0</td></tr><tr><td><strong>9. Hybrid (OPF Fine-Tuned + spaCy Fine-Tuned + VN Rules)</strong></td><td><span class='badge post'>POST-FINETUNE</span></td><td>88.85%</td><td>90.96%</td><td><strong>89.90%</strong></td><td>95.73%</td><td>99.28%</td><td>0.60%</td><td><strong>90.40%</strong></td><td>0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>2. Kết Quả Chi Tiết Đủ 19 Nhãn OpenPII (vn_test_600)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nhãn OpenPII</th>
+          <th>Support</th>
+          <th>OPF Pre (Model) F1</th>
+          <th>spaCy Post (Model) F1</th>
+          <th>OPF Post (Model) F1</th>
+          <th>spaCy Post (+Rules) F1</th>
+          <th>OPF Post (+Rules) F1</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>AGE</code></td><td>219</td><td>0.00%</td><td>93.55%</td><td><strong>92.27%</strong></td><td>92.81%</td><td><strong>92.97%</strong></td></tr><tr><td><code>BUILDINGNUM</code></td><td>227</td><td>0.00%</td><td>94.27%</td><td><strong>94.71%</strong></td><td>94.27%</td><td><strong>94.71%</strong></td></tr><tr><td><code>CITY</code></td><td>319</td><td>0.00%</td><td>96.58%</td><td><strong>94.51%</strong></td><td>96.58%</td><td><strong>94.65%</strong></td></tr><tr><td><code>CREDITCARDNUMBER</code></td><td>159</td><td>0.00%</td><td>90.46%</td><td><strong>98.42%</strong></td><td>90.46%</td><td><strong>98.42%</strong></td></tr><tr><td><code>DATE</code></td><td>543</td><td>89.21%</td><td>99.45%</td><td><strong>99.63%</strong></td><td>99.72%</td><td><strong>99.82%</strong></td></tr><tr><td><code>DRIVERLICENSENUM</code></td><td>112</td><td>0.00%</td><td>83.02%</td><td><strong>86.76%</strong></td><td>84.65%</td><td><strong>89.09%</strong></td></tr><tr><td><code>EMAIL</code></td><td>352</td><td>84.99%</td><td>98.58%</td><td><strong>99.01%</strong></td><td>98.87%</td><td><strong>99.29%</strong></td></tr><tr><td><code>GENDER</code></td><td>122</td><td>0.00%</td><td>91.56%</td><td><strong>87.89%</strong></td><td>92.51%</td><td><strong>90.83%</strong></td></tr><tr><td><code>GIVENNAME</code></td><td>589</td><td>8.55%</td><td>49.23%</td><td><strong>68.99%</strong></td><td>49.27%</td><td><strong>68.99%</strong></td></tr><tr><td><code>IDCARDNUM</code></td><td>165</td><td>22.37%</td><td>86.25%</td><td><strong>90.36%</strong></td><td>87.65%</td><td><strong>91.89%</strong></td></tr><tr><td><code>PASSPORTNUM</code></td><td>102</td><td>0.00%</td><td>99.51%</td><td><strong>99.51%</strong></td><td>99.51%</td><td><strong>99.51%</strong></td></tr><tr><td><code>SEX</code></td><td>116</td><td>0.00%</td><td>85.26%</td><td><strong>88.71%</strong></td><td>86.40%</td><td><strong>90.53%</strong></td></tr><tr><td><code>SOCIALNUM</code></td><td>122</td><td>0.00%</td><td>83.54%</td><td><strong>99.18%</strong></td><td>83.54%</td><td><strong>99.59%</strong></td></tr><tr><td><code>STREET</code></td><td>224</td><td>0.60%</td><td>82.67%</td><td><strong>86.27%</strong></td><td>82.67%</td><td><strong>86.46%</strong></td></tr><tr><td><code>SURNAME</code></td><td>466</td><td>0.00%</td><td>45.53%</td><td><strong>68.75%</strong></td><td>45.59%</td><td><strong>68.75%</strong></td></tr><tr><td><code>TAXNUM</code></td><td>153</td><td>0.00%</td><td>96.20%</td><td><strong>99.03%</strong></td><td>96.20%</td><td><strong>99.35%</strong></td></tr><tr><td><code>TELEPHONENUM</code></td><td>265</td><td>89.89%</td><td>98.69%</td><td><strong>98.68%</strong></td><td>99.07%</td><td><strong>98.68%</strong></td></tr><tr><td><code>TITLE</code></td><td>314</td><td>0.00%</td><td>96.31%</td><td><strong>92.48%</strong></td><td>96.31%</td><td><strong>92.48%</strong></td></tr><tr><td><code>ZIPCODE</code></td><td>189</td><td>0.00%</td><td>97.05%</td><td><strong>100.00%</strong></td><td>97.05%</td><td><strong>100.00%</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
