@@ -1,0 +1,45 @@
+info: rebuilt output head for target label space (77 labels; copied_rows=77; exact=1; fallback=76)
+training plan: epochs=4 train_examples=3000 train_windows=3000 validation_examples=300 validation_windows=300 progress_interval_s=15.0
+train progress: epoch=1/4 batch=36/375 windows=288/3000 examples_seen=288/3000 tokens=30963 train_loss=0.923664 train_token_accuracy=0.8389 eta_epoch=02:26 eta_total=10:32
+train progress: epoch=1/4 batch=84/375 windows=672/3000 examples_seen=672/3000 tokens=71734 train_loss=0.609780 train_token_accuracy=0.8696 eta_epoch=01:48 eta_total=08:46
+train progress: epoch=1/4 batch=130/375 windows=1040/3000 examples_seen=1040/3000 tokens=111557 train_loss=0.485374 train_token_accuracy=0.8868 eta_epoch=01:28 eta_total=08:13
+train progress: epoch=1/4 batch=180/375 windows=1440/3000 examples_seen=1440/3000 tokens=151613 train_loss=0.412743 train_token_accuracy=0.8999 eta_epoch=01:08 eta_total=07:37
+train progress: epoch=1/4 batch=226/375 windows=1808/3000 examples_seen=1808/3000 tokens=192842 train_loss=0.359426 train_token_accuracy=0.9108 eta_epoch=00:51 eta_total=07:19
+train progress: epoch=1/4 batch=270/375 windows=2160/3000 examples_seen=2160/3000 tokens=233434 train_loss=0.322962 train_token_accuracy=0.9181 eta_epoch=00:36 eta_total=07:05
+train progress: epoch=1/4 batch=316/375 windows=2528/3000 examples_seen=2528/3000 tokens=273257 train_loss=0.295376 train_token_accuracy=0.9241 eta_epoch=00:20 eta_total=06:47
+train progress: epoch=1/4 batch=364/375 windows=2912/3000 examples_seen=2912/3000 tokens=313691 train_loss=0.273294 train_token_accuracy=0.9289 eta_epoch=00:04 eta_total=06:26
+train progress: epoch=1/4 batch=375/375 windows=3000/3000 examples_seen=3000/3000 tokens=323761 train_loss=0.268278 train_token_accuracy=0.9300 eta_epoch=00:00 eta_total=06:22
+epoch 1/4: train_loss=0.268278 val_loss=0.112958 val_token_accuracy=0.9644 optimizer_steps=188
+train progress: epoch=2/4 batch=46/375 windows=368/3000 examples_seen=368/3000 tokens=39508 train_loss=0.097230 train_token_accuracy=0.9674 eta_epoch=01:47 eta_total=05:52
+train progress: epoch=2/4 batch=94/375 windows=752/3000 examples_seen=752/3000 tokens=81049 train_loss=0.089539 train_token_accuracy=0.9706 eta_epoch=01:31 eta_total=05:34
+train progress: epoch=2/4 batch=140/375 windows=1120/3000 examples_seen=1120/3000 tokens=119780 train_loss=0.087366 train_token_accuracy=0.9712 eta_epoch=01:17 eta_total=05:21
+train progress: epoch=2/4 batch=186/375 windows=1488/3000 examples_seen=1488/3000 tokens=160514 train_loss=0.084758 train_token_accuracy=0.9719 eta_epoch=01:02 eta_total=05:09
+train progress: epoch=2/4 batch=230/375 windows=1840/3000 examples_seen=1840/3000 tokens=200638 train_loss=0.084725 train_token_accuracy=0.9718 eta_epoch=00:48 eta_total=04:56
+train progress: epoch=2/4 batch=276/375 windows=2208/3000 examples_seen=2208/3000 tokens=239996 train_loss=0.081909 train_token_accuracy=0.9728 eta_epoch=00:33 eta_total=04:41
+train progress: epoch=2/4 batch=322/375 windows=2576/3000 examples_seen=2576/3000 tokens=279318 train_loss=0.080566 train_token_accuracy=0.9731 eta_epoch=00:18 eta_total=04:26
+train progress: epoch=2/4 batch=370/375 windows=2960/3000 examples_seen=2960/3000 tokens=319215 train_loss=0.080079 train_token_accuracy=0.9732 eta_epoch=00:02 eta_total=04:09
+train progress: epoch=2/4 batch=375/375 windows=3000/3000 examples_seen=3000/3000 tokens=323761 train_loss=0.079946 train_token_accuracy=0.9733 eta_epoch=00:00 eta_total=04:07
+epoch 2/4: train_loss=0.079946 val_loss=0.082082 val_token_accuracy=0.9728 optimizer_steps=188
+train progress: epoch=3/4 batch=44/375 windows=352/3000 examples_seen=352/3000 tokens=38679 train_loss=0.048190 train_token_accuracy=0.9836 eta_epoch=01:54 eta_total=04:03
+train progress: epoch=3/4 batch=86/375 windows=688/3000 examples_seen=688/3000 tokens=76245 train_loss=0.048260 train_token_accuracy=0.9833 eta_epoch=01:42 eta_total=03:53
+train progress: epoch=3/4 batch=134/375 windows=1072/3000 examples_seen=1072/3000 tokens=116054 train_loss=0.049191 train_token_accuracy=0.9830 eta_epoch=01:22 eta_total=03:29
+train progress: epoch=3/4 batch=180/375 windows=1440/3000 examples_seen=1440/3000 tokens=156248 train_loss=0.049836 train_token_accuracy=0.9826 eta_epoch=01:06 eta_total=03:12
+train progress: epoch=3/4 batch=228/375 windows=1824/3000 examples_seen=1824/3000 tokens=196670 train_loss=0.050407 train_token_accuracy=0.9823 eta_epoch=00:49 eta_total=02:53
+train progress: epoch=3/4 batch=276/375 windows=2208/3000 examples_seen=2208/3000 tokens=237425 train_loss=0.050098 train_token_accuracy=0.9822 eta_epoch=00:33 eta_total=02:37
+train progress: epoch=3/4 batch=324/375 windows=2592/3000 examples_seen=2592/3000 tokens=278283 train_loss=0.050743 train_token_accuracy=0.9820 eta_epoch=00:17 eta_total=02:20
+train progress: epoch=3/4 batch=368/375 windows=2944/3000 examples_seen=2944/3000 tokens=317636 train_loss=0.050591 train_token_accuracy=0.9822 eta_epoch=00:02 eta_total=02:07
+train progress: epoch=3/4 batch=375/375 windows=3000/3000 examples_seen=3000/3000 tokens=323761 train_loss=0.050711 train_token_accuracy=0.9821 eta_epoch=00:00 eta_total=02:04
+epoch 3/4: train_loss=0.050711 val_loss=0.069672 val_token_accuracy=0.9772 optimizer_steps=188
+train progress: epoch=4/4 batch=46/375 windows=368/3000 examples_seen=368/3000 tokens=41066 train_loss=0.031971 train_token_accuracy=0.9885 eta_epoch=01:50 eta_total=01:50
+train progress: epoch=4/4 batch=90/375 windows=720/3000 examples_seen=720/3000 tokens=80553 train_loss=0.032599 train_token_accuracy=0.9883 eta_epoch=01:36 eta_total=01:36
+train progress: epoch=4/4 batch=136/375 windows=1088/3000 examples_seen=1088/3000 tokens=120555 train_loss=0.035166 train_token_accuracy=0.9877 eta_epoch=01:20 eta_total=01:20
+train progress: epoch=4/4 batch=182/375 windows=1456/3000 examples_seen=1456/3000 tokens=159057 train_loss=0.035844 train_token_accuracy=0.9871 eta_epoch=01:05 eta_total=01:05
+train progress: epoch=4/4 batch=228/375 windows=1824/3000 examples_seen=1824/3000 tokens=198278 train_loss=0.035810 train_token_accuracy=0.9870 eta_epoch=00:49 eta_total=00:49
+train progress: epoch=4/4 batch=278/375 windows=2224/3000 examples_seen=2224/3000 tokens=239787 train_loss=0.035437 train_token_accuracy=0.9872 eta_epoch=00:32 eta_total=00:32
+train progress: epoch=4/4 batch=322/375 windows=2576/3000 examples_seen=2576/3000 tokens=278071 train_loss=0.035601 train_token_accuracy=0.9872 eta_epoch=00:18 eta_total=00:18
+train progress: epoch=4/4 batch=368/375 windows=2944/3000 examples_seen=2944/3000 tokens=317542 train_loss=0.036348 train_token_accuracy=0.9869 eta_epoch=00:02 eta_total=00:02
+train progress: epoch=4/4 batch=375/375 windows=3000/3000 examples_seen=3000/3000 tokens=323761 train_loss=0.036635 train_token_accuracy=0.9868 eta_epoch=00:00 eta_total=00:00
+epoch 4/4: train_loss=0.036635 val_loss=0.065882 val_token_accuracy=0.9788 optimizer_steps=188
+finetune complete
+output_checkpoint: /content/vn_pii_work/outputs/opf_vn_19
+best_epoch: 4 validation_loss: 0.065882
