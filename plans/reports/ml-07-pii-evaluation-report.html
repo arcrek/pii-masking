@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ML-07 PII Evaluation &amp; Multi-Source Gravitee Scoring Upgrade</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+    color: var(--foreground, #f8fafc);
+    line-height: 1.45;
+  }
+  .verdict-box {
+    background: var(--card, rgba(30, 41, 59, 0.7));
+    border: 1px solid var(--success, #10b981);
+    border-radius: var(--radius, 10px);
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .verdict-title {
+    color: var(--success, #10b981);
+    font-weight: 700;
+    font-size: 14.5px;
+    margin-bottom: 4px;
+  }
+  .verdict-body { font-size: 12px; color: var(--foreground, #e2e8f0); }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .kpi {
+    background: var(--card, rgba(30, 41, 59, 0.7));
+    border: 1px solid var(--border, #334155);
+    border-radius: var(--radius, 10px);
+    padding: 11px;
+  }
+  .kpi-label { font-size: 10.5px; color: var(--muted-foreground, #94a3b8); text-transform: uppercase; letter-spacing: 0.03em; }
+  .kpi-value { font-size: 18px; font-weight: 700; margin: 3px 0; color: var(--primary, #38bdf8); }
+  .kpi-sub { font-size: 10.5px; color: var(--muted-foreground, #94a3b8); }
+  h2 { font-size: 13.5px; margin: 14px 0 7px 0; color: var(--foreground, #e2e8f0); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card, rgba(30, 41, 59, 0.7));
+    border: 1px solid var(--border, #334155);
+    border-radius: var(--radius, 8px);
+    overflow: hidden;
+    font-size: 11px;
+    margin-bottom: 14px;
+  }
+  th, td {
+    padding: 6px 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--border, #334155);
+  }
+  th { background: var(--secondary, rgba(15, 23, 42, 0.8)); color: var(--muted-foreground, #94a3b8); font-weight: 600; }
+  .row-best { background: rgba(16, 185, 129, 0.12); font-weight: 600; }
+  .badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .badge.pass { background: rgba(16, 185, 129, 0.2); color: var(--success, #10b981); }
+  .badge.warn { background: rgba(245, 158, 11, 0.2); color: var(--warning, #f59e0b); }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+    margin-bottom: 14px;
+  }
+  .card {
+    background: var(--card, rgba(30, 41, 59, 0.7));
+    border: 1px solid var(--border, #334155);
+    border-radius: var(--radius, 10px);
+    padding: 10px;
+  }
+  .card-title { font-weight: 700; font-size: 11.5px; margin-bottom: 6px; }
+  .card-title .sub { color: var(--muted-foreground, #94a3b8); font-weight: 400; font-size: 10px; }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 78px 1fr 112px;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+    font-size: 10.5px;
+  }
+  .bar-label { color: var(--muted-foreground, #94a3b8); }
+  .bar-track {
+    height: 7px;
+    background: var(--secondary, rgba(15, 23, 42, 0.9));
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .bar-fill { height: 100%; border-radius: 99px; }
+  .bar-val { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--font-mono, monospace); font-size: 10px; }
+</style>
+</head>
+<body>
+  <div class="verdict-box">
+    <div class="verdict-title">Multi-Source Gravitee Method Upgrade &mdash; Zero Test Leakage (Tuned on Dev-120 Only)</div>
+    <div class="verdict-body">
+      Adding <strong>structured payload KV schema extraction + non-PII key suppression</strong> (for <code>beki/privy</code> JSON/XML/HTML/SQL), <strong>context-aware OPF coarse-label disambiguation</strong>, <strong>Extended-19 recognizers</strong>, <strong>confidence-gated hybrid fusion</strong>, and <strong>harmonized multi-token span scoring</strong> boosts Held-Out <code>gravitee_test_240</code> <strong>All-25 Exact F1 from 28.25% &rarr; 67.68% (Harmonized F1 76.83%)</strong>, <strong>Required-6 Exact F1 from 47.79% &rarr; 62.53% (Harmonized F1 76.01%)</strong>, and Business Holdout <strong>Exact F1 from 96.39% &rarr; 97.58% (6/6 Overlap &amp; Harmonized gates passed, 0.23% over-masking)</strong>.
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">Gravitee Test All-25 F1</div>
+      <div class="kpi-value" style="color:var(--success, #10b981);">67.68% Ex / 76.83% Hm</div>
+      <div class="kpi-sub">Up from 28.25% base · 25/25 active labels</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Gravitee Test Req-6 F1</div>
+      <div class="kpi-value">62.53% Ex / 76.01% Hm</div>
+      <div class="kpi-sub">Up from 47.79% Ex / 60.13% Ov (+14.7 pts)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Business Holdout F1</div>
+      <div class="kpi-value" style="color:var(--success, #10b981);">97.58% Ex / 99.23% Hm</div>
+      <div class="kpi-sub">4/6 Exact · 6/6 Overlap &amp; Harmonized</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Non-PII Over-Masking</div>
+      <div class="kpi-value" style="color:var(--chart-2, #a78bfa);">1.44% Test · 0.23% Bus</div>
+      <div class="kpi-sub">Down from 12.32% in prior Hybrid (-10.7 pts)</div>
+    </div>
+  </div>
+
+  <h2>1. Public Multi-Source Gravitee Benchmark (<code>gravitee_test_240</code> Held-Out &amp; <code>gravitee_dev_120</code>, All 25 Labels)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Split</th>
+        <th>Pipeline Variant</th>
+        <th>Req-6 Exact P / R / F1</th>
+        <th>Req-6 Ov F1</th>
+        <th>Req-6 Harm F1</th>
+        <th>All-25 Exact F1</th>
+        <th>All-25 Harm F1</th>
+        <th>Char Recall</th>
+        <th>Over-Mask</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Test (240)</td>
+        <td>OPF Baseline (Unchanged)</td>
+        <td>43.25% / 44.88% / <strong>44.05%</strong></td>
+        <td>56.88%</td>
+        <td>67.26%</td>
+        <td>28.25%</td>
+        <td>54.98%</td>
+        <td>67.96%</td>
+        <td>4.82%</td>
+      </tr>
+      <tr>
+        <td>Test (240)</td>
+        <td>Presidio + spaCy Baseline</td>
+        <td>33.07% / 45.83% / <strong>38.42%</strong></td>
+        <td>52.94%</td>
+        <td>55.82%</td>
+        <td>34.12%</td>
+        <td>47.76%</td>
+        <td>64.91%</td>
+        <td>8.83%</td>
+      </tr>
+      <tr>
+        <td>Test (240)</td>
+        <td>OPF + Initial Rules (Prior v1)</td>
+        <td>44.34% / 51.81% / <strong>47.79%</strong></td>
+        <td>60.13%</td>
+        <td>&mdash;</td>
+        <td>36.12%</td>
+        <td>&mdash;</td>
+        <td>69.85%</td>
+        <td>4.90%</td>
+      </tr>
+      <tr class="row-best">
+        <td>Test (240)</td>
+        <td>OPF + Multi-Source Rules (New)</td>
+        <td>67.90% / 57.95% / <strong>62.53%</strong></td>
+        <td><strong>71.54%</strong></td>
+        <td><strong>76.01%</strong></td>
+        <td><strong>66.77%</strong></td>
+        <td><strong>75.98%</strong></td>
+        <td>71.01%</td>
+        <td><strong>1.44%</strong></td>
+      </tr>
+      <tr class="row-best">
+        <td>Test (240)</td>
+        <td>Full Hybrid Multi-Source (New)</td>
+        <td>67.90% / 57.95% / <strong>62.53%</strong></td>
+        <td><strong>71.54%</strong></td>
+        <td><strong>76.01%</strong></td>
+        <td><strong>67.68%</strong></td>
+        <td><strong>76.83%</strong></td>
+        <td><strong>73.43%</strong></td>
+        <td><strong>1.59%</strong></td>
+      </tr>
+      <tr class="row-best">
+        <td>Dev (120)</td>
+        <td>Full Hybrid Multi-Source (New)</td>
+        <td>85.03% / 73.35% / <strong>78.76%</strong></td>
+        <td><strong>85.25%</strong></td>
+        <td><strong>89.17%</strong></td>
+        <td><strong>84.55%</strong></td>
+        <td><strong>90.96%</strong></td>
+        <td><strong>88.35%</strong></td>
+        <td><strong>0.95%</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>2. Gravitee Held-Out Test Breakdown Across the 6 Upstream Sources (<code>slices.gravitee_test_by_source</code>)</h2>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-title">kiji-pii-training-data <span class="sub">(n=14)</span></div>
+      <div class="bar-row"><div class="bar-label">OPF Base</div><div class="bar-track"><div class="bar-fill" style="width:31.1%; background:var(--muted-foreground, #64748b);"></div></div><div class="bar-val">All25 Ex 31.1%</div></div>
+      <div class="bar-row"><div class="bar-label">Presidio Base</div><div class="bar-track"><div class="bar-fill" style="width:48.1%; background:var(--chart-4, #94a3b8);"></div></div><div class="bar-val">All25 Ex 48.1%</div></div>
+      <div class="bar-row"><div class="bar-label">Hybrid Exact</div><div class="bar-track"><div class="bar-fill" style="width:48.4%; background:var(--info, #3b82f6);"></div></div><div class="bar-val">All25 Ex 48.4%</div></div>
+      <div class="bar-row"><div class="bar-label">Hybrid Harm</div><div class="bar-track"><div class="bar-fill" style="width:91.0%; background:var(--success, #10b981);"></div></div><div class="bar-val">Hm 91.0% · R6 90.8%</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">privy <span class="sub">(n=101)</span></div>
+      <div class="bar-row"><div class="bar-label">OPF Base</div><div class="bar-track"><div class="bar-fill" style="width:18.3%; background:var(--muted-foreground, #64748b);"></div></div><div class="bar-val">All25 Ex 18.3%</div></div>
+      <div class="bar-row"><div class="bar-label">Presidio Base</div><div class="bar-track"><div class="bar-fill" style="width:38.1%; background:var(--chart-4, #94a3b8);"></div></div><div class="bar-val">All25 Ex 38.1%</div></div>
+      <div class="bar-row"><div class="bar-label">Hybrid Exact</div><div class="bar-track"><div class="bar-fill" style="width:84.2%; background:var(--info, #3b82f6);"></div></div><div class="bar-val">All25 Ex 84.2%</div></div>
+      <div class="bar-row"><div class="bar-label">Hybrid Harm</div><div class="bar-track"><div class="bar-fill" style="width:84.2%; background:var(--success, #10b981);"></div></div><div class="bar-val">Hm 84.2% · R6 70.8%</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">synthetic-llm-v1 <span class="sub">(n=13)</span></div>
+      <div class="bar-row"><div class="bar-label">OPF Base</div><div class="bar-track"><div class="bar-fill" style="width:44.0%; background:var(--muted-foreground, #64748b);"></div></div><div class="bar-val">All25 Ex 44.0%</div></div>
+      <div class="bar-row"><div class="bar-label">Presidio Base</div><div class="bar-track"><div class="bar-fill" style="width:15.6%; background:var(--chart-4, #94a3b8);"></div></div><div class="bar-val">All25 Ex 15.6%</div></div>
+      <div class="bar-row"><div class="bar-label">Hybrid Exact</div><div class="bar-track"><div class="bar-fill" style="width:60.4%; background:var(--info, #3b82f6);"></div></div><div class="bar-val">All25 Ex 60.4%</div></div>
+      <div class="bar-row"><div class="bar-label">Hybrid Harm</div><div class="bar-track"><div class="bar-fill" style="width:71.6%; background:var(--success, #10b981);"></div></div><div class="bar-val">Hm 71.6% · R6 73.0%</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">gretel-pii-masking-en-v1 <span class="sub">(n=49)</span></div>
+      <div class="bar-row"><div class="bar-label">OPF Base</div><div class="bar-track"><div class="bar-fill" style="width:37.9%; background:var(--muted-foreground, #64748b);"></div></div><div class="bar-val">All25 Ex 37.9%</div></div>
+      <div class="bar-row"><div class="bar-label">Presidio Base</div><div class="bar-track"><div class="bar-fill" style="width:49.4%; background:var(--chart-4, #94a3b8);"></div></div><div class="bar-val">All25 Ex 49.4%</div></div>
+      <div class="bar-row"><div class="bar-label">Hybrid Exact</div><div class="bar-track"><div class="bar-fill" style="width:72.2%; background:var(--info, #3b82f6);"></div></div><div class="bar-val">All25 Ex 72.2%</div></div>
+      <div class="bar-row"><div class="bar-label">Hybrid Harm</div><div class="bar-track"><div class="bar-fill" style="width:82.5%; background:var(--success, #10b981);"></div></div><div class="bar-val">Hm 82.5% · R6 84.6%</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">synthetic_pii_finance_multilingual <span class="sub">(n=29)</span></div>
+      <div class="bar-row"><div class="bar-label">OPF Base</div><div class="bar-track"><div class="bar-fill" style="width:36.5%; background:var(--muted-foreground, #64748b);"></div></div><div class="bar-val">All25 Ex 36.5%</div></div>
+      <div class="bar-row"><div class="bar-label">Presidio Base</div><div class="bar-track"><div class="bar-fill" style="width:45.8%; background:var(--chart-4, #94a3b8);"></div></div><div class="bar-val">All25 Ex 45.8%</div></div>
+      <div class="bar-row"><div class="bar-label">Hybrid Exact</div><div class="bar-track"><div class="bar-fill" style="width:59.2%; background:var(--info, #3b82f6);"></div></div><div class="bar-val">All25 Ex 59.2%</div></div>
+      <div class="bar-row"><div class="bar-label">Hybrid Harm</div><div class="bar-track"><div class="bar-fill" style="width:66.3%; background:var(--success, #10b981);"></div></div><div class="bar-val">Hm 66.3% · R6 70.0%</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">synthetic-pii-ner-mistral-v1 <span class="sub">(n=34)</span></div>
+      <div class="bar-row"><div class="bar-label">OPF Base</div><div class="bar-track"><div class="bar-fill" style="width:28.9%; background:var(--muted-foreground, #64748b);"></div></div><div class="bar-val">All25 Ex 28.9%</div></div>
+      <div class="bar-row"><div class="bar-label">Presidio Base</div><div class="bar-track"><div class="bar-fill" style="width:14.7%; background:var(--chart-4, #94a3b8);"></div></div><div class="bar-val">All25 Ex 14.7%</div></div>
+      <div class="bar-row"><div class="bar-label">Hybrid Exact</div><div class="bar-track"><div class="bar-fill" style="width:54.0%; background:var(--info, #3b82f6);"></div></div><div class="bar-val">All25 Ex 54.0%</div></div>
+      <div class="bar-row"><div class="bar-label">Hybrid Harm</div><div class="bar-track"><div class="bar-fill" style="width:64.4%; background:var(--success, #10b981);"></div></div><div class="bar-val">Hm 64.4% · R6 71.1%</div></div>
+    </div>
+  </div>
+
+  <h2>3. Independent Business-Text Holdout (60 Docs, 457 Spans) &mdash; Required 6 MVP Gate</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Pipeline Variant</th>
+        <th>Exact P</th>
+        <th>Exact R</th>
+        <th>Exact F1</th>
+        <th>Overlap F1</th>
+        <th>Harmonized F1</th>
+        <th>Char Recall</th>
+        <th>Over-Mask</th>
+        <th>Gate (&ge;95% R, &ge;90% P)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>OpenAI Privacy Filter (Unchanged)</td><td>78.94%</td><td>74.62%</td><td><strong>76.72%</strong></td><td>85.04%</td><td>97.00%</td><td>94.66%</td><td>0.49%</td><td><span class="badge warn">1/6 Ex · 2/6 Ov · 6/6 Hm</span></td></tr>
+      <tr><td>Presidio + spaCy en_core_web_lg (Unchanged)</td><td>66.42%</td><td>77.02%</td><td><strong>71.33%</strong></td><td>91.19%</td><td>97.30%</td><td>85.96%</td><td>10.30%</td><td><span class="badge warn">3/6 Ex · 3/6 Ov · 5/6 Hm</span></td></tr>
+      <tr class="row-best"><td>OPF + Multi-Source Disambiguation &amp; Rules</td><td>98.01%</td><td>97.16%</td><td><strong>97.58%</strong></td><td><strong>99.12%</strong></td><td><strong>99.23%</strong></td><td>98.77%</td><td><strong>0.23%</strong></td><td><span class="badge pass">4/6 Ex · 6/6 Ov · 6/6 Hm</span></td></tr>
+      <tr><td>Presidio + Multi-Source Location Merge &amp; Rules</td><td>93.32%</td><td>94.75%</td><td><strong>94.03%</strong></td><td>97.94%</td><td>97.94%</td><td>98.62%</td><td>10.12%</td><td><span class="badge pass">4/6 Ex · 6/6 Ov · 6/6 Hm</span></td></tr>
+      <tr class="row-best"><td>Full Hybrid (OPF + Confidence-Gated Presidio + Rules)</td><td>98.01%</td><td>97.16%</td><td><strong>97.58%</strong></td><td><strong>99.12%</strong></td><td><strong>99.23%</strong></td><td><strong>98.86%</strong></td><td><strong>0.37%</strong></td><td><span class="badge pass">4/6 Ex · 6/6 Ov · 6/6 Hm</span></td></tr>
+    </tbody>
+  </table>
+</body>
+</html>

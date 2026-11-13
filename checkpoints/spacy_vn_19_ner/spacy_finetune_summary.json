@@ -1,0 +1,172 @@
+{
+  "model_architecture": "spacy_blank_vi_tok2vec_ner_cnn",
+  "spacy_version": "3.8.18",
+  "seed": 42,
+  "epochs": 15,
+  "best_epoch": 14,
+  "best_dev_exact_f1": 0.8638,
+  "total_train_seconds": 499.32,
+  "num_train_docs": 3000,
+  "num_dev_docs": 300,
+  "labels": [
+    "AGE",
+    "BUILDINGNUM",
+    "CITY",
+    "CREDITCARDNUMBER",
+    "DATE",
+    "DRIVERLICENSENUM",
+    "EMAIL",
+    "GENDER",
+    "GIVENNAME",
+    "IDCARDNUM",
+    "PASSPORTNUM",
+    "SEX",
+    "SOCIALNUM",
+    "STREET",
+    "SURNAME",
+    "TAXNUM",
+    "TELEPHONENUM",
+    "TITLE",
+    "ZIPCODE"
+  ],
+  "tokenizer_alignment_train": {
+    "total_spans": 22095,
+    "strict_aligned": 19682,
+    "strict_rate": 0.8908,
+    "contract_aligned": 20208,
+    "contract_rate": 0.9146,
+    "expand_aligned": 22095,
+    "expand_rate": 1.0
+  },
+  "tokenizer_alignment_dev": {
+    "total_spans": 2500,
+    "strict_aligned": 2227,
+    "strict_rate": 0.8908,
+    "contract_aligned": 2270,
+    "contract_rate": 0.908,
+    "expand_aligned": 2500,
+    "expand_rate": 1.0
+  },
+  "epoch_metrics": [
+    {
+      "epoch": 1,
+      "train_loss_ner": 28656.94,
+      "dev_exact_precision": 0.7672,
+      "dev_exact_recall": 0.6988,
+      "dev_exact_f1": 0.7314,
+      "elapsed_sec": 32.88
+    },
+    {
+      "epoch": 2,
+      "train_loss_ner": 6745.48,
+      "dev_exact_precision": 0.8554,
+      "dev_exact_recall": 0.814,
+      "dev_exact_f1": 0.8342,
+      "elapsed_sec": 33.25
+    },
+    {
+      "epoch": 3,
+      "train_loss_ner": 4268.91,
+      "dev_exact_precision": 0.8589,
+      "dev_exact_recall": 0.8324,
+      "dev_exact_f1": 0.8454,
+      "elapsed_sec": 33.48
+    },
+    {
+      "epoch": 4,
+      "train_loss_ner": 3152.15,
+      "dev_exact_precision": 0.8587,
+      "dev_exact_recall": 0.834,
+      "dev_exact_f1": 0.8462,
+      "elapsed_sec": 33.05
+    },
+    {
+      "epoch": 5,
+      "train_loss_ner": 2478.44,
+      "dev_exact_precision": 0.8669,
+      "dev_exact_recall": 0.8388,
+      "dev_exact_f1": 0.8526,
+      "elapsed_sec": 33.2
+    },
+    {
+      "epoch": 6,
+      "train_loss_ner": 2043.49,
+      "dev_exact_precision": 0.8691,
+      "dev_exact_recall": 0.8444,
+      "dev_exact_f1": 0.8566,
+      "elapsed_sec": 33.99
+    },
+    {
+      "epoch": 7,
+      "train_loss_ner": 1690.31,
+      "dev_exact_precision": 0.8723,
+      "dev_exact_recall": 0.8416,
+      "dev_exact_f1": 0.8567,
+      "elapsed_sec": 33.65
+    },
+    {
+      "epoch": 8,
+      "train_loss_ner": 1585.22,
+      "dev_exact_precision": 0.8721,
+      "dev_exact_recall": 0.8484,
+      "dev_exact_f1": 0.8601,
+      "elapsed_sec": 33.38
+    },
+    {
+      "epoch": 9,
+      "train_loss_ner": 1406.79,
+      "dev_exact_precision": 0.8667,
+      "dev_exact_recall": 0.8424,
+      "dev_exact_f1": 0.8544,
+      "elapsed_sec": 33.19
+    },
+    {
+      "epoch": 10,
+      "train_loss_ner": 1092.28,
+      "dev_exact_precision": 0.87,
+      "dev_exact_recall": 0.8488,
+      "dev_exact_f1": 0.8593,
+      "elapsed_sec": 32.92
+    },
+    {
+      "epoch": 11,
+      "train_loss_ner": 1126.29,
+      "dev_exact_precision": 0.8738,
+      "dev_exact_recall": 0.8448,
+      "dev_exact_f1": 0.8591,
+      "elapsed_sec": 33.34
+    },
+    {
+      "epoch": 12,
+      "train_loss_ner": 943.21,
+      "dev_exact_precision": 0.872,
+      "dev_exact_recall": 0.8424,
+      "dev_exact_f1": 0.857,
+      "elapsed_sec": 33.09
+    },
+    {
+      "epoch": 13,
+      "train_loss_ner": 983.89,
+      "dev_exact_precision": 0.8717,
+      "dev_exact_recall": 0.8424,
+      "dev_exact_f1": 0.8568,
+      "elapsed_sec": 33.23
+    },
+    {
+      "epoch": 14,
+      "train_loss_ner": 955.09,
+      "dev_exact_precision": 0.8794,
+      "dev_exact_recall": 0.8488,
+      "dev_exact_f1": 0.8638,
+      "elapsed_sec": 33.05
+    },
+    {
+      "epoch": 15,
+      "train_loss_ner": 909.37,
+      "dev_exact_precision": 0.8658,
+      "dev_exact_recall": 0.8436,
+      "dev_exact_f1": 0.8545,
+      "elapsed_sec": 33.02
+    }
+  ]
+}
