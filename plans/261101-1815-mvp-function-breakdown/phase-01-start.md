@@ -18,7 +18,7 @@ Mốc P1; xem lịch và hợp đồng trong [Function breakdown](./function-bre
 - [ ] DATA-02 — Chuẩn hóa annotation (owner SE4, reviewer ML1).
 - [ ] DATA-03 — Tách train/validation/test (owner SE4, reviewer ML1).
 - [ ] QA-01 — Ma trận nghiệm thu và ngưỡng chất lượng (owner CS1, reviewer ML1).
-- [ ] OPS-01 — Môi trường và cấu hình phiên bản (owner SE2, reviewer CS1).
+- [x] OPS-01 — Môi trường và cấu hình phiên bản (owner SE2, reviewer CS1).
 
 ## Thực hiện và kiểm tra
 

@@ -66,7 +66,7 @@
 
 - [ ] Tài liệu chính sách PII có phiên bản (v1.0), định nghĩa rõ ràng 6 nhóm nhãn (Tên, Email, Điện thoại, Địa chỉ, Ngày sinh, Mã định danh), có ví dụ âm/dương cụ thể.
 - [ ] Tài liệu hợp đồng tài liệu & tọa độ PDF: Thống nhất đơn vị đo (PDF points), gốc tọa độ (bottom-left vs top-left), phép biến đổi xoay (rotation) và crop box.
-- [ ] Repository chuẩn, phân quyền git, file .gitignore, cấu hình môi trường dev, container chuẩn hóa và tài liệu hướng dẫn setup môi trường.
+- [x] Repository chuẩn, phân quyền git, file .gitignore, cấu hình môi trường dev, container chuẩn hóa và tài liệu hướng dẫn setup môi trường.
 - [ ] Báo cáo danh mục dataset PII (English public/synthetic), giấy phép sử dụng hợp lệ, không chứa dữ liệu nhạy cảm thật.
 
 ---
