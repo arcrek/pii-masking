@@ -13,10 +13,10 @@
 | **BE-06** | Điều phối pipeline | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | - | `P1` | `L` | Có kết quả hoàn chỉnh hoặc lỗi có cấu trúc; không âm thầm bỏ trang; ghi version pipeline |
 | **BE-07** | Thử lại và chống tác vụ trùng | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | - | `P1` | `L` | Retry không ghi đè kết quả mới; hai yêu cầu trùng không tạo hai artifact chính thức |
 | **BE-08** | Lưu và đọc quyết định duyệt | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | - | `P1` | `M` | Vùng ngoài trang bị từ chối; sửa đồng thời được báo xung đột; mở lại không mất quyết định |
-| **FE-03** | Danh sách tài liệu và tác vụ | **Dương Minh Đức** | `SE1` | SE2 | - | `P1` | `M` | Không hiển thị tài liệu người khác; tải lại trang vẫn truy cập được tác vụ đã lưu |
-| **FE-04** | Hiển thị tiến trình và lỗi theo trang | **Dương Minh Đức** | `SE1` | SE2 | - | `P1` | `M` | Không hiển thị hoàn tất khi còn trang lỗi; retry hiển thị đúng tác vụ mới hoặc lần chạy mới |
-| **FE-08** | Duyệt gợi ý | **Dương Minh Đức** | `SE1` | SE2 | - | `P1` | `M` | Lựa chọn được lưu đúng revision; bỏ chọn không xóa kết quả phát hiện gốc |
-| **FE-09** | Khoanh vùng thủ công | **Dương Minh Đức** | `SE1` | SE3 | - | `P1` | `L` | Vùng nằm trong trang, tồn tại sau mở lại; tọa độ hiển thị và lưu khớp nhau |
+| **FE-03** | Danh sách tài liệu và tác vụ | **Đỗ Minh Tấn** | `SE1` | SE2 | - | `P1` | `M` | Không hiển thị tài liệu người khác; tải lại trang vẫn truy cập được tác vụ đã lưu |
+| **FE-04** | Hiển thị tiến trình và lỗi theo trang | **Đỗ Minh Tấn** | `SE1` | SE2 | - | `P1` | `M` | Không hiển thị hoàn tất khi còn trang lỗi; retry hiển thị đúng tác vụ mới hoặc lần chạy mới |
+| **FE-08** | Duyệt gợi ý | **Đỗ Minh Tấn** | `SE1` | SE2 | - | `P1` | `M` | Lựa chọn được lưu đúng revision; bỏ chọn không xóa kết quả phát hiện gốc |
+| **FE-09** | Khoanh vùng thủ công | **Đỗ Minh Tấn** | `SE1` | SE3 | - | `P1` | `L` | Vùng nằm trong trang, tồn tại sau mở lại; tọa độ hiển thị và lưu khớp nhau |
 
 ---
 
@@ -28,12 +28,12 @@
 - **Trách nhiệm Review/Nghiệm thu**: **FE-03**, **FE-04**, **FE-08**
 - **Chi tiết hoạt động trong tuần**: Chủ trì lập trình pipeline orchestrator (BE-06); xây dựng cơ chế retry, queue idempotency (BE-07); phát triển API quản lý review revision (BE-08).
 
-### SE1: Dương Minh Đức (Frontend - ICT)
+### SE1: Đỗ Minh Tấn (Frontend - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **FE-03** (Danh sách tài liệu và tác vụ), **FE-04** (Hiển thị tiến trình và lỗi theo trang), **FE-08** (Duyệt gợi ý), **FE-09** (Khoanh vùng thủ công)
 - **Chi tiết hoạt động trong tuần**: Chủ trì xây dựng trang danh sách tài liệu (FE-03); component tiến trình trang (FE-04); tính năng duyệt gợi ý (FE-08) và công cụ khoanh vùng thủ công (FE-09).
 
-### SE4: Đỗ Minh Tấn (Data & PDF Engine - ICT)
+### SE4: Dương Minh Đức (Data & PDF Engine - ICT)
 
 - **Công việc chính phụ trách (Owner)**: *Không trực tiếp làm owner task phát triển mới trong tuần này (tập trung phối hợp, review và chuẩn bị chuyên môn)*
 - **Chi tiết hoạt động trong tuần**: Hỗ trợ tích hợp module redaction vào backend; kiểm tra tính tương thích giữa revision lưu trữ và dữ liệu đầu vào của engine xóa.

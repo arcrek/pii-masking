@@ -12,10 +12,10 @@
 | :--- | :--- | :--- | :---: | :--- | :---: | :---: | :---: | :--- |
 | **BE-02** | Quản lý phiên truy cập | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | - | `P1` | `M` | API bảo vệ từ chối phiên hết hạn/đã thu hồi; đáp ứng chính sách phiên đã chọn |
 | **BE-03** | Phân quyền tài liệu và artifact | **Nguyễn Quang Anh** | `CS1` | CS2 | SE2 | `P0` | `M` | Tài khoản A không đọc/sửa/xóa/tải tài liệu hay artifact của B dù biết ID |
-| **FE-01** | Đăng nhập và đăng xuất | **Dương Minh Đức** | `SE1` | CS2 | - | `P1` | `S` | Đăng nhập hợp lệ được; sai thông tin/hết phiên được xử lý; đăng xuất mất quyền truy cập |
+| **FE-01** | Đăng nhập và đăng xuất | **Đỗ Minh Tấn** | `SE1` | CS2 | - | `P1` | `S` | Đăng nhập hợp lệ được; sai thông tin/hết phiên được xử lý; đăng xuất mất quyền truy cập |
 | **OCR-02** | Trích xuất văn bản native | **Nguyễn Tuấn Vinh** | `SE3` | CS2 | - | `P1` | `L` | Có offset mapping; không mất nguồn vị trí do nối đoạn; báo lỗi khi không trích xuất được |
 | **OCR-03** | Render và tiền xử lý OCR | **Nguyễn Tuấn Vinh** | `SE3` | SE4 | - | `P1` | `L` | Ảnh có kích thước và transform rõ; đảo biến đổi về trang gốc kiểm tra được |
-| **DATA-04** | Bộ tài liệu PDF chuẩn | **Đỗ Minh Tấn** | `SE4` | SE3 | SE1 | `P1` | `L` | Có ground truth text/regions; PDF đánh giá dùng nguồn held-out theo split, không dùng text train; phủ native/scan/mixed, handwriting thủ công và các layout/rotation/noise đã chọn |
+| **DATA-04** | Bộ tài liệu PDF chuẩn | **Dương Minh Đức** | `SE4` | SE3 | SE1 | `P1` | `L` | Có ground truth text/regions; PDF đánh giá dùng nguồn held-out theo split, không dùng text train; phủ native/scan/mixed, handwriting thủ công và các layout/rotation/noise đã chọn |
 | **ML-01** | Baseline có thể tái lập | **Nguyễn Đăng Đạt** | `ML1` | SE4 | SE4 | `P1` | `M` | Báo cáo cùng taxonomy/split; công bố entity không hỗ trợ thay vì coi là true negative |
 | **ML-02** | Chuẩn bị dữ liệu huấn luyện | **Nguyễn Đăng Đạt** | `ML1` | SE4 | SE4 | `P1` | `L` | Không làm lệch offset; cửa sổ chồng lấn có quy tắc ghép và kiểm thử thực thể ở ranh giới |
 
@@ -29,13 +29,13 @@
 - **Phối hợp liên module**: **BE-03**
 - **Chi tiết hoạt động trong tuần**: Chủ trì xây dựng quản lý phiên (BE-02). Phối hợp với CS1 triển khai middleware kiểm tra phân quyền (BE-03). Hỗ trợ ML1 thiết kế cấu trúc dữ liệu cho model.
 
-### SE1: Dương Minh Đức (Frontend - ICT)
+### SE1: Đỗ Minh Tấn (Frontend - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **FE-01** (Đăng nhập và đăng xuất)
 - **Phối hợp liên module**: **DATA-04**
 - **Chi tiết hoạt động trong tuần**: Hoàn thiện giao diện đăng nhập, thông báo lỗi và luồng đăng xuất (FE-01). Nghiên cứu cơ chế cache và render trang PDF trên canvas.
 
-### SE4: Đỗ Minh Tấn (Data & PDF Engine - ICT)
+### SE4: Dương Minh Đức (Data & PDF Engine - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **DATA-04** (Bộ tài liệu PDF chuẩn)
 - **Trách nhiệm Review/Nghiệm thu**: **OCR-03**, **ML-01**, **ML-02**

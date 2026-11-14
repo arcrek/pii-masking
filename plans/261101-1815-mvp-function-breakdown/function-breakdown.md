@@ -24,15 +24,15 @@ Mã vai trò không phải tên thật: ML1, CS1, CS2, SE1, SE2, SE3, SE4. Prefi
 | ML1 — Machine Learning | Nguyễn Đăng Đạt (ICT) | Baseline mô hình, preprocessing, fine-tune/checkpoint trên Colab Pro và đánh giá ML | ML-01, ML-02, ML-05, ML-07 | 4 |
 | CS1 — Security Engineering | Nguyễn Quang Anh (CS) | Chính sách PII, phân quyền/audit, kiểm tra vùng và dữ liệu ẩn, resource isolation, ma trận an toàn và race tests | CORE-01; BE-03/12; RED-01/02/05; QA-01/05; OPS-03 | 9 |
 | CS2 — Security Verification | Hoàng Thị Kiều Ly (CS) | Verification độc lập, fixture đối kháng, kiểm thử redaction/quyền truy cập và nghiệm thu | DATA-05; VER-01–06; QA-03/04/07 | 10 |
-| SE1 — Frontend | Dương Minh Đức (ICT) | Giao diện, viewer, duyệt vùng và E2E sản phẩm | FE-01–12; QA-02 | 13 |
+| SE1 — Frontend | Đỗ Minh Tấn (ICT) | Giao diện, viewer, duyệt vùng và E2E sản phẩm | FE-01–12; QA-02 | 13 |
 | SE2 — Backend và vận hành | Nguyễn Đinh Phú Vinh (ICT) | Kiến trúc hệ thống, API/jobs/storage/revision, tích hợp model serving, server demo và đồng thiết kế model | CORE-03; BE-01/02/04–11; ML-03; OPS-01/02/04/05 | 16 |
 | SE3 — Document/OCR | Nguyễn Tuấn Vinh (ICT) | Extraction, OCR, geometry và mapping entity thành vùng | CORE-02; OCR-01–09; ML-08 | 11 |
-| SE4 — Data và PDF engine | Đỗ Minh Tấn (ICT) | Dữ liệu, regex/hybrid, redaction text/ảnh, xuất PDF và benchmark sản phẩm | DATA-01–04/06; ML-04/06; RED-03/04/06/07; QA-06 | 12 |
+| SE4 — Data và PDF engine | Dương Minh Đức (ICT) | Dữ liệu, regex/hybrid, redaction text/ảnh, xuất PDF và benchmark sản phẩm | DATA-01–04/06; ML-04/06; RED-03/04/06/07; QA-06 | 12 |
 
 ### Ranh giới trách nhiệm ML và SE
 
 - ML1 (Nguyễn Đăng Đạt) chịu trách nhiệm chính về ML-01, ML-02, ML-05 (trực tiếp chạy Colab Pro fine-tune checkpoint) và ML-07. SE2 (Nguyễn Đinh Phú Vinh) phối hợp đồng thiết kế kiến trúc mô hình, schema nhãn và chuyển giao cho Đạt chạy Colab Pro.
-- SE4 (Đỗ Minh Tấn) chuẩn bị nguồn, annotation, dedup/split, regex và code kết hợp kết quả. ML1 duyệt DATA-02/03/06 và ML-04/06; SE không tự thay taxonomy hoặc tune threshold trên test.
+- SE4 (Dương Minh Đức) chuẩn bị nguồn, annotation, dedup/split, regex và code kết hợp kết quả. ML1 duyệt DATA-02/03/06 và ML-04/06; SE không tự thay taxonomy hoặc tune threshold trên test.
 - SE2 (Nguyễn Đinh Phú Vinh) đóng gói, load và tích hợp model do ML1 bàn giao; SE3 (Nguyễn Tuấn Vinh) ánh xạ spans sang vùng PDF.
 - Reviewer SE4 của ML-01/02/05/07 kiểm tra dữ liệu, cấu hình, metrics, artifact và khả năng tái lập. Quyết định chạy và huấn luyện trên Colab Pro thuộc ML1.
 - SE2/SE4 hỗ trợ môi trường, dữ liệu và pipeline tích hợp cho ML-05.

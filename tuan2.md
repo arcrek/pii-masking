@@ -12,8 +12,8 @@
 | :--- | :--- | :--- | :---: | :--- | :---: | :---: | :---: | :--- |
 | **CORE-03** | Chốt hợp đồng API và tác vụ | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | SE1;SE3 | `P0` | `M` | FE/BE/OCR/RED thống nhất contract; khóa trạng thái xuất khi phân tích chưa đầy đủ hoặc kiểm tra thất bại |
 | **QA-01** | Ma trận nghiệm thu và ngưỡng chất lượng | **Nguyễn Quang Anh** | `CS1` | ML1 | CS2;SE2;SE4 | `P1` | `M` | Ngưỡng được chốt trước test cuối; có trace từng tiêu chí đến function code và evidence |
-| **DATA-02** | Chuẩn hóa annotation | **Đỗ Minh Tấn** | `SE4` | ML1 | - | `P1` | `L` | Kiểm tra span đúng substring; nêu nhãn không phủ đủ; ví dụ sai nhãn được rà soát |
-| **DATA-03** | Tách train/validation/test | **Đỗ Minh Tấn** | `SE4` | ML1 | - | `P1` | `M` | Có manifest tái lập, thống kê phân bố và dedup; test không dùng để tune hoặc chọn threshold |
+| **DATA-02** | Chuẩn hóa annotation | **Dương Minh Đức** | `SE4` | ML1 | - | `P1` | `L` | Kiểm tra span đúng substring; nêu nhãn không phủ đủ; ví dụ sai nhãn được rà soát |
+| **DATA-03** | Tách train/validation/test | **Dương Minh Đức** | `SE4` | ML1 | - | `P1` | `M` | Có manifest tái lập, thống kê phân bố và dedup; test không dùng để tune hoặc chọn threshold |
 | **OPS-03** | Giới hạn tài nguyên xử lý | **Nguyễn Quang Anh** | `CS1` | CS2 | SE2;SE3 | `P0` | `L` | Giới hạn và cách ly có trước khi parser/OCR xử lý file; timeout có lý do; không quyền truy cập ngoài storage cần thiết hoặc network tùy ý |
 | **OCR-01** | Kiểm tra và phân loại trang | **Nguyễn Tuấn Vinh** | `SE3` | SE4 | - | `P1` | `M` | Bộ mẫu có ba loại và trang hỗn hợp được nhận diện; lớp OCR cũ không mặc định được tin cậy |
 | **BE-01** | Quản lý tài khoản demo | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | - | `P1` | `M` | Không cần đăng ký công khai; không lưu mật khẩu dạng rõ; thử đăng nhập sai có giới hạn |
@@ -28,13 +28,13 @@
 - **Phối hợp liên module**: **QA-01**, **OPS-03**
 - **Chi tiết hoạt động trong tuần**: Chủ trì xây dựng đặc tả hợp đồng API và trạng thái tác vụ (CORE-03); lập trình module quản lý tài khoản demo và cơ chế băm mật khẩu an toàn (BE-01). Phối hợp với CS1 cấu hình cgroups (OPS-03).
 
-### SE1: Dương Minh Đức (Frontend - ICT)
+### SE1: Đỗ Minh Tấn (Frontend - ICT)
 
 - **Công việc chính phụ trách (Owner)**: *Không trực tiếp làm owner task phát triển mới trong tuần này (tập trung phối hợp, review và chuẩn bị chuyên môn)*
 - **Phối hợp liên module**: **CORE-03**
 - **Chi tiết hoạt động trong tuần**: Tham gia phản biện hợp đồng API (CORE-03) để đảm bảo thuận tiện cho client; bắt đầu dựng khung giao diện đăng nhập và layout tổng quan cho ứng dụng web.
 
-### SE4: Đỗ Minh Tấn (Data & PDF Engine - ICT)
+### SE4: Dương Minh Đức (Data & PDF Engine - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **DATA-02** (Chuẩn hóa annotation), **DATA-03** (Tách train/validation/test)
 - **Trách nhiệm Review/Nghiệm thu**: **OCR-01**

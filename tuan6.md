@@ -13,11 +13,11 @@
 | **OCR-09** | Hợp nhất native và OCR | **Nguyễn Tuấn Vinh** | `SE3` | SE4 | - | `P1` | `L` | Không bỏ qua ảnh chỉ vì trang có text; một nội dung không nhân đôi do lớp OCR cũ |
 | **ML-03** | Suy luận phát hiện PII | **Nguyễn Đinh Phú Vinh** | `SE2` | ML1 | SE4 | `P1` | `L` | Batch/empty/long text xử lý được; score không tự coi là probability; model load được ngoài Colab |
 | **ML-08** | Ánh xạ entity thành vùng | **Nguyễn Tuấn Vinh** | `SE3` | SE1 | - | `P1` | `L` | Không chỉ tìm lần xuất hiện đầu tiên; đúng trang, đủ các dòng; lỗi mapping được báo, không âm thầm bỏ |
-| **ML-06** | Kết hợp ML và luật | **Đỗ Minh Tấn** | `SE4` | ML1 | SE2 | `P1` | `L` | So sánh ML/rules/hybrid; không dùng test để tune; kết quả ổn định với input lặp lại |
-| **FE-06** | Overlay vùng PII | **Dương Minh Đức** | `SE1` | SE3 | - | `P1` | `L` | Vùng bám đúng nội dung khi zoom/rotate/crop; không coi confidence là xác suất đã hiệu chỉnh |
-| **FE-07** | Danh sách và lọc kết quả PII | **Dương Minh Đức** | `SE1` | SE2 | - | `P1` | `M` | Danh sách và overlay đồng bộ; không tìm thấy PII vẫn yêu cầu duyệt trực quan |
-| **RED-03** | Redaction nội dung native | **Đỗ Minh Tấn** | `SE4` | CS2 | - | `P0` | `L` | Copy/search/extract không lấy lại nội dung mục tiêu; không chỉ phủ hình chữ nhật |
-| **RED-04** | Redaction ảnh và lớp OCR | **Đỗ Minh Tấn** | `SE4` | CS2 | - | `P0` | `L` | Ảnh trích xuất không còn nội dung mục tiêu; cả pixel và OCR layer bị xử lý; không tái gắn ảnh gốc |
+| **ML-06** | Kết hợp ML và luật | **Dương Minh Đức** | `SE4` | ML1 | SE2 | `P1` | `L` | So sánh ML/rules/hybrid; không dùng test để tune; kết quả ổn định với input lặp lại |
+| **FE-06** | Overlay vùng PII | **Đỗ Minh Tấn** | `SE1` | SE3 | - | `P1` | `L` | Vùng bám đúng nội dung khi zoom/rotate/crop; không coi confidence là xác suất đã hiệu chỉnh |
+| **FE-07** | Danh sách và lọc kết quả PII | **Đỗ Minh Tấn** | `SE1` | SE2 | - | `P1` | `M` | Danh sách và overlay đồng bộ; không tìm thấy PII vẫn yêu cầu duyệt trực quan |
+| **RED-03** | Redaction nội dung native | **Dương Minh Đức** | `SE4` | CS2 | - | `P0` | `L` | Copy/search/extract không lấy lại nội dung mục tiêu; không chỉ phủ hình chữ nhật |
+| **RED-04** | Redaction ảnh và lớp OCR | **Dương Minh Đức** | `SE4` | CS2 | - | `P0` | `L` | Ảnh trích xuất không còn nội dung mục tiêu; cả pixel và OCR layer bị xử lý; không tái gắn ảnh gốc |
 
 ---
 
@@ -30,13 +30,13 @@
 - **Phối hợp liên module**: **ML-06**
 - **Chi tiết hoạt động trong tuần**: Chủ trì đóng gói và tối ưu hóa module model inference serving ML-03; thiết kế API phục vụ suy luận cho pipeline backend.
 
-### SE1: Dương Minh Đức (Frontend - ICT)
+### SE1: Đỗ Minh Tấn (Frontend - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **FE-06** (Overlay vùng PII), **FE-07** (Danh sách và lọc kết quả PII)
 - **Trách nhiệm Review/Nghiệm thu**: **ML-08**
 - **Chi tiết hoạt động trong tuần**: Lập trình vẽ bounding box overlay đè lên canvas PDF (FE-06); xây dựng danh sách thực thể và bộ lọc theo nhóm PII (FE-07).
 
-### SE4: Đỗ Minh Tấn (Data & PDF Engine - ICT)
+### SE4: Dương Minh Đức (Data & PDF Engine - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **ML-06** (Kết hợp ML và luật), **RED-03** (Redaction nội dung native), **RED-04** (Redaction ảnh và lớp OCR)
 - **Trách nhiệm Review/Nghiệm thu**: **OCR-09**
