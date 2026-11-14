@@ -1,0 +1,58 @@
+version: '3.8'
+
+# ==============================================================================
+# Docker Compose for PII Detection & Secure PDF Redaction MVP
+# Services: API Server, Background Worker, Private Storage Isolation
+# ==============================================================================
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: pii-masking-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=development
+      - SYSTEM_VERSION=0.1.0
+      - API_PORT=8000
+      - STORAGE_ROOT=/app/storage/private
+      - TEMP_STORAGE_DIR=/app/storage/temp
+      - SAFE_LOGGING=true
+    volumes:
+      - ./checkpoints:/app/checkpoints:ro
+      - ./storage:/app/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4096M
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: pii-masking-worker
+    restart: unless-stopped
+    environment:
+      - APP_ENV=development
+      - WORKER_CONCURRENCY=2
+      - STORAGE_ROOT=/app/storage/private
+      - TEMP_STORAGE_DIR=/app/storage/temp
+      - SAFE_LOGGING=true
+    volumes:
+      - ./checkpoints:/app/checkpoints:ro
+      - ./storage:/app/storage
+    command: ["python", "-c", "import time; print('Worker running...'); time.sleep(3600)"]
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4096M

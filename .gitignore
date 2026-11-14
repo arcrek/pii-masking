@@ -1,12 +1,71 @@
+# ==============================================================================
+# Git Ignore Rules - PII Detection & Secure PDF Redaction MVP
+# Enforces secret hygiene, credential protection, and reproducible artifacts
+# ==============================================================================
+
 # Local agent configuration and credentials
 .agents/
 .aws/
 .codex/
 .agentkit/
+
+# Environment files and credentials (CRITICAL: NEVER COMMIT REAL SECRETS)
 .env
 .env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+id_rsa*
+credentials.json
+service-account*.json
+
+# Python runtime, virtual environments, and cache
 .venv/
+venv/
+env/
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing & Quality Assurance
 .pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Storage & Temporary Files (Keep storage private and uncommitted)
+storage/private/*
+!storage/private/.gitkeep
+storage/temp/*
+!storage/temp/.gitkeep
+logs/
+*.log
+
+# Large binary checkpoints (OPF large weight files)
 checkpoints/opf_vn_19/model.safetensors
 
+# OS metadata
+.DS_Store
+Thumbs.db
