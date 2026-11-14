@@ -1,0 +1,40 @@
+{
+  "registry_version": "1.0.0",
+  "updated_at": "2026-11-14",
+  "default_model": "spacy_vn_19_ner",
+  "models": [
+    {
+      "id": "spacy_vn_19_ner",
+      "version": "1.0.0",
+      "type": "ner",
+      "framework": "spacy",
+      "language": "vi",
+      "path": "checkpoints/spacy_vn_19_ner",
+      "label_space": "checkpoints/opf_vn_19_label_space.json",
+      "label_count": 19,
+      "description": "Fine-tuned spaCy token classification NER on Vietnamese OpenPII 19 labels"
+    },
+    {
+      "id": "opf_vn_19",
+      "version": "1.0.0",
+      "type": "openpii-filter",
+      "framework": "safetensors",
+      "language": "vi",
+      "path": "checkpoints/opf_vn_19",
+      "label_space": "checkpoints/opf_vn_19_label_space.json",
+      "label_count": 19,
+      "description": "Fine-tuned OpenPII-Filter model on Vietnamese OpenPII 19 labels"
+    },
+    {
+      "id": "vn_rules_19",
+      "version": "1.0.0",
+      "type": "rule-based",
+      "framework": "regex",
+      "language": "vi",
+      "path": "evaluation/vn_rules.py",
+      "label_space": "checkpoints/opf_vn_19_label_space.json",
+      "label_count": 19,
+      "description": "Deterministic regular expression and algorithmic validator for Vietnamese PII"
+    }
+  ]
+}

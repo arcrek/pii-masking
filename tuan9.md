@@ -18,9 +18,9 @@
 | **VER-06** | Quét PII còn sót | **Hoàng Thị Kiều Ly** | `CS2` | ML1 | SE2;SE4 | `P1` | `M` | Gợi ý mới chưa được duyệt làm snapshot xuất mất hiệu lực và yêu cầu duyệt revision mới; không lặp lại gợi ý đã bị từ chối trên nội dung không đổi; không chứng minh hết PII |
 | **BE-10** | Điều phối xuất và tải an toàn | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | - | `P0` | `L` | Chỉ phát hành khi mandatory checks đạt, revision còn hiệu lực và không có gợi ý mới chưa duyệt; kiểm tra dấu đã xóa ngay trước publish; không phát hành file tạm |
 | **BE-11** | Vòng đời và xóa dữ liệu | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | - | `P0` | `L` | Xóa áp dụng cả tài liệu chưa xử lý/xuất; đánh dấu đã xóa, hủy job và dọn mọi artifact; job không tái tạo file sau xóa |
-| **FE-11** | Xuất và tải kết quả | **Dương Minh Đức** | `SE1` | CS2 | - | `P1` | `M` | Chỉ tải artifact đúng revision đã kiểm tra; phân biệt lỗi với không phát hiện thêm PII |
-| **FE-12** | Xóa tài liệu | **Dương Minh Đức** | `SE1` | CS2 | - | `P1` | `S` | Sau xóa không mở được bản gốc, preview hoặc kết quả; hiển thị tiến trình xóa nếu chưa xong |
-| **QA-02** | E2E luồng sản phẩm | **Dương Minh Đức** | `SE1` | CS2 | SE2;SE3;SE4 | `P1` | `L` | Cả ba loại tài liệu chạy trọn luồng; trường hợp không có gợi ý vẫn cần duyệt |
+| **FE-11** | Xuất và tải kết quả | **Đỗ Minh Tấn** | `SE1` | CS2 | - | `P1` | `M` | Chỉ tải artifact đúng revision đã kiểm tra; phân biệt lỗi với không phát hiện thêm PII |
+| **FE-12** | Xóa tài liệu | **Đỗ Minh Tấn** | `SE1` | CS2 | - | `P1` | `S` | Sau xóa không mở được bản gốc, preview hoặc kết quả; hiển thị tiến trình xóa nếu chưa xong |
+| **QA-02** | E2E luồng sản phẩm | **Đỗ Minh Tấn** | `SE1` | CS2 | SE2;SE3;SE4 | `P1` | `L` | Cả ba loại tài liệu chạy trọn luồng; trường hợp không có gợi ý vẫn cần duyệt |
 
 ---
 
@@ -32,12 +32,12 @@
 - **Phối hợp liên module**: **VER-06**, **QA-02**
 - **Chi tiết hoạt động trong tuần**: Chủ trì xây dựng cổng điều phối xuất và tải an toàn BE-10; hoàn thiện cơ chế dọn dẹp vòng đời dữ liệu và hủy job BE-11.
 
-### SE1: Dương Minh Đức (Frontend - ICT)
+### SE1: Đỗ Minh Tấn (Frontend - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **FE-11** (Xuất và tải kết quả), **FE-12** (Xóa tài liệu), **QA-02** (E2E luồng sản phẩm)
 - **Chi tiết hoạt động trong tuần**: Chủ trì xây dựng giao diện xuất và tải kết quả (FE-11); giao diện xác nhận xóa dữ liệu (FE-12); phối hợp thực hiện kiểm thử E2E trọn luồng (QA-02).
 
-### SE4: Đỗ Minh Tấn (Data & PDF Engine - ICT)
+### SE4: Dương Minh Đức (Data & PDF Engine - ICT)
 
 - **Công việc chính phụ trách (Owner)**: *Không trực tiếp làm owner task phát triển mới trong tuần này (tập trung phối hợp, review và chuẩn bị chuyên môn)*
 - **Phối hợp liên module**: **VER-02**, **VER-06**, **QA-02**

@@ -12,10 +12,10 @@
 | :--- | :--- | :--- | :---: | :--- | :---: | :---: | :---: | :--- |
 | **BE-09** | Khóa snapshot đã duyệt | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | - | `P0` | `L` | Chặn khi trang phân tích lỗi/chưa duyệt hoặc có candidate mới chưa xử lý; sửa review làm snapshot xuất cũ mất hiệu lực; lưu revision bất biến |
 | **BE-12** | Nhật ký xử lý | **Nguyễn Quang Anh** | `CS1` | CS2 | SE2 | `P1` | `M` | Không ghi raw PII, nội dung OCR, mật khẩu hoặc token vào log/báo cáo mặc định |
-| **FE-10** | Xác nhận duyệt tài liệu | **Dương Minh Đức** | `SE1` | SE2 | - | `P1` | `M` | Không xác nhận bản cũ khi vùng thay đổi hoặc có candidate mới; chỉ dẫn trở lại duyệt; trang chưa duyệt/lỗi và giới hạn chữ viết tay hiển thị rõ |
+| **FE-10** | Xác nhận duyệt tài liệu | **Đỗ Minh Tấn** | `SE1` | SE2 | - | `P1` | `M` | Không xác nhận bản cũ khi vùng thay đổi hoặc có candidate mới; chỉ dẫn trở lại duyệt; trang chưa duyệt/lỗi và giới hạn chữ viết tay hiển thị rõ |
 | **RED-05** | Làm sạch dữ liệu ẩn | **Nguyễn Quang Anh** | `CS1` | CS2 | SE4 | `P0` | `L` | Nội dung phải loại bỏ không còn trong artifact; cấu trúc không xử lý được bị từ chối rõ |
-| **RED-06** | Ghi PDF sạch và bảo toàn nội dung | **Đỗ Minh Tấn** | `SE4` | CS2 | - | `P0` | `L` | File mở được; không chứa bản gốc đính kèm/object cũ cần loại; page geometry và phần giữ lại được kiểm tra |
-| **RED-07** | Artifact export bất biến | **Đỗ Minh Tấn** | `SE4` | CS2 | - | `P1` | `M` | Artifact gắn đúng snapshot; lỗi giữa chừng không để file tải chính thức; đầu vào không bị sửa |
+| **RED-06** | Ghi PDF sạch và bảo toàn nội dung | **Dương Minh Đức** | `SE4` | CS2 | - | `P0` | `L` | File mở được; không chứa bản gốc đính kèm/object cũ cần loại; page geometry và phần giữ lại được kiểm tra |
+| **RED-07** | Artifact export bất biến | **Dương Minh Đức** | `SE4` | CS2 | - | `P1` | `M` | Artifact gắn đúng snapshot; lỗi giữa chừng không để file tải chính thức; đầu vào không bị sửa |
 | **OPS-02** | Triển khai demo có đăng nhập | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | SE1 | `P1` | `M` | Demo truy cập HTTPS; file không public; deployment dùng model version cố định |
 
 ---
@@ -29,13 +29,13 @@
 - **Phối hợp liên module**: **BE-12**
 - **Chi tiết hoạt động trong tuần**: Chủ trì xây dựng module khóa snapshot (BE-09); thiết lập hạ tầng triển khai demo server HTTPS và Docker Compose (OPS-02).
 
-### SE1: Dương Minh Đức (Frontend - ICT)
+### SE1: Đỗ Minh Tấn (Frontend - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **FE-10** (Xác nhận duyệt tài liệu)
 - **Phối hợp liên module**: **OPS-02**
 - **Chi tiết hoạt động trong tuần**: Chủ trì phát triển giao diện xác nhận hoàn tất duyệt tài liệu, hiển thị cảnh báo và chốt revision (FE-10).
 
-### SE4: Đỗ Minh Tấn (Data & PDF Engine - ICT)
+### SE4: Dương Minh Đức (Data & PDF Engine - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **RED-06** (Ghi PDF sạch và bảo toàn nội dung), **RED-07** (Artifact export bất biến)
 - **Phối hợp liên module**: **RED-05**

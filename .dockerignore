@@ -1,0 +1,50 @@
+# ==============================================================================
+# Docker Ignore Rules - PII Detection & Secure PDF Redaction MVP
+# Prevents leaking local secrets, development virtualenvs, and test caches into images
+# ==============================================================================
+
+# Git repository
+.git
+.gitignore
+
+# Environment files and secrets (CRITICAL)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.crt
+id_rsa*
+credentials.json
+service-account*.json
+
+# Virtual environments & Python cache
+.venv
+venv
+env
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Testing & quality caches
+.pytest_cache
+.coverage
+htmlcov
+.ruff_cache
+.mypy_cache
+
+# Storage and logs
+storage/private/*
+!storage/private/.gitkeep
+storage/temp/*
+!storage/temp/.gitkeep
+logs/*
+
+# Large binary checkpoints (OPF large weight files)
+checkpoints/opf_vn_19/model.safetensors
+
+# OS metadata
+.DS_Store
+Thumbs.db

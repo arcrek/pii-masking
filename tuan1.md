@@ -12,7 +12,7 @@
 | :--- | :--- | :--- | :---: | :--- | :---: | :---: | :---: | :--- |
 | **CORE-01** | Chốt chính sách PII | **Nguyễn Quang Anh** | `CS1` | ML1 | SE4 | `P0` | `M` | Có taxonomy versioned và quyết định phạm vi mã ID; từng nhãn có ví dụ và ranh giới rõ |
 | **CORE-02** | Chốt hợp đồng tài liệu và tọa độ | **Nguyễn Tuấn Vinh** | `SE3` | SE4 | SE1 | `P0` | `M` | Có ví dụ thật cho trang xoay và thực thể nhiều dòng; thống nhất PDF units, gốc tọa độ, crop và phép biến đổi |
-| **DATA-01** | Khảo sát dữ liệu và giấy phép | **Đỗ Minh Tấn** | `SE4` | CS1 | - | `P1` | `M` | Có danh mục dataset cùng giấy phép/version; không đưa dữ liệu nhạy cảm thật vào project |
+| **DATA-01** | Khảo sát dữ liệu và giấy phép | **Dương Minh Đức** | `SE4` | CS1 | - | `P1` | `M` | Có danh mục dataset cùng giấy phép/version; không đưa dữ liệu nhạy cảm thật vào project |
 | **OPS-01** | Môi trường và cấu hình phiên bản | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | ML1 | `P1` | `M` | Nhóm khởi chạy tái lập; model/config có version; không ghi secret vào artifact/log |
 
 ---
@@ -24,13 +24,13 @@
 - **Công việc chính phụ trách (Owner)**: **OPS-01** (Môi trường và cấu hình phiên bản)
 - **Chi tiết hoạt động trong tuần**: Chủ trì thiết lập môi trường dev, Docker base, cấu hình repository và quy chuẩn commit/branching (OPS-01). Phối hợp với CS1 và SE3 chuẩn bị hợp đồng API cho tuần sau.
 
-### SE1: Dương Minh Đức (Frontend - ICT)
+### SE1: Đỗ Minh Tấn (Frontend - ICT)
 
 - **Công việc chính phụ trách (Owner)**: *Không trực tiếp làm owner task phát triển mới trong tuần này (tập trung phối hợp, review và chuẩn bị chuyên môn)*
 - **Phối hợp liên module**: **CORE-02**
 - **Chi tiết hoạt động trong tuần**: Khởi tạo project Frontend (React/Next.js/Vite + TailwindCSS), nghiên cứu tích hợp PDF.js, khảo sát cơ chế render canvas đè lên trang PDF. Đóng góp ý kiến cho hợp đồng tọa độ CORE-02.
 
-### SE4: Đỗ Minh Tấn (Data & PDF Engine - ICT)
+### SE4: Dương Minh Đức (Data & PDF Engine - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **DATA-01** (Khảo sát dữ liệu và giấy phép)
 - **Trách nhiệm Review/Nghiệm thu**: **CORE-02**
@@ -66,7 +66,7 @@
 
 - [ ] Tài liệu chính sách PII có phiên bản (v1.0), định nghĩa rõ ràng 6 nhóm nhãn (Tên, Email, Điện thoại, Địa chỉ, Ngày sinh, Mã định danh), có ví dụ âm/dương cụ thể.
 - [ ] Tài liệu hợp đồng tài liệu & tọa độ PDF: Thống nhất đơn vị đo (PDF points), gốc tọa độ (bottom-left vs top-left), phép biến đổi xoay (rotation) và crop box.
-- [ ] Repository chuẩn, phân quyền git, file .gitignore, cấu hình môi trường dev, container chuẩn hóa và tài liệu hướng dẫn setup môi trường.
+- [x] Repository chuẩn, phân quyền git, file .gitignore, cấu hình môi trường dev, container chuẩn hóa và tài liệu hướng dẫn setup môi trường.
 - [ ] Báo cáo danh mục dataset PII (English public/synthetic), giấy phép sử dụng hợp lệ, không chứa dữ liệu nhạy cảm thật.
 
 ---

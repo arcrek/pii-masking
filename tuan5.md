@@ -11,7 +11,7 @@
 | Mã Task | Tên công việc | Người thực hiện | Vai trò | Người Review | Người phối hợp | Độ ưu tiên | Quy mô | Tiêu chuẩn nghiệm thu (Acceptance Criteria) |
 | :--- | :--- | :--- | :---: | :--- | :---: | :---: | :---: | :--- |
 | **BE-05** | Lưu và truy xuất tài liệu | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | - | `P1` | `M` | Preview/bản gốc được phân quyền, không thực thi JavaScript/action/attachment hay tải tài nguyên ngoài; có checksum; storage private và response không content sniffing |
-| **FE-05** | PDF viewer | **Dương Minh Đức** | `SE1` | SE3 | - | `P1` | `L` | Native/scan/mixed mở được, đúng số trang; viewer không thực thi active content/tải ngoài; zoom/rotate không sửa tọa độ lưu |
+| **FE-05** | PDF viewer | **Đỗ Minh Tấn** | `SE1` | SE3 | - | `P1` | `L` | Native/scan/mixed mở được, đúng số trang; viewer không thực thi active content/tải ngoài; zoom/rotate không sửa tọa độ lưu |
 | **OCR-06** | Khôi phục thứ tự đọc | **Nguyễn Tuấn Vinh** | `SE3` | CS2 | - | `P1` | `L` | Bộ mẫu layout đã chọn có chuỗi văn bản và mapping đúng; giới hạn layout được công bố |
 | **OCR-07** | Chuẩn hóa tọa độ PDF | **Nguyễn Tuấn Vinh** | `SE3` | SE4 | - | `P0` | `L` | Kiểm tra trang xoay/crop/DPI khác nhau; round-trip điểm và vùng trong tolerance đã định nghĩa |
 | **OCR-08** | Đánh giá chất lượng trang | **Nguyễn Tuấn Vinh** | `SE3` | ML1 | - | `P1` | `M` | Không kết luận không có PII từ OCR rỗng; lỗi nguồn/trang được BE và FE thể hiện |
@@ -28,12 +28,12 @@
 - **Phối hợp liên module**: **ML-05**
 - **Chi tiết hoạt động trong tuần**: Chủ trì xây dựng kho lưu trữ tài liệu bất biến, private storage và sinh link preview an toàn (BE-05). Phối hợp cùng ML1 rà soát format checkpoint model để chuẩn bị serving.
 
-### SE1: Dương Minh Đức (Frontend - ICT)
+### SE1: Đỗ Minh Tấn (Frontend - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **FE-05** (PDF viewer)
 - **Chi tiết hoạt động trong tuần**: Chủ trì phát triển PDF Viewer (FE-05) với khả năng render chính xác các loại PDF, xử lý zoom/rotate đồng bộ với hệ tọa độ.
 
-### SE4: Đỗ Minh Tấn (Data & PDF Engine - ICT)
+### SE4: Dương Minh Đức (Data & PDF Engine - ICT)
 
 - **Công việc chính phụ trách (Owner)**: *Không trực tiếp làm owner task phát triển mới trong tuần này (tập trung phối hợp, review và chuẩn bị chuyên môn)*
 - **Trách nhiệm Review/Nghiệm thu**: **OCR-07**, **ML-05**

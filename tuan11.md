@@ -23,13 +23,13 @@
 - **Phối hợp liên module**: **QA-07**
 - **Chi tiết hoạt động trong tuần**: Chủ trì xây dựng tài liệu runbook vận hành, quy trình rollback và backup/restore hệ thống (OPS-05). Tổng hợp tài liệu kiến trúc Backend & API docs.
 
-### SE1: Dương Minh Đức (Frontend - ICT)
+### SE1: Đỗ Minh Tấn (Frontend - ICT)
 
 - **Công việc chính phụ trách (Owner)**: *Không trực tiếp làm owner task phát triển mới trong tuần này (tập trung phối hợp, review và chuẩn bị chuyên môn)*
 - **Phối hợp liên module**: **QA-07**
 - **Chi tiết hoạt động trong tuần**: Hoàn thiện tài liệu hướng dẫn người dùng cuối (User Manual); chuẩn bị kịch bản và dữ liệu mẫu để trình diễn trực tiếp giao diện Web.
 
-### SE4: Đỗ Minh Tấn (Data & PDF Engine - ICT)
+### SE4: Dương Minh Đức (Data & PDF Engine - ICT)
 
 - **Công việc chính phụ trách (Owner)**: *Không trực tiếp làm owner task phát triển mới trong tuần này (tập trung phối hợp, review và chuẩn bị chuyên môn)*
 - **Phối hợp liên module**: **QA-07**, **OPS-05**

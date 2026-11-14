@@ -17,7 +17,7 @@ Backlog 75 function codes cho MVP tiếng Anh, PDF native/scan/mixed; chữ vi�
 - [Danh mục chức năng và acceptance](./function-breakdown.md)
 - [CSV phân công và tracking](./function-backlog.csv)
 
-Function codes là work packages; không phải tên hàm code. Đã hoàn tất gán tên thật cho cả 7 vai trò (ML1: Nguyễn Đăng Đạt, SE2: Nguyễn Đinh Phú Vinh, SE3: Nguyễn Tuấn Vinh, SE4: Đỗ Minh Tấn, SE1: Dương Minh Đức, CS1: Nguyễn Quang Anh, CS2: Hoàng Thị Kiều Ly). Fine-tune ML-05 do ML1 (Đăng Đạt) trực tiếp chạy Colab Pro với sự hỗ trợ thiết kế kiến trúc từ SE2 (Phú Vinh). Các phase là roadmap tích hợp, không cản phát triển song song theo contract.
+Function codes là work packages; không phải tên hàm code. Đã hoàn tất gán tên thật cho cả 7 vai trò (ML1: Nguyễn Đăng Đạt, SE2: Nguyễn Đinh Phú Vinh, SE3: Nguyễn Tuấn Vinh, SE4: Dương Minh Đức, SE1: Đỗ Minh Tấn, CS1: Nguyễn Quang Anh, CS2: Hoàng Thị Kiều Ly). Fine-tune ML-05 do ML1 (Đăng Đạt) trực tiếp chạy Colab Pro với sự hỗ trợ thiết kế kiến trúc từ SE2 (Phú Vinh). Các phase là roadmap tích hợp, không cản phát triển song song theo contract.
 
 ## Goals
 

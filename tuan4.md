@@ -11,10 +11,10 @@
 | Mã Task | Tên công việc | Người thực hiện | Vai trò | Người Review | Người phối hợp | Độ ưu tiên | Quy mô | Tiêu chuẩn nghiệm thu (Acceptance Criteria) |
 | :--- | :--- | :--- | :---: | :--- | :---: | :---: | :---: | :--- |
 | **BE-04** | Tiếp nhận và kiểm tra PDF | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | - | `P1` | `L` | Từ chối có lý do với file không hỗ trợ; không dùng đường dẫn upload do client tự chỉ định |
-| **FE-02** | Tải PDF lên | **Dương Minh Đức** | `SE1` | SE2 | - | `P1` | `M` | Upload thành công trả về tài liệu; lỗi định dạng/dung lượng hiển thị được và cho thử lại |
+| **FE-02** | Tải PDF lên | **Đỗ Minh Tấn** | `SE1` | SE2 | - | `P1` | `M` | Upload thành công trả về tài liệu; lỗi định dạng/dung lượng hiển thị được và cho thử lại |
 | **OCR-04** | Nhận dạng chữ in tiếng Anh | **Nguyễn Tuấn Vinh** | `SE3` | CS2 | - | `P1` | `L` | Trả token/bbox/confidence; trang không đọc được hoặc timeout có trạng thái riêng |
 | **OCR-05** | Chuẩn hóa văn bản cho ML | **Nguyễn Tuấn Vinh** | `SE3` | ML1 | - | `P1` | `L` | Mọi span mô hình dùng truy ngược được token gốc; không tìm lại vị trí bằng text matching đơn thuần |
-| **ML-04** | Luật bổ trợ theo chính sách | **Đỗ Minh Tấn** | `SE4` | ML1 | - | `P1` | `M` | Có ca đúng/sai gần giống; validation/checksum chỉ áp dụng cho hệ mã có quy tắc tương ứng |
+| **ML-04** | Luật bổ trợ theo chính sách | **Dương Minh Đức** | `SE4` | ML1 | - | `P1` | `M` | Có ca đúng/sai gần giống; validation/checksum chỉ áp dụng cho hệ mã có quy tắc tương ứng |
 | **DATA-05** | Bộ ca redaction đối kháng | **Hoàng Thị Kiều Ly** | `CS2` | CS1 | SE3;SE4 | `P1` | `L` | Mỗi ca có nội dung mục tiêu và cách truy xuất kỳ vọng; synthetic có nhãn không chứa PII thật |
 | **RED-01** | Kiểm tra snapshot và vùng xóa | **Nguyễn Quang Anh** | `CS1` | CS2 | SE4 | `P1` | `M` | Từ chối snapshot sai hoặc vùng lỗi; không thay thế bản gốc bằng file đã xử lý |
 
@@ -28,12 +28,12 @@
 - **Trách nhiệm Review/Nghiệm thu**: **FE-02**
 - **Chi tiết hoạt động trong tuần**: Chủ trì lập trình module tiếp nhận, kiểm tra PDF và lưu trữ tạm an toàn (BE-04). Hỗ trợ chuẩn bị hạ tầng Colab Pro cho ML-05.
 
-### SE1: Dương Minh Đức (Frontend - ICT)
+### SE1: Đỗ Minh Tấn (Frontend - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **FE-02** (Tải PDF lên)
 - **Chi tiết hoạt động trong tuần**: Chủ trì xây dựng UI upload PDF kèm validate kích thước/định dạng và xử lý thử lại khi mất kết nối (FE-02).
 
-### SE4: Đỗ Minh Tấn (Data & PDF Engine - ICT)
+### SE4: Dương Minh Đức (Data & PDF Engine - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **ML-04** (Luật bổ trợ theo chính sách)
 - **Phối hợp liên module**: **DATA-05**, **RED-01**

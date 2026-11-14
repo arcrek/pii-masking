@@ -7,8 +7,8 @@ Dự án MVP phát hiện PII (Personally Identifiable Information) và xóa nh�
 | Thành viên | Vai trò | Chuyên môn | Trách nhiệm chính | Số task |
 | :--- | :---: | :---: | :--- | :---: |
 | **Nguyễn Đinh Phú Vinh** | `SE2` | ICT | **Backend & System Lead**: API, Job Queue, Database, Docker server, tích hợp Model Serving; đồng thiết kế kiến trúc model | **16** |
-| **Dương Minh Đức** | `SE1` | ICT | **Frontend**: Giao diện Web, PDF viewer, reviewer overlay, khoanh vùng PII thủ công | **13** |
-| **Đỗ Minh Tấn** | `SE4` | ICT | **Data & PDF Engine**: Xây dựng Regex, chuẩn bị dataset, thuật toán bóc tách/xóa triệt để vector stream PDF | **12** |
+| **Đỗ Minh Tấn** | `SE1` | ICT | **Frontend**: Giao diện Web, PDF viewer, reviewer overlay, khoanh vùng PII thủ công | **13** |
+| **Dương Minh Đức** | `SE4` | ICT | **Data & PDF Engine**: Xây dựng Regex, chuẩn bị dataset, thuật toán bóc tách/xóa triệt để vector stream PDF | **12** |
 | **Nguyễn Tuấn Vinh** | `SE3` | ICT | **Document / OCR**: Bóc tách text native, tích hợp OCR engine, tính toán tọa độ bounding box | **11** |
 | **Hoàng Thị Kiều Ly** | `CS2` | CS | **Security Verification**: Pentest độc lập, tạo fixture đối kháng rà soát leak dữ liệu PDF sau xuất | **10** |
 | **Nguyễn Quang Anh** | `CS1` | CS | **Security Engineering**: Chính sách PII, phân quyền RBAC, audit log, resource isolation | **9** |

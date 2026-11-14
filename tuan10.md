@@ -10,12 +10,12 @@
 
 | Mã Task | Tên công việc | Người thực hiện | Vai trò | Người Review | Người phối hợp | Độ ưu tiên | Quy mô | Tiêu chuẩn nghiệm thu (Acceptance Criteria) |
 | :--- | :--- | :--- | :---: | :--- | :---: | :---: | :---: | :--- |
-| **DATA-06** | Version và báo cáo dữ liệu | **Đỗ Minh Tấn** | `SE4` | ML1 | - | `P1` | `M` | Mọi kết quả tham chiếu được dataset version; phân biệt PDF tổng hợp và mẫu public thực tế |
+| **DATA-06** | Version và báo cáo dữ liệu | **Dương Minh Đức** | `SE4` | ML1 | - | `P1` | `M` | Mọi kết quả tham chiếu được dataset version; phân biệt PDF tổng hợp và mẫu public thực tế |
 | **ML-07** | Đánh giá và phân tích lỗi | **Nguyễn Đăng Đạt** | `ML1` | SE4 | SE4;CS2 | `P1` | `L` | Có báo cáo test cố định, latency và ví dụ lỗi; đánh giá text chuẩn và text OCR để tách nguyên nhân |
 | **QA-03** | Kiểm thử an toàn redaction độc lập | **Hoàng Thị Kiều Ly** | `CS2` | SE3 | - | `P0` | `L` | Bộ fixture đối kháng phát hiện được engine lỗi; có kiểm tra thủ công độc lập với RED |
 | **QA-04** | Kiểm thử quyền truy cập | **Hoàng Thị Kiều Ly** | `CS2` | SE4 | - | `P0` | `M` | Không đọc/sửa/tải artifact chéo tài khoản; input giả mạo và phiên hết hạn bị từ chối |
 | **QA-05** | Kiểm thử lỗi và tranh chấp tác vụ | **Nguyễn Quang Anh** | `CS1` | CS2 | SE2;SE4 | `P0` | `L` | Không xuất snapshot cũ, không khôi phục file đã xóa và không báo hoàn tất giả khi thiếu trang |
-| **QA-06** | Hiệu năng và chất lượng sử dụng | **Đỗ Minh Tấn** | `SE4` | CS2 | SE1;SE2;SE3 | `P1` | `L` | Benchmark trên máy mục tiêu; không vượt giới hạn chốt; ghi thao tác sửa và thời gian so với làm thủ công |
+| **QA-06** | Hiệu năng và chất lượng sử dụng | **Dương Minh Đức** | `SE4` | CS2 | SE1;SE2;SE3 | `P1` | `L` | Benchmark trên máy mục tiêu; không vượt giới hạn chốt; ghi thao tác sửa và thời gian so với làm thủ công |
 | **OPS-04** | Quan sát và kiểm tra sức khỏe | **Nguyễn Đinh Phú Vinh** | `SE2` | CS1 | SE1 | `P1` | `M` | Phát hiện worker/model chưa sẵn sàng; metrics không raw PII; có cảnh báo disk/queue phù hợp demo |
 
 ---
@@ -28,13 +28,13 @@
 - **Phối hợp liên module**: **QA-05**, **QA-06**
 - **Chi tiết hoạt động trong tuần**: Chủ trì xây dựng hệ thống quan sát sức khỏe, metrics và cảnh báo dịch vụ (OPS-04). Hỗ trợ CS1 trong các ca test tranh chấp tác vụ QA-05.
 
-### SE1: Dương Minh Đức (Frontend - ICT)
+### SE1: Đỗ Minh Tấn (Frontend - ICT)
 
 - **Công việc chính phụ trách (Owner)**: *Không trực tiếp làm owner task phát triển mới trong tuần này (tập trung phối hợp, review và chuẩn bị chuyên môn)*
 - **Phối hợp liên module**: **QA-06**, **OPS-04**
 - **Chi tiết hoạt động trong tuần**: Khắc phục các điểm nghẽn UX/UI phát hiện từ benchmark QA-06; tối ưu hóa tốc độ tải và zoom trang PDF trên trình duyệt.
 
-### SE4: Đỗ Minh Tấn (Data & PDF Engine - ICT)
+### SE4: Dương Minh Đức (Data & PDF Engine - ICT)
 
 - **Công việc chính phụ trách (Owner)**: **DATA-06** (Version và báo cáo dữ liệu), **QA-06** (Hiệu năng và chất lượng sử dụng)
 - **Trách nhiệm Review/Nghiệm thu**: **ML-07**, **QA-04**
