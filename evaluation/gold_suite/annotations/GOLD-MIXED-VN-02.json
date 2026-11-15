@@ -1,0 +1,272 @@
+{
+  "doc_id": "GOLD-MIXED-VN-02",
+  "title": "Hợp đồng Kinh tế & Xác nhận Con dấu 02",
+  "doc_type": "mixed",
+  "language": "vi",
+  "category": "contract_stamped",
+  "filename": "GOLD-MIXED-VN-02.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": true
+    }
+  ],
+  "total_entities": 13,
+  "entities": [
+    {
+      "entity_id": "GOLD-MIXED-VN-02_ent_001",
+      "label": "TITLE",
+      "text": "Tiến sĩ",
+      "char_start": 47,
+      "char_end": 54,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 269.55,
+          "y0": 110.95,
+          "x1": 299.53,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-02_ent_002",
+      "label": "GIVENNAME",
+      "text": "Minh Tuấn",
+      "char_start": 55,
+      "char_end": 64,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 302.3,
+          "y0": 110.95,
+          "x1": 349.52,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-02_ent_003",
+      "label": "SURNAME",
+      "text": "Hoàng",
+      "char_start": 65,
+      "char_end": 70,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 352.29,
+          "y0": 110.95,
+          "x1": 381.75,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-02_ent_005",
+      "label": "AGE",
+      "text": "48",
+      "char_start": 94,
+      "char_end": 96,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 156.24,
+          "y0": 126.95,
+          "x1": 167.36,
+          "y1": 138.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-02_ent_006",
+      "label": "GENDER",
+      "text": "Nam",
+      "char_start": 124,
+      "char_end": 127,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 283.32,
+          "y0": 126.95,
+          "x1": 304.43,
+          "y1": 138.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-02_ent_007",
+      "label": "SOCIALNUM",
+      "text": "7923411610",
+      "char_start": 149,
+      "char_end": 159,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 145.09,
+          "y0": 146.95,
+          "x1": 200.69,
+          "y1": 158.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-02_ent_008",
+      "label": "TAXNUM",
+      "text": "131045891772",
+      "char_start": 174,
+      "char_end": 186,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 263.8,
+          "y0": 146.95,
+          "x1": 330.52,
+          "y1": 158.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-02_ent_009",
+      "label": "IDCARDNUM",
+      "text": "VN84K1382C",
+      "char_start": 203,
+      "char_end": 213,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 121.18,
+          "y0": 162.95,
+          "x1": 182.3,
+          "y1": 174.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-02_ent_010",
+      "label": "BUILDINGNUM",
+      "text": "302",
+      "char_start": 233,
+      "char_end": 236,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 128.3,
+          "y0": 182.95,
+          "x1": 144.98,
+          "y1": 194.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-02_ent_011",
+      "label": "STREET",
+      "text": "Hòa Bình",
+      "char_start": 237,
+      "char_end": 245,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 147.75,
+          "y0": 182.95,
+          "x1": 189.41,
+          "y1": 194.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-02_ent_012",
+      "label": "CITY",
+      "text": "Thành phố Cần Thơ",
+      "char_start": 247,
+      "char_end": 264,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 194.95,
+          "y0": 182.95,
+          "x1": 284.83,
+          "y1": 194.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-02_ent_013",
+      "label": "ZIPCODE",
+      "text": "90000",
+      "char_start": 278,
+      "char_end": 283,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 349.28,
+          "y0": 182.95,
+          "x1": 377.08,
+          "y1": 194.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-02_ent_015",
+      "label": "EMAIL",
+      "text": "minh.tuan.14@congtyvn.vn",
+      "char_start": 332,
+      "char_end": 356,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 267.04,
+          "y0": 202.95,
+          "x1": 388.31,
+          "y1": 214.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "f1094af76be3f6c4220cf4953789065f6cad6f35b848877920b4c50c838f1f3e",
+  "is_held_out": true,
+  "provenance_source": "vn_independent_hr_medical"
+}

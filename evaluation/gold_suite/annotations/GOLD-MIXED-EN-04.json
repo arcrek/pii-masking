@@ -1,0 +1,44 @@
+{
+  "doc_id": "GOLD-MIXED-EN-04",
+  "title": "Certified Executive Agreement 04",
+  "doc_type": "mixed",
+  "language": "en",
+  "category": "executive_agreement",
+  "filename": "GOLD-MIXED-EN-04.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": true
+    }
+  ],
+  "total_entities": 1,
+  "entities": [
+    {
+      "entity_id": "GOLD-MIXED-EN-04_ent_004",
+      "label": "LOCATION",
+      "text": "300 North LaSalle Street, Chicago, IL 60654",
+      "char_start": 157,
+      "char_end": 200,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 147.88,
+          "y0": 170.95,
+          "x1": 343.96,
+          "y1": 182.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "15e6dc3fefc9e5018e59ddc5d2187227f1afb8f3320927dad0112dcab503ec2a",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

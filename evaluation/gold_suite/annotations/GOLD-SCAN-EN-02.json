@@ -1,0 +1,82 @@
+{
+  "doc_id": "GOLD-SCAN-EN-02",
+  "title": "Archived Scanned Invoice & Notice 02",
+  "doc_type": "scanned",
+  "language": "en",
+  "category": "scanned_record",
+  "filename": "GOLD-SCAN-EN-02.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 300,
+      "has_image_overlay": true
+    }
+  ],
+  "total_entities": 3,
+  "entities": [
+    {
+      "entity_id": "GOLD-SCAN-EN-02_ent_001",
+      "label": "PERSON",
+      "text": "Kenneth R. Kowalski",
+      "char_start": 54,
+      "char_end": 73,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 133.8,
+          "y0": 127.75,
+          "x1": 226.2,
+          "y1": 140.68,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-EN-02_ent_002",
+      "label": "LOCATION",
+      "text": "2100 West Loop South, Houston, TX 77027",
+      "char_start": 165,
+      "char_end": 204,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 134.69,
+          "y0": 167.78,
+          "x1": 328.16,
+          "y1": 182.65,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-EN-02_ent_003",
+      "label": "PERSON",
+      "text": "Derrick Boone",
+      "char_start": 225,
+      "char_end": 238,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 148.76,
+          "y0": 188.05,
+          "x1": 212.29,
+          "y1": 200.43,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "43e600d68476ff3f3f9c9d460440be7b927608d90eb971337ff0bdd3581de83d",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

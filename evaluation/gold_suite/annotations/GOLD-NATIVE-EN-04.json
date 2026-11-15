@@ -1,0 +1,82 @@
+{
+  "doc_id": "GOLD-NATIVE-EN-04",
+  "title": "Corporate Agreement & Record 04",
+  "doc_type": "native",
+  "language": "en",
+  "category": "corporate",
+  "filename": "GOLD-NATIVE-EN-04.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": false
+    }
+  ],
+  "total_entities": 3,
+  "entities": [
+    {
+      "entity_id": "GOLD-NATIVE-EN-04_ent_001",
+      "label": "PERSON",
+      "text": "Desmond K. O'Connor",
+      "char_start": 54,
+      "char_end": 73,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 103.99,
+          "y0": 130.95,
+          "x1": 204.21,
+          "y1": 142.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-EN-04_ent_003",
+      "label": "LOCATION",
+      "text": "400 Boylston Street, Boston, MA 02116",
+      "char_start": 106,
+      "char_end": 143,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 111.19,
+          "y0": 150.95,
+          "x1": 286.14,
+          "y1": 162.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-EN-04_ent_007",
+      "label": "PERSON",
+      "text": "Hannah Lindqvist",
+      "char_start": 287,
+      "char_end": 303,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 203.98,
+          "y0": 210.95,
+          "x1": 281.22,
+          "y1": 222.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "45c55859c6d118ba46a44bf03d50dd55b986aeaefcde0603fb2c8d191b9f9237",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

@@ -1,0 +1,101 @@
+{
+  "doc_id": "GOLD-LANDSCAPE-EN-01",
+  "title": "Quarterly Payroll & Tax Ledger (Landscape)",
+  "doc_type": "native",
+  "language": "en",
+  "category": "ledger_table",
+  "filename": "GOLD-LANDSCAPE-EN-01.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 841.92,
+      "height_pts": 595.32,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": false
+    }
+  ],
+  "total_entities": 4,
+  "entities": [
+    {
+      "entity_id": "GOLD-LANDSCAPE-EN-01_ent_001",
+      "label": "PERSON",
+      "text": "Clara M. Schoenfeld",
+      "char_start": 69,
+      "char_end": 88,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 129.0,
+          "y0": 130.95,
+          "x1": 219.54,
+          "y1": 142.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-EN-01_ent_003",
+      "label": "LOCATION",
+      "text": "700 Nicollet Mall, Minneapolis, MN 55402",
+      "char_start": 147,
+      "char_end": 187,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 135.66,
+          "y0": 150.95,
+          "x1": 319.53,
+          "y1": 162.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-EN-01_ent_006",
+      "label": "DATE_TIME",
+      "text": "September 9, 2025",
+      "char_start": 289,
+      "char_end": 306,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 168.98,
+          "y0": 190.95,
+          "x1": 253.98,
+          "y1": 202.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-EN-01_ent_007",
+      "label": "PERSON",
+      "text": "Prof. Julian Mercer",
+      "char_start": 319,
+      "char_end": 338,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 101.19,
+          "y0": 210.95,
+          "x1": 185.05,
+          "y1": 222.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "bdf934e180f8cb70767115f5eced6178d6ff2dd50a603238bde1e40145792869",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

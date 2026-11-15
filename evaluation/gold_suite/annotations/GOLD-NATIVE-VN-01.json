@@ -1,0 +1,319 @@
+{
+  "doc_id": "GOLD-NATIVE-VN-01",
+  "title": "Văn bản Hành chính & Nhân sự Số 01",
+  "doc_type": "native",
+  "language": "vi",
+  "category": "administrative",
+  "filename": "GOLD-NATIVE-VN-01.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": false
+    }
+  ],
+  "total_entities": 14,
+  "entities": [
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_001",
+      "label": "TITLE",
+      "text": "Ông",
+      "char_start": 47,
+      "char_end": 50,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 272.3,
+          "y0": 110.95,
+          "x1": 291.19,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_002",
+      "label": "GIVENNAME",
+      "text": "Văn Hùng",
+      "char_start": 51,
+      "char_end": 59,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 293.96,
+          "y0": 110.95,
+          "x1": 338.41,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_003",
+      "label": "SURNAME",
+      "text": "Nguyễn",
+      "char_start": 60,
+      "char_end": 66,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 341.18,
+          "y0": 110.95,
+          "x1": 375.64,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        },
+        {
+          "x0": 153.34,
+          "y0": 198.95,
+          "x1": 187.8,
+          "y1": 210.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_004",
+      "label": "GENDER",
+      "text": "Nam",
+      "char_start": 89,
+      "char_end": 92,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 120.53,
+          "y0": 126.95,
+          "x1": 141.64,
+          "y1": 138.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_005",
+      "label": "SEX",
+      "text": "Male",
+      "char_start": 114,
+      "char_end": 118,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 228.7,
+          "y0": 126.95,
+          "x1": 250.37,
+          "y1": 138.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_006",
+      "label": "AGE",
+      "text": "34",
+      "char_start": 120,
+      "char_end": 122,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 255.91,
+          "y0": 126.95,
+          "x1": 267.03,
+          "y1": 138.11,
+          "coord_origin": "pdf_top_left"
+        },
+        {
+          "x0": 178.95,
+          "y0": 162.95,
+          "x1": 190.07,
+          "y1": 174.11,
+          "coord_origin": "pdf_top_left"
+        },
+        {
+          "x0": 293.2,
+          "y0": 162.95,
+          "x1": 304.32,
+          "y1": 174.11,
+          "coord_origin": "pdf_top_left"
+        },
+        {
+          "x0": 152.04,
+          "y0": 234.95,
+          "x1": 163.16,
+          "y1": 246.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_008",
+      "label": "IDCARDNUM",
+      "text": "VN80K1234C",
+      "char_start": 192,
+      "char_end": 202,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 136.17,
+          "y0": 162.95,
+          "x1": 197.29,
+          "y1": 174.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_009",
+      "label": "PASSPORTNUM",
+      "text": "C8102345",
+      "char_start": 218,
+      "char_end": 226,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 263.74,
+          "y0": 162.95,
+          "x1": 309.88,
+          "y1": 174.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_010",
+      "label": "DRIVERLICENSENUM",
+      "text": "DL54X8210B",
+      "char_start": 250,
+      "char_end": 260,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 54.0,
+          "y0": 178.95,
+          "x1": 113.46,
+          "y1": 190.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_011",
+      "label": "BUILDINGNUM",
+      "text": "128",
+      "char_start": 279,
+      "char_end": 282,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 133.89,
+          "y0": 198.95,
+          "x1": 150.57,
+          "y1": 210.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_012",
+      "label": "STREET",
+      "text": "Nguyễn Thị Minh Khai",
+      "char_start": 283,
+      "char_end": 303,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 153.34,
+          "y0": 198.95,
+          "x1": 251.66,
+          "y1": 210.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_013",
+      "label": "CITY",
+      "text": "Thành phố Hồ Chí Minh",
+      "char_start": 305,
+      "char_end": 326,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 257.2,
+          "y0": 198.95,
+          "x1": 363.3,
+          "y1": 210.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_014",
+      "label": "ZIPCODE",
+      "text": "70000",
+      "char_start": 341,
+      "char_end": 346,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 81.22,
+          "y0": 214.95,
+          "x1": 109.02,
+          "y1": 226.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-01_ent_016",
+      "label": "EMAIL",
+      "text": "van.hung.10@congtyvn.vn",
+      "char_start": 394,
+      "char_end": 417,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 257.59,
+          "y0": 234.95,
+          "x1": 376.1,
+          "y1": 246.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "54238568db1ca8ad5ee276b13b4fb97c8dab564e3b9f5e1fcd392c2886e19cc6",
+  "is_held_out": true,
+  "provenance_source": "vn_independent_admin_kyc"
+}

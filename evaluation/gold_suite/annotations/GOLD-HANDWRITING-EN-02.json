@@ -1,0 +1,101 @@
+{
+  "doc_id": "GOLD-HANDWRITING-EN-02",
+  "title": "Beneficiary Designation Form",
+  "doc_type": "handwriting",
+  "language": "en",
+  "category": "financial_form",
+  "filename": "GOLD-HANDWRITING-EN-02.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": false
+    }
+  ],
+  "total_entities": 4,
+  "entities": [
+    {
+      "entity_id": "GOLD-HANDWRITING-EN-02_hw_001",
+      "label": "PERSON",
+      "text": "Alexander James Miller",
+      "char_start": 0,
+      "char_end": 22,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 200.0,
+          "y0": 117.49,
+          "x1": 350.12,
+          "y1": 135.69,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "handwriting",
+      "is_handwriting": true
+    },
+    {
+      "entity_id": "GOLD-HANDWRITING-EN-02_hw_002",
+      "label": "US_SSN",
+      "text": "123-45-6789",
+      "char_start": 0,
+      "char_end": 11,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 200.0,
+          "y0": 153.49,
+          "x1": 290.3,
+          "y1": 171.69,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "handwriting",
+      "is_handwriting": true
+    },
+    {
+      "entity_id": "GOLD-HANDWRITING-EN-02_hw_003",
+      "label": "DATE_TIME",
+      "text": "1985-11-12",
+      "char_start": 0,
+      "char_end": 10,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 200.0,
+          "y0": 189.49,
+          "x1": 281.9,
+          "y1": 207.69,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "handwriting",
+      "is_handwriting": true
+    },
+    {
+      "entity_id": "GOLD-HANDWRITING-EN-02_hw_004",
+      "label": "PHONE_NUMBER",
+      "text": "(555) 234-5678",
+      "char_start": 0,
+      "char_end": 14,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 200.0,
+          "y0": 225.49,
+          "x1": 304.7,
+          "y1": 243.69,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "handwriting",
+      "is_handwriting": true
+    }
+  ],
+  "sha256": "a8ee5f861f567fe7ed973486e3fc0efb710c81141e6c4f2e94466a967dd9eb21",
+  "is_held_out": true,
+  "provenance_source": "simulated_handwritten_forms"
+}

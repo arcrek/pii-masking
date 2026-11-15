@@ -1,0 +1,70 @@
+{
+  "doc_id": "GOLD-SCAN-EN-05",
+  "title": "Archived Scanned Invoice & Notice 05",
+  "doc_type": "scanned",
+  "language": "en",
+  "category": "scanned_record",
+  "filename": "GOLD-SCAN-EN-05.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 150,
+      "has_image_overlay": true
+    }
+  ],
+  "total_entities": 2,
+  "entities": [
+    {
+      "entity_id": "GOLD-SCAN-EN-05_ent_001",
+      "label": "LOCATION",
+      "text": "450 Newport Center Drive, Newport Beach, CA 92660",
+      "char_start": 157,
+      "char_end": 206,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 173.14,
+          "y0": 189.6,
+          "x1": 382.12,
+          "y1": 204.04,
+          "coord_origin": "pdf_top_left"
+        },
+        {
+          "x0": 50.67,
+          "y0": 210.37,
+          "x1": 78.64,
+          "y1": 221.96,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-EN-05_ent_002",
+      "label": "DATE_TIME",
+      "text": "April 10, 2025",
+      "char_start": 311,
+      "char_end": 325,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 113.25,
+          "y0": 268.86,
+          "x1": 175.08,
+          "y1": 280.99,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "448d83f50da7e0e2e41cb2f19333e7524800ab18c62677cbb0d31374a74201f5",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

@@ -1,0 +1,82 @@
+{
+  "doc_id": "GOLD-SCAN-EN-03",
+  "title": "Archived Scanned Invoice & Notice 03",
+  "doc_type": "scanned",
+  "language": "en",
+  "category": "scanned_record",
+  "filename": "GOLD-SCAN-EN-03.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 150,
+      "has_image_overlay": true
+    }
+  ],
+  "total_entities": 3,
+  "entities": [
+    {
+      "entity_id": "GOLD-SCAN-EN-03_ent_001",
+      "label": "PERSON",
+      "text": "Miriam Goldstein",
+      "char_start": 65,
+      "char_end": 81,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 116.11,
+          "y0": 132.59,
+          "x1": 191.25,
+          "y1": 144.92,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-EN-03_ent_002",
+      "label": "LOCATION",
+      "text": "350 Fifth Avenue, Floor 28, New York, NY 10118",
+      "char_start": 131,
+      "char_end": 177,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 150.6,
+          "y0": 169.83,
+          "x1": 367.34,
+          "y1": 184.39,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-EN-03_ent_003",
+      "label": "DATE_TIME",
+      "text": "December 31, 2025",
+      "char_start": 275,
+      "char_end": 292,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 156.54,
+          "y0": 231.76,
+          "x1": 244.5,
+          "y1": 244.3,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "2be91661e640883d1daaf127b12a79556f92056f4c17765e5fd06113120b752c",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

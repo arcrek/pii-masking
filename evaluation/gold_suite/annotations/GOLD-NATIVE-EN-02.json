@@ -1,0 +1,89 @@
+{
+  "doc_id": "GOLD-NATIVE-EN-02",
+  "title": "Corporate Agreement & Record 02",
+  "doc_type": "native",
+  "language": "en",
+  "category": "corporate",
+  "filename": "GOLD-NATIVE-EN-02.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": false
+    }
+  ],
+  "total_entities": 3,
+  "entities": [
+    {
+      "entity_id": "GOLD-NATIVE-EN-02_ent_001",
+      "label": "PERSON",
+      "text": "Gregory H. Sterling",
+      "char_start": 80,
+      "char_end": 99,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 155.63,
+          "y0": 130.95,
+          "x1": 241.15,
+          "y1": 142.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-EN-02_ent_003",
+      "label": "LOCATION",
+      "text": "1480 Peachtree Street NE, Suite 410, Atlanta, GA 30309",
+      "char_start": 152,
+      "char_end": 206,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 173.98,
+          "y0": 170.95,
+          "x1": 377.79,
+          "y1": 182.11,
+          "coord_origin": "pdf_top_left"
+        },
+        {
+          "x0": 54.0,
+          "y0": 186.95,
+          "x1": 99.0,
+          "y1": 198.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-EN-02_ent_006",
+      "label": "DATE_TIME",
+      "text": "03/22/2025",
+      "char_start": 339,
+      "char_end": 349,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 177.83,
+          "y0": 246.95,
+          "x1": 227.85,
+          "y1": 258.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "74185cadfa8af7dfb41757762928e3f8a77f23d891ce9e5c887cb0516e301c84",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

@@ -1,0 +1,101 @@
+{
+  "doc_id": "GOLD-MIXED-EN-03",
+  "title": "Certified Executive Agreement 03",
+  "doc_type": "mixed",
+  "language": "en",
+  "category": "executive_agreement",
+  "filename": "GOLD-MIXED-EN-03.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": true
+    }
+  ],
+  "total_entities": 4,
+  "entities": [
+    {
+      "entity_id": "GOLD-MIXED-EN-03_ent_001",
+      "label": "PERSON",
+      "text": "Arthur P. Pendelton",
+      "char_start": 56,
+      "char_end": 75,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 136.19,
+          "y0": 130.95,
+          "x1": 223.38,
+          "y1": 142.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-EN-03_ent_003",
+      "label": "DATE_TIME",
+      "text": "January 29, 1963",
+      "char_start": 119,
+      "char_end": 135,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 244.85,
+          "y0": 150.95,
+          "x1": 322.09,
+          "y1": 162.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-EN-03_ent_004",
+      "label": "LOCATION",
+      "text": "1801 Market Street, Philadelphia, PA 19103",
+      "char_start": 153,
+      "char_end": 195,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 130.65,
+          "y0": 170.95,
+          "x1": 325.06,
+          "y1": 182.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-EN-03_ent_007",
+      "label": "DATE_TIME",
+      "text": "November 20, 2025",
+      "char_start": 318,
+      "char_end": 335,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 183.94,
+          "y0": 226.95,
+          "x1": 271.73,
+          "y1": 238.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "d7ee9009eb8816fe479d96a25f1a49b8d81ef858137015c599651c9875bb5aad",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

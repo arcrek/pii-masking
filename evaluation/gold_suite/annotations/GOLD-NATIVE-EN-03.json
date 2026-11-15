@@ -1,0 +1,101 @@
+{
+  "doc_id": "GOLD-NATIVE-EN-03",
+  "title": "Corporate Agreement & Record 03",
+  "doc_type": "native",
+  "language": "en",
+  "category": "corporate",
+  "filename": "GOLD-NATIVE-EN-03.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": false
+    }
+  ],
+  "total_entities": 4,
+  "entities": [
+    {
+      "entity_id": "GOLD-NATIVE-EN-03_ent_003",
+      "label": "DATE_TIME",
+      "text": "August 11, 1979",
+      "char_start": 103,
+      "char_end": 118,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 194.87,
+          "y0": 150.95,
+          "x1": 267.65,
+          "y1": 162.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-EN-03_ent_004",
+      "label": "LOCATION",
+      "text": "2250 Vallejo Street, San Francisco, CA 94123",
+      "char_start": 141,
+      "char_end": 185,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 161.75,
+          "y0": 170.95,
+          "x1": 365.59,
+          "y1": 182.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-EN-03_ent_005",
+      "label": "LOCATION",
+      "text": "890 Bryant Street, Palo Alto, CA 94301",
+      "char_start": 201,
+      "char_end": 239,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 120.08,
+          "y0": 190.95,
+          "x1": 293.34,
+          "y1": 202.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-EN-03_ent_008",
+      "label": "DATE_TIME",
+      "text": "November 3, 2025",
+      "char_start": 337,
+      "char_end": 353,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 156.19,
+          "y0": 246.95,
+          "x1": 238.42,
+          "y1": 258.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "f1e79245b257267ccaa1994ee256dc50189555fb24264f0f3f19a425aa25f6d8",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

@@ -1,0 +1,267 @@
+{
+  "doc_id": "GOLD-NATIVE-VN-06",
+  "title": "Văn bản Hành chính & Nhân sự Số 06",
+  "doc_type": "native",
+  "language": "vi",
+  "category": "administrative",
+  "filename": "GOLD-NATIVE-VN-06.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": false
+    }
+  ],
+  "total_entities": 12,
+  "entities": [
+    {
+      "entity_id": "GOLD-NATIVE-VN-06_ent_001",
+      "label": "TITLE",
+      "text": "Bà",
+      "char_start": 43,
+      "char_end": 45,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 262.24,
+          "y0": 110.95,
+          "x1": 274.46,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-06_ent_002",
+      "label": "GIVENNAME",
+      "text": "Mai Hương",
+      "char_start": 46,
+      "char_end": 55,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 277.23,
+          "y0": 110.95,
+          "x1": 327.69,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-06_ent_003",
+      "label": "SURNAME",
+      "text": "Trần",
+      "char_start": 56,
+      "char_end": 60,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 330.46,
+          "y0": 110.95,
+          "x1": 351.01,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-06_ent_005",
+      "label": "EMAIL",
+      "text": "mai.huong.11@congtyvn.vn",
+      "char_start": 99,
+      "char_end": 123,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 186.5,
+          "y0": 126.95,
+          "x1": 310.56,
+          "y1": 138.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-06_ent_006",
+      "label": "CREDITCARDNUMBER",
+      "text": "4532141788443043",
+      "char_start": 146,
+      "char_end": 162,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 149.54,
+          "y0": 146.95,
+          "x1": 238.5,
+          "y1": 158.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-06_ent_007",
+      "label": "TAXNUM",
+      "text": "131045890533",
+      "char_start": 177,
+      "char_end": 189,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 306.81,
+          "y0": 146.95,
+          "x1": 373.53,
+          "y1": 158.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-06_ent_009",
+      "label": "BUILDINGNUM",
+      "text": "45",
+      "char_start": 241,
+      "char_end": 243,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 149.54,
+          "y0": 146.95,
+          "x1": 160.66,
+          "y1": 158.11,
+          "coord_origin": "pdf_top_left"
+        },
+        {
+          "x0": 329.05,
+          "y0": 146.95,
+          "x1": 340.17,
+          "y1": 158.11,
+          "coord_origin": "pdf_top_left"
+        },
+        {
+          "x0": 183.3,
+          "y0": 182.95,
+          "x1": 194.42,
+          "y1": 194.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-06_ent_010",
+      "label": "STREET",
+      "text": "Lý Thường Kiệt",
+      "char_start": 244,
+      "char_end": 258,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 197.19,
+          "y0": 182.95,
+          "x1": 266.52,
+          "y1": 194.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-06_ent_011",
+      "label": "CITY",
+      "text": "Thành phố Hà Nội",
+      "char_start": 260,
+      "char_end": 276,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 272.06,
+          "y0": 182.95,
+          "x1": 353.17,
+          "y1": 194.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-06_ent_012",
+      "label": "ZIPCODE",
+      "text": "10000",
+      "char_start": 291,
+      "char_end": 296,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 101.8,
+          "y0": 198.95,
+          "x1": 129.6,
+          "y1": 210.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-06_ent_013",
+      "label": "PASSPORTNUM",
+      "text": "C8102464",
+      "char_start": 311,
+      "char_end": 319,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 197.92,
+          "y0": 198.95,
+          "x1": 244.06,
+          "y1": 210.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-VN-06_ent_014",
+      "label": "DRIVERLICENSENUM",
+      "text": "DL55X8233B",
+      "char_start": 338,
+      "char_end": 348,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 324.6,
+          "y0": 198.95,
+          "x1": 384.06,
+          "y1": 210.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "f16f233672de48c0ceefad7bf2c63a268a70e0d500c58484158df149ac5d98ee",
+  "is_held_out": true,
+  "provenance_source": "vn_independent_finance_commerce"
+}

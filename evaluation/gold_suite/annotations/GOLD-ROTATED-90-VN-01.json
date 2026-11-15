@@ -1,0 +1,260 @@
+{
+  "doc_id": "GOLD-ROTATED-90-VN-01",
+  "title": "Văn bản Xoay 90 Độ (Định hướng Trang)",
+  "doc_type": "native",
+  "language": "vi",
+  "category": "rotated_page",
+  "filename": "GOLD-ROTATED-90-VN-01.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 90,
+      "dpi": 72,
+      "has_image_overlay": false
+    }
+  ],
+  "total_entities": 12,
+  "entities": [
+    {
+      "entity_id": "GOLD-ROTATED-90-VN-01_ent_001",
+      "label": "TITLE",
+      "text": "Bác sĩ",
+      "char_start": 43,
+      "char_end": 49,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 262.24,
+          "y0": 110.95,
+          "x1": 290.0,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-ROTATED-90-VN-01_ent_002",
+      "label": "GIVENNAME",
+      "text": "Thu Thảo",
+      "char_start": 50,
+      "char_end": 58,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 292.77,
+          "y0": 110.95,
+          "x1": 335.54,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-ROTATED-90-VN-01_ent_003",
+      "label": "SURNAME",
+      "text": "Vũ",
+      "char_start": 59,
+      "char_end": 61,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 338.31,
+          "y0": 110.95,
+          "x1": 350.53,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-ROTATED-90-VN-01_ent_005",
+      "label": "EMAIL",
+      "text": "thu.thao.15@congtyvn.vn",
+      "char_start": 100,
+      "char_end": 123,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 186.5,
+          "y0": 126.95,
+          "x1": 299.99,
+          "y1": 138.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-ROTATED-90-VN-01_ent_006",
+      "label": "CREDITCARDNUMBER",
+      "text": "4532148589363167",
+      "char_start": 146,
+      "char_end": 162,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 149.54,
+          "y0": 146.95,
+          "x1": 238.5,
+          "y1": 158.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-ROTATED-90-VN-01_ent_007",
+      "label": "TAXNUM",
+      "text": "131045892185",
+      "char_start": 177,
+      "char_end": 189,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 306.81,
+          "y0": 146.95,
+          "x1": 373.53,
+          "y1": 158.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-ROTATED-90-VN-01_ent_009",
+      "label": "BUILDINGNUM",
+      "text": "16",
+      "char_start": 241,
+      "char_end": 243,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 221.82,
+          "y0": 146.95,
+          "x1": 232.94,
+          "y1": 158.11,
+          "coord_origin": "pdf_top_left"
+        },
+        {
+          "x0": 183.3,
+          "y0": 182.95,
+          "x1": 194.42,
+          "y1": 194.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-ROTATED-90-VN-01_ent_010",
+      "label": "STREET",
+      "text": "Điện Biên Phủ",
+      "char_start": 244,
+      "char_end": 257,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 197.19,
+          "y0": 182.95,
+          "x1": 261.07,
+          "y1": 194.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-ROTATED-90-VN-01_ent_011",
+      "label": "CITY",
+      "text": "Thành phố Hải Phòng",
+      "char_start": 259,
+      "char_end": 278,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 266.61,
+          "y0": 182.95,
+          "x1": 363.84,
+          "y1": 194.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-ROTATED-90-VN-01_ent_012",
+      "label": "ZIPCODE",
+      "text": "18000",
+      "char_start": 293,
+      "char_end": 298,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 101.8,
+          "y0": 198.95,
+          "x1": 129.6,
+          "y1": 210.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-ROTATED-90-VN-01_ent_013",
+      "label": "PASSPORTNUM",
+      "text": "C8102940",
+      "char_start": 313,
+      "char_end": 321,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 197.92,
+          "y0": 198.95,
+          "x1": 244.06,
+          "y1": 210.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-ROTATED-90-VN-01_ent_014",
+      "label": "DRIVERLICENSENUM",
+      "text": "DL59X8325B",
+      "char_start": 340,
+      "char_end": 350,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 324.6,
+          "y0": 198.95,
+          "x1": 384.06,
+          "y1": 210.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "5c558e576c9a87b63d23f7f207240186bdfa50399c779fb798a60bf0ee623de3",
+  "is_held_out": true,
+  "provenance_source": "vn_independent_finance_commerce"
+}

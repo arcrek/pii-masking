@@ -1,0 +1,82 @@
+{
+  "doc_id": "GOLD-NATIVE-EN-06",
+  "title": "Corporate Agreement & Record 06",
+  "doc_type": "native",
+  "language": "en",
+  "category": "corporate",
+  "filename": "GOLD-NATIVE-EN-06.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": false
+    }
+  ],
+  "total_entities": 3,
+  "entities": [
+    {
+      "entity_id": "GOLD-NATIVE-EN-06_ent_001",
+      "label": "PERSON",
+      "text": "Trevor J. MacAllister",
+      "char_start": 59,
+      "char_end": 80,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 130.09,
+          "y0": 130.95,
+          "x1": 221.15,
+          "y1": 142.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-EN-06_ent_004",
+      "label": "LOCATION",
+      "text": "Baltimore, Maryland",
+      "char_start": 157,
+      "char_end": 176,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 118.95,
+          "y0": 190.95,
+          "x1": 207.82,
+          "y1": 202.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-EN-06_ent_005",
+      "label": "LOCATION",
+      "text": "1725 I Street NW, Washington, DC 20006",
+      "char_start": 201,
+      "char_end": 239,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 161.73,
+          "y0": 210.95,
+          "x1": 347.22,
+          "y1": 222.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "7dda0d5dd868d532abaa7fd5f362fe4e43a85037c36d1b3bf56773667d6a08dc",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

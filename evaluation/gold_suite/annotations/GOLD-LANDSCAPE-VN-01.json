@@ -1,0 +1,272 @@
+{
+  "doc_id": "GOLD-LANDSCAPE-VN-01",
+  "title": "Bảng Kê Khai Tài Chính & Nhân Sự (Khổ Ngang)",
+  "doc_type": "native",
+  "language": "vi",
+  "category": "ledger_table",
+  "filename": "GOLD-LANDSCAPE-VN-01.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 841.92,
+      "height_pts": 595.32,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": false
+    }
+  ],
+  "total_entities": 13,
+  "entities": [
+    {
+      "entity_id": "GOLD-LANDSCAPE-VN-01_ent_001",
+      "label": "TITLE",
+      "text": "Bác sĩ",
+      "char_start": 47,
+      "char_end": 53,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 269.55,
+          "y0": 110.95,
+          "x1": 297.31,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-VN-01_ent_002",
+      "label": "GIVENNAME",
+      "text": "Thu Thảo",
+      "char_start": 54,
+      "char_end": 62,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 300.08,
+          "y0": 110.95,
+          "x1": 342.85,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-VN-01_ent_003",
+      "label": "SURNAME",
+      "text": "Vũ",
+      "char_start": 63,
+      "char_end": 65,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 345.62,
+          "y0": 110.95,
+          "x1": 357.84,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-VN-01_ent_005",
+      "label": "AGE",
+      "text": "37",
+      "char_start": 89,
+      "char_end": 91,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 465.62,
+          "y0": 110.95,
+          "x1": 476.74,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-VN-01_ent_006",
+      "label": "GENDER",
+      "text": "Nữ",
+      "char_start": 119,
+      "char_end": 121,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 167.19,
+          "y0": 126.95,
+          "x1": 181.1,
+          "y1": 138.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-VN-01_ent_007",
+      "label": "SOCIALNUM",
+      "text": "7923411767",
+      "char_start": 143,
+      "char_end": 153,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 145.09,
+          "y0": 146.95,
+          "x1": 200.69,
+          "y1": 158.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-VN-01_ent_008",
+      "label": "TAXNUM",
+      "text": "131045892185",
+      "char_start": 168,
+      "char_end": 180,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 263.8,
+          "y0": 146.95,
+          "x1": 330.52,
+          "y1": 158.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-VN-01_ent_009",
+      "label": "IDCARDNUM",
+      "text": "VN85K1419C",
+      "char_start": 197,
+      "char_end": 207,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 420.82,
+          "y0": 146.95,
+          "x1": 481.94,
+          "y1": 158.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-VN-01_ent_010",
+      "label": "BUILDINGNUM",
+      "text": "16",
+      "char_start": 227,
+      "char_end": 229,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 128.3,
+          "y0": 166.95,
+          "x1": 139.42,
+          "y1": 178.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-VN-01_ent_011",
+      "label": "STREET",
+      "text": "Điện Biên Phủ",
+      "char_start": 230,
+      "char_end": 243,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 142.19,
+          "y0": 166.95,
+          "x1": 206.07,
+          "y1": 178.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-VN-01_ent_012",
+      "label": "CITY",
+      "text": "Thành phố Hải Phòng",
+      "char_start": 245,
+      "char_end": 264,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 211.61,
+          "y0": 166.95,
+          "x1": 308.84,
+          "y1": 178.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-VN-01_ent_013",
+      "label": "ZIPCODE",
+      "text": "18000",
+      "char_start": 278,
+      "char_end": 283,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 373.29,
+          "y0": 166.95,
+          "x1": 401.09,
+          "y1": 178.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-LANDSCAPE-VN-01_ent_015",
+      "label": "EMAIL",
+      "text": "thu.thao.15@congtyvn.vn",
+      "char_start": 332,
+      "char_end": 355,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 267.04,
+          "y0": 186.95,
+          "x1": 380.53,
+          "y1": 198.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "c4d1b66b3eac1c824d85470e5ccd6b2628bd3504edddbc4f49e71559de65c797",
+  "is_held_out": true,
+  "provenance_source": "vn_independent_hr_medical"
+}

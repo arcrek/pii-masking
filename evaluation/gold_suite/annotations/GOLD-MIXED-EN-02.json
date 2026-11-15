@@ -1,0 +1,63 @@
+{
+  "doc_id": "GOLD-MIXED-EN-02",
+  "title": "Certified Executive Agreement 02",
+  "doc_type": "mixed",
+  "language": "en",
+  "category": "executive_agreement",
+  "filename": "GOLD-MIXED-EN-02.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": true
+    }
+  ],
+  "total_entities": 2,
+  "entities": [
+    {
+      "entity_id": "GOLD-MIXED-EN-02_ent_001",
+      "label": "PERSON",
+      "text": "Vanessa J.holloway",
+      "char_start": 67,
+      "char_end": 85,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 155.63,
+          "y0": 130.95,
+          "x1": 243.97,
+          "y1": 142.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-EN-02_ent_004",
+      "label": "LOCATION",
+      "text": "200 South Tryon Street, Charlotte, NC 28202",
+      "char_start": 167,
+      "char_end": 210,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 147.87,
+          "y0": 190.95,
+          "x1": 347.81,
+          "y1": 202.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "e931033e7b3c5242f7193b2c411d6045590a4aa56ce8dcf28f1bb8e3a5a948ce",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

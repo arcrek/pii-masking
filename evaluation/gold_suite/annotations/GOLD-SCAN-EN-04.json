@@ -1,0 +1,101 @@
+{
+  "doc_id": "GOLD-SCAN-EN-04",
+  "title": "Archived Scanned Invoice & Notice 04",
+  "doc_type": "scanned",
+  "language": "en",
+  "category": "scanned_record",
+  "filename": "GOLD-SCAN-EN-04.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 300,
+      "has_image_overlay": true
+    }
+  ],
+  "total_entities": 4,
+  "entities": [
+    {
+      "entity_id": "GOLD-SCAN-EN-04_ent_001",
+      "label": "PERSON",
+      "text": "Aiden C. Gallagher",
+      "char_start": 61,
+      "char_end": 79,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 166.02,
+          "y0": 128.37,
+          "x1": 250.65,
+          "y1": 141.15,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-EN-04_ent_002",
+      "label": "LOCATION",
+      "text": "1120 Lincoln Street, Denver, CO 80203",
+      "char_start": 115,
+      "char_end": 152,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 130.64,
+          "y0": 147.7,
+          "x1": 305.8,
+          "y1": 162.21,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-EN-04_ent_003",
+      "label": "LOCATION",
+      "text": "601 Congress Avenue, Austin, TX 78701",
+      "char_start": 174,
+      "char_end": 211,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 153.59,
+          "y0": 168.14,
+          "x1": 334.86,
+          "y1": 182.78,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-EN-04_ent_004",
+      "label": "DATE_TIME",
+      "text": "August 29, 2025",
+      "char_start": 234,
+      "char_end": 249,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 165.43,
+          "y0": 188.37,
+          "x1": 238.41,
+          "y1": 200.93,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "ee27bb8cc01474e3b6f016f2646e18e9ffcee7f5eade1741d6a47949f893fb38",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

@@ -1,0 +1,82 @@
+{
+  "doc_id": "GOLD-SCAN-EN-01",
+  "title": "Archived Scanned Invoice & Notice 01",
+  "doc_type": "scanned",
+  "language": "en",
+  "category": "scanned_record",
+  "filename": "GOLD-SCAN-EN-01.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 150,
+      "has_image_overlay": true
+    }
+  ],
+  "total_entities": 3,
+  "entities": [
+    {
+      "entity_id": "GOLD-SCAN-EN-01_ent_001",
+      "label": "DATE_TIME",
+      "text": "February 2, 1990",
+      "char_start": 129,
+      "char_end": 145,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 111.16,
+          "y0": 172.65,
+          "x1": 187.43,
+          "y1": 185.01,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-EN-01_ent_002",
+      "label": "LOCATION",
+      "text": "500 Yale Avenue North, Seattle, WA 98109",
+      "char_start": 173,
+      "char_end": 213,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 162.04,
+          "y0": 190.03,
+          "x1": 354.36,
+          "y1": 204.21,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-EN-01_ent_003",
+      "label": "DATE_TIME",
+      "text": "January 15, 2026",
+      "char_start": 328,
+      "char_end": 344,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 176.31,
+          "y0": 251.62,
+          "x1": 253.72,
+          "y1": 263.99,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "cd8ce3c91b97a3ec5aa6a6031992537b3cc7350b124fcd97c049040059eb10bb",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

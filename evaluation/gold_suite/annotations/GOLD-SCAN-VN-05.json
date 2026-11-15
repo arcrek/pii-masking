@@ -1,0 +1,272 @@
+{
+  "doc_id": "GOLD-SCAN-VN-05",
+  "title": "Hồ sơ Lưu trữ Scan Số 05",
+  "doc_type": "scanned",
+  "language": "vi",
+  "category": "scanned_archive",
+  "filename": "GOLD-SCAN-VN-05.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 150,
+      "has_image_overlay": true
+    }
+  ],
+  "total_entities": 13,
+  "entities": [
+    {
+      "entity_id": "GOLD-SCAN-VN-05_ent_001",
+      "label": "TITLE",
+      "text": "Chị",
+      "char_start": 47,
+      "char_end": 50,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 273.73,
+          "y0": 110.59,
+          "x1": 288.88,
+          "y1": 121.96,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-05_ent_002",
+      "label": "GIVENNAME",
+      "text": "Ngọc Bích",
+      "char_start": 51,
+      "char_end": 60,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 291.49,
+          "y0": 110.84,
+          "x1": 337.74,
+          "y1": 122.64,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-05_ent_003",
+      "label": "SURNAME",
+      "text": "Phạm",
+      "char_start": 61,
+      "char_end": 65,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 340.36,
+          "y0": 111.52,
+          "x1": 366.62,
+          "y1": 123.04,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-05_ent_004",
+      "label": "AGE",
+      "text": "26",
+      "char_start": 89,
+      "char_end": 91,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 135.76,
+          "y0": 124.66,
+          "x1": 147.03,
+          "y1": 135.98,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-05_ent_005",
+      "label": "GENDER",
+      "text": "Nữ",
+      "char_start": 119,
+      "char_end": 121,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 262.82,
+          "y0": 126.44,
+          "x1": 276.89,
+          "y1": 137.79,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-05_ent_006",
+      "label": "SOCIALNUM",
+      "text": "7923411453",
+      "char_start": 143,
+      "char_end": 153,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 148.77,
+          "y0": 144.85,
+          "x1": 204.53,
+          "y1": 156.78,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-05_ent_007",
+      "label": "TAXNUM",
+      "text": "131045891359",
+      "char_start": 168,
+      "char_end": 180,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 267.47,
+          "y0": 146.5,
+          "x1": 334.34,
+          "y1": 158.59,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-05_ent_008",
+      "label": "IDCARDNUM",
+      "text": "VN83K1345C",
+      "char_start": 197,
+      "char_end": 207,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 124.64,
+          "y0": 160.51,
+          "x1": 185.91,
+          "y1": 172.52,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-05_ent_009",
+      "label": "BUILDINGNUM",
+      "text": "88",
+      "char_start": 227,
+      "char_end": 229,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 131.48,
+          "y0": 180.61,
+          "x1": 142.76,
+          "y1": 191.92,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-05_ent_010",
+      "label": "STREET",
+      "text": "Lê Lợi",
+      "char_start": 230,
+      "char_end": 236,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 145.37,
+          "y0": 180.8,
+          "x1": 173.75,
+          "y1": 192.36,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-05_ent_011",
+      "label": "CITY",
+      "text": "Thành phố Huế",
+      "char_start": 238,
+      "char_end": 251,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 179.13,
+          "y0": 181.27,
+          "x1": 248.18,
+          "y1": 193.39,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-05_ent_012",
+      "label": "ZIPCODE",
+      "text": "53000",
+      "char_start": 265,
+      "char_end": 270,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 312.47,
+          "y0": 183.14,
+          "x1": 340.42,
+          "y1": 194.68,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-05_ent_013",
+      "label": "EMAIL",
+      "text": "ngoc.bich.13@congtyvn.vn",
+      "char_start": 319,
+      "char_end": 343,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 269.93,
+          "y0": 202.54,
+          "x1": 390.25,
+          "y1": 215.38,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "4951a66b54ab9d4bc4fbba1c51aeff2b15c2de2455dba7ee9a8079b15573b937",
+  "is_held_out": true,
+  "provenance_source": "vn_independent_hr_medical"
+}

@@ -1,0 +1,82 @@
+{
+  "doc_id": "GOLD-MIXED-EN-01",
+  "title": "Certified Executive Agreement 01",
+  "doc_type": "mixed",
+  "language": "en",
+  "category": "executive_agreement",
+  "filename": "GOLD-MIXED-EN-01.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": true
+    }
+  ],
+  "total_entities": 3,
+  "entities": [
+    {
+      "entity_id": "GOLD-MIXED-EN-01_ent_001",
+      "label": "PERSON",
+      "text": "Dr. Soren Lindholm",
+      "char_start": 66,
+      "char_end": 84,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 120.66,
+          "y0": 130.95,
+          "x1": 206.76,
+          "y1": 142.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-EN-01_ent_004",
+      "label": "LOCATION",
+      "text": "1000 Main Street, Cambridge, MA 02142",
+      "char_start": 145,
+      "char_end": 182,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 116.78,
+          "y0": 170.95,
+          "x1": 298.42,
+          "y1": 182.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-EN-01_ent_007",
+      "label": "DATE_TIME",
+      "text": "May 5, 2025",
+      "char_start": 293,
+      "char_end": 304,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 169.53,
+          "y0": 226.95,
+          "x1": 224.53,
+          "y1": 238.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "8f5ae949230abf88e764a54249cd680ac449269ee42664a6b08db3a0fb5778b2",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}

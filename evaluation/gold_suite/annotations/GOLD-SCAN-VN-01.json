@@ -1,0 +1,305 @@
+{
+  "doc_id": "GOLD-SCAN-VN-01",
+  "title": "Hồ sơ Lưu trữ Scan Số 01",
+  "doc_type": "scanned",
+  "language": "vi",
+  "category": "scanned_archive",
+  "filename": "GOLD-SCAN-VN-01.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 150,
+      "has_image_overlay": true
+    }
+  ],
+  "total_entities": 14,
+  "entities": [
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_001",
+      "label": "TITLE",
+      "text": "Anh",
+      "char_start": 47,
+      "char_end": 50,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 276.48,
+          "y0": 110.63,
+          "x1": 294.41,
+          "y1": 122.03,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_002",
+      "label": "GIVENNAME",
+      "text": "Hoàng Nam",
+      "char_start": 51,
+      "char_end": 60,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 297.02,
+          "y0": 110.91,
+          "x1": 350.51,
+          "y1": 122.82,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_003",
+      "label": "SURNAME",
+      "text": "Lê",
+      "char_start": 61,
+      "char_end": 63,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 353.13,
+          "y0": 111.7,
+          "x1": 364.4,
+          "y1": 123.01,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_004",
+      "label": "GENDER",
+      "text": "Nam",
+      "char_start": 86,
+      "char_end": 89,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 329.25,
+          "y0": 111.36,
+          "x1": 350.51,
+          "y1": 122.82,
+          "coord_origin": "pdf_top_left"
+        },
+        {
+          "x0": 124.5,
+          "y0": 124.51,
+          "x1": 145.76,
+          "y1": 135.96,
+          "coord_origin": "pdf_top_left"
+        },
+        {
+          "x0": 290.83,
+          "y0": 218.84,
+          "x1": 310.43,
+          "y1": 230.27,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_005",
+      "label": "SEX",
+      "text": "Male",
+      "char_start": 111,
+      "char_end": 115,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 232.66,
+          "y0": 126.02,
+          "x1": 254.48,
+          "y1": 137.48,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_006",
+      "label": "AGE",
+      "text": "41",
+      "char_start": 117,
+      "char_end": 119,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 259.86,
+          "y0": 126.4,
+          "x1": 271.14,
+          "y1": 137.71,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_007",
+      "label": "IDCARDNUM",
+      "text": "VN82K1308C",
+      "char_start": 189,
+      "char_end": 199,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 139.63,
+          "y0": 160.72,
+          "x1": 200.9,
+          "y1": 172.73,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_008",
+      "label": "PASSPORTNUM",
+      "text": "C8102583",
+      "char_start": 215,
+      "char_end": 223,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 267.19,
+          "y0": 162.5,
+          "x1": 313.48,
+          "y1": 174.3,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_009",
+      "label": "DRIVERLICENSENUM",
+      "text": "DL56X8256B",
+      "char_start": 247,
+      "char_end": 257,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 57.25,
+          "y0": 175.57,
+          "x1": 116.86,
+          "y1": 187.56,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_010",
+      "label": "BUILDINGNUM",
+      "text": "219",
+      "char_start": 276,
+      "char_end": 279,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 136.85,
+          "y0": 196.69,
+          "x1": 153.68,
+          "y1": 208.08,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_011",
+      "label": "STREET",
+      "text": "Trần Phú",
+      "char_start": 280,
+      "char_end": 288,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 156.3,
+          "y0": 196.96,
+          "x1": 197.55,
+          "y1": 208.69,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_012",
+      "label": "CITY",
+      "text": "Thành phố Đà Nẵng",
+      "char_start": 290,
+      "char_end": 307,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 202.93,
+          "y0": 197.61,
+          "x1": 293.09,
+          "y1": 210.02,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_013",
+      "label": "ZIPCODE",
+      "text": "55000",
+      "char_start": 322,
+      "char_end": 327,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 362.93,
+          "y0": 199.84,
+          "x1": 390.88,
+          "y1": 211.39,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-SCAN-VN-01_ent_014",
+      "label": "EMAIL",
+      "text": "hoang.nam.12@congtyvn.vn",
+      "char_start": 375,
+      "char_end": 399,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 260.26,
+          "y0": 218.41,
+          "x1": 387.8,
+          "y1": 231.35,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "scanned_image",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "a3294734ed57e207f8ea02240b022abc465b50d893095037c11301f43368a447",
+  "is_held_out": true,
+  "provenance_source": "vn_independent_admin_kyc"
+}

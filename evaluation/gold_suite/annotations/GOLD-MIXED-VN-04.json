@@ -1,0 +1,291 @@
+{
+  "doc_id": "GOLD-MIXED-VN-04",
+  "title": "Hợp đồng Kinh tế & Xác nhận Con dấu 04",
+  "doc_type": "mixed",
+  "language": "vi",
+  "category": "contract_stamped",
+  "filename": "GOLD-MIXED-VN-04.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": true
+    }
+  ],
+  "total_entities": 14,
+  "entities": [
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_001",
+      "label": "TITLE",
+      "text": "Bác sĩ",
+      "char_start": 41,
+      "char_end": 47,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 245.54,
+          "y0": 110.95,
+          "x1": 273.3,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_002",
+      "label": "GIVENNAME",
+      "text": "Thu Thảo",
+      "char_start": 48,
+      "char_end": 56,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 276.07,
+          "y0": 110.95,
+          "x1": 318.84,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_003",
+      "label": "SURNAME",
+      "text": "Vũ",
+      "char_start": 57,
+      "char_end": 59,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 321.61,
+          "y0": 110.95,
+          "x1": 333.83,
+          "y1": 122.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_004",
+      "label": "GENDER",
+      "text": "Nữ",
+      "char_start": 82,
+      "char_end": 84,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 106.79,
+          "y0": 126.95,
+          "x1": 120.7,
+          "y1": 138.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_005",
+      "label": "SEX",
+      "text": "Female",
+      "char_start": 106,
+      "char_end": 112,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 207.76,
+          "y0": 126.95,
+          "x1": 241.09,
+          "y1": 138.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_006",
+      "label": "AGE",
+      "text": "37",
+      "char_start": 114,
+      "char_end": 116,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 246.63,
+          "y0": 126.95,
+          "x1": 257.75,
+          "y1": 138.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_008",
+      "label": "IDCARDNUM",
+      "text": "VN85K1419C",
+      "char_start": 160,
+      "char_end": 170,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 136.17,
+          "y0": 162.95,
+          "x1": 197.29,
+          "y1": 174.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_009",
+      "label": "PASSPORTNUM",
+      "text": "C8102940",
+      "char_start": 186,
+      "char_end": 194,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 263.74,
+          "y0": 162.95,
+          "x1": 309.88,
+          "y1": 174.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_010",
+      "label": "DRIVERLICENSENUM",
+      "text": "DL59X8325B",
+      "char_start": 213,
+      "char_end": 223,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 54.0,
+          "y0": 178.95,
+          "x1": 113.46,
+          "y1": 190.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_011",
+      "label": "BUILDINGNUM",
+      "text": "16",
+      "char_start": 247,
+      "char_end": 249,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 152.88,
+          "y0": 198.95,
+          "x1": 164.0,
+          "y1": 210.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_012",
+      "label": "STREET",
+      "text": "Điện Biên Phủ",
+      "char_start": 250,
+      "char_end": 263,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 166.77,
+          "y0": 198.95,
+          "x1": 230.65,
+          "y1": 210.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_013",
+      "label": "CITY",
+      "text": "Thành phố Hải Phòng",
+      "char_start": 265,
+      "char_end": 284,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 236.19,
+          "y0": 198.95,
+          "x1": 333.42,
+          "y1": 210.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_014",
+      "label": "ZIPCODE",
+      "text": "18000",
+      "char_start": 298,
+      "char_end": 303,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 54.0,
+          "y0": 214.95,
+          "x1": 81.8,
+          "y1": 226.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-MIXED-VN-04_ent_016",
+      "label": "EMAIL",
+      "text": "thu.thao.15@congtyvn.vn",
+      "char_start": 353,
+      "char_end": 376,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 268.73,
+          "y0": 234.95,
+          "x1": 382.22,
+          "y1": 246.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "9bf9631bdf4cde9e2d89032a4256488a93626100ca5219bba559970cfc68fb10",
+  "is_held_out": true,
+  "provenance_source": "vn_independent_admin_kyc"
+}

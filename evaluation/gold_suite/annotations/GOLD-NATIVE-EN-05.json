@@ -1,0 +1,120 @@
+{
+  "doc_id": "GOLD-NATIVE-EN-05",
+  "title": "Corporate Agreement & Record 05",
+  "doc_type": "native",
+  "language": "en",
+  "category": "corporate",
+  "filename": "GOLD-NATIVE-EN-05.pdf",
+  "page_count": 1,
+  "pages": [
+    {
+      "page_index": 0,
+      "width_pts": 595.32,
+      "height_pts": 841.92,
+      "rotation": 0,
+      "dpi": 72,
+      "has_image_overlay": false
+    }
+  ],
+  "total_entities": 5,
+  "entities": [
+    {
+      "entity_id": "GOLD-NATIVE-EN-05_ent_001",
+      "label": "PERSON",
+      "text": "Carlos Eduardo Rivera",
+      "char_start": 64,
+      "char_end": 85,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 144.52,
+          "y0": 130.95,
+          "x1": 245.63,
+          "y1": 142.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-EN-05_ent_003",
+      "label": "DATE_TIME",
+      "text": "05/14/1984",
+      "char_start": 110,
+      "char_end": 120,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 54.0,
+          "y0": 146.95,
+          "x1": 104.02,
+          "y1": 158.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-EN-05_ent_004",
+      "label": "PERSON",
+      "text": "Lucia M. Rivera",
+      "char_start": 142,
+      "char_end": 157,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 150.66,
+          "y0": 166.95,
+          "x1": 220.09,
+          "y1": 178.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-EN-05_ent_006",
+      "label": "DATE_TIME",
+      "text": "09/28/1986",
+      "char_start": 182,
+      "char_end": 192,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 341.7,
+          "y0": 166.95,
+          "x1": 391.72,
+          "y1": 178.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    },
+    {
+      "entity_id": "GOLD-NATIVE-EN-05_ent_007",
+      "label": "LOCATION",
+      "text": "3910 Brickell Avenue, Apt 12B, Miami, FL 33131",
+      "char_start": 215,
+      "char_end": 261,
+      "page_index": 0,
+      "bounding_boxes": [
+        {
+          "x0": 148.43,
+          "y0": 186.95,
+          "x1": 363.37,
+          "y1": 198.11,
+          "coord_origin": "pdf_top_left"
+        }
+      ],
+      "source_type": "native_text",
+      "is_handwriting": false
+    }
+  ],
+  "sha256": "48d5f0554cdad4d28f3ebff8f4ab8bf3598e61320b29a0b8170767cd9749975c",
+  "is_held_out": true,
+  "provenance_source": "independent_business_form"
+}
