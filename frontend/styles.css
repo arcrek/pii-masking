@@ -22,6 +22,10 @@ header { min-height: 78px; justify-content: space-between; gap: 1rem; border-bot
 .studio { color: #50594f; font-size: .875rem; }
 main { display: grid; grid-template-columns: 1.12fr 1fr; align-items: center; gap: clamp(32px, 7vw, 104px); padding-block: clamp(36px, 7vh, 92px); }
 .login { width: min(100%, 395px); }
+@media (min-width: 721px) {
+  .login { grid-column: 2; grid-row: 1; }
+  .sample { grid-column: 1; grid-row: 1; }
+}
 h1 { margin: 0; font-size: clamp(48px, 4.8vw, 72px); font-weight: 550; line-height: 1.06; letter-spacing: -.055em; }
 h1 em { color: var(--rust); font-style: normal; }
 .login p { color: #535b53; line-height: 1.55; margin: 18px 0 28px; }
@@ -70,6 +74,5 @@ input::placeholder { color: #656d62; }
   header { min-height: 64px; }
   .studio { font-size: .76rem; }
   main { display: flex; flex-direction: column; gap: 34px; padding: 32px 0; }
-  .login { order: -1; }
   .sample { width: min(100%, 395px); }
 }

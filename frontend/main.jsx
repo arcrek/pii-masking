@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles.css'
+import './text-motion.css'
 
 function Brand() {
   return <span className="brand"><i className="mark" aria-hidden="true"><b/><b/><b/></i>PII Shield</span>
@@ -24,21 +25,109 @@ function FlowerSprig({ placement }) {
   )
 }
 
-function DocumentSample() {
+function DecodeText({ text, enabled }) {
+  if (!enabled) return text
+  return (
+    <>
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true" key={text}>
+        {Array.from(text).map((letter, index) => letter === ' ' ? ' ' : (
+          <span className="glyph" key={index} style={{ '--delay': `${index * 32}ms` }}>
+            <span>{letter}</span>
+          </span>
+        ))}
+      </span>
+    </>
+  )
+}
+
+const mouseMotionQuery = '(any-hover: hover) and (any-pointer: fine) and (prefers-reduced-motion: no-preference)'
+
+function usePaperTilt(enabled) {
+  const ref = useRef(null)
+  useEffect(() => {
+    if (!enabled) return
+    const paper = ref.current
+    const media = window.matchMedia(mouseMotionQuery)
+    const target = { x: 0, y: 0 }
+    const angle = { x: 0, y: 0 }
+    const speed = { x: 0, y: 0 }
+    let frame = 0
+    let previous = 0
+
+    function tick(now) {
+      const dt = Math.min((now - previous) / 1000, 1 / 30)
+      previous = now
+      let moving = false
+      for (const axis of ['x', 'y']) {
+        const distance = target[axis] - angle[axis]
+        speed[axis] += (180 * distance - 23 * speed[axis]) * dt
+        angle[axis] += speed[axis] * dt
+        moving ||= Math.abs(distance) > .005 || Math.abs(speed[axis]) > .04
+      }
+      if (!moving) {
+        Object.assign(angle, target)
+        speed.x = speed.y = 0
+      }
+      const degrees = Math.hypot(angle.x, angle.y)
+      paper.style.rotate = degrees ? `${angle.x} ${angle.y} 0 ${degrees}deg` : ''
+      frame = moving ? requestAnimationFrame(tick) : 0
+    }
+    function aim(x, y) {
+      target.x = x
+      target.y = y
+      if (!frame) {
+        previous = performance.now()
+        frame = requestAnimationFrame(tick)
+      }
+    }
+    function follow(event) {
+      if (!media.matches || event.pointerType !== 'mouse') return
+      const box = paper.getBoundingClientRect()
+      const offset = ratio => Math.max(-1, Math.min(1, 2 * ratio - 1))
+      aim(-2.5 * offset((event.clientY - box.top) / box.height),
+          2.5 * offset((event.clientX - box.left) / box.width))
+    }
+    const release = () => aim(0, 0)
+    function reset() {
+      cancelAnimationFrame(frame)
+      frame = 0
+      target.x = target.y = angle.x = angle.y = speed.x = speed.y = 0
+      paper.style.rotate = ''
+    }
+    paper.addEventListener('pointermove', follow)
+    paper.addEventListener('pointerleave', release)
+    paper.addEventListener('pointercancel', release)
+    window.addEventListener('blur', reset)
+    media.addEventListener('change', reset)
+    return () => {
+      reset()
+      paper.removeEventListener('pointermove', follow)
+      paper.removeEventListener('pointerleave', release)
+      paper.removeEventListener('pointercancel', release)
+      window.removeEventListener('blur', reset)
+      media.removeEventListener('change', reset)
+    }
+  }, [enabled])
+  return ref
+}
+
+function DocumentSample({ motion }) {
   const [masked, setMasked] = useState(true)
+  const paperRef = usePaperTilt(motion)
   return (
     <section className="sample" aria-label="Minh họa ẩn thông tin trong tài liệu">
       <div className="drawing" data-masked={masked}>
         <FlowerSprig placement="upper" />
         <FlowerSprig placement="lower" />
         <div className="folder" aria-hidden="true" />
-        <article className="sheet">
+        <article className="sheet" ref={paperRef}>
           <div className="sheet-head"><span>HỒ SƠ DỊCH VỤ</span><span>01 / 01</span></div>
           <h2>Thỏa thuận<br/>dịch vụ</h2>
           <div className="rules" aria-hidden="true"/>
           <dl className={masked ? 'masked' : ''}>
-            <div><dt>Bên A</dt><dd>{masked ? 'Người 01' : 'An Nguyễn'}</dd></div>
-            <div><dt>Email</dt><dd>{masked ? 'Email 04' : 'an@example.com'}</dd></div>
+            <div><dt>Bên A</dt><dd><DecodeText enabled={motion} text={masked ? 'Người 01' : 'An Nguyễn'} /></dd></div>
+            <div><dt>Email</dt><dd><DecodeText enabled={motion} text={masked ? 'Email 04' : 'an@example.com'} /></dd></div>
           </dl>
           <div className="sheet-foot"><span>Hợp đồng mẫu</span><span>PII Shield</span></div>
         </article>
@@ -51,14 +140,70 @@ function DocumentSample() {
   )
 }
 
+function PaperWatermark() {
+  const trace = useRef(null)
+
+  useEffect(() => {
+    const shell = trace.current.parentElement
+    const media = window.matchMedia(mouseMotionQuery)
+    function hide() {
+      shell.removeAttribute('data-revealing')
+    }
+
+    function follow(event) {
+      if (!media.matches || event.pointerType !== 'mouse') return hide()
+      shell.style.setProperty('--reveal-x', `${event.clientX}px`)
+      shell.style.setProperty('--reveal-y', `${event.clientY}px`)
+      shell.dataset.revealing = ''
+    }
+
+    window.addEventListener('pointermove', follow, { passive: true })
+    document.documentElement.addEventListener('pointerleave', hide)
+    window.addEventListener('blur', hide)
+    media.addEventListener('change', hide)
+    return () => {
+      hide()
+      window.removeEventListener('pointermove', follow)
+      document.documentElement.removeEventListener('pointerleave', hide)
+      window.removeEventListener('blur', hide)
+      media.removeEventListener('change', hide)
+    }
+  }, [])
+
+  return <div className="paper-watermark" aria-hidden="true" ref={trace} />
+}
+
 function LoginPreview() {
+  const [motion, setMotion] = useState(() => {
+    try {
+      return localStorage.getItem('pii-login-text-motion') !== 'off'
+    } catch {
+      return true
+    }
+  })
+
+  function toggleMotion() {
+    setMotion(!motion)
+    try {
+      localStorage.setItem('pii-login-text-motion', motion ? 'off' : 'on')
+    } catch {
+      // The switch still works for this visit when storage is unavailable.
+    }
+  }
+
   return (
-    <div className="shell">
-      <header><Brand/><span className="studio">Studio kiểm duyệt PDF</span></header>
+    <div className="shell" data-motion={motion ? 'on' : 'off'}>
+      {motion && <PaperWatermark />}
+      <header>
+        <Brand/>
+        <span className="studio">Studio kiểm duyệt PDF</span>
+        <button type="button" className="motion-switch" aria-label="Chuyển động chữ và nền" aria-pressed={motion} onClick={toggleMotion}>
+          Chuyển động · {motion ? 'Bật' : 'Tắt'}
+        </button>
+      </header>
       <main>
-        <DocumentSample/>
         <section className="login" aria-labelledby="title">
-          <h1 id="title">Đăng nhập<br/><em>vào Studio.</em></h1>
+          <h1 id="title">Đăng nhập<br/><em>vào <DecodeText enabled={motion} text="Studio." /></em></h1>
           <p id="preview">Giao diện xem trước. Đăng nhập sẽ khả dụng khi Studio kết nối dịch vụ xác thực.</p>
           <form aria-describedby="preview">
             <fieldset disabled>
@@ -70,6 +215,7 @@ function LoginPreview() {
             </fieldset>
           </form>
         </section>
+        <DocumentSample motion={motion}/>
       </main>
     </div>
   )
