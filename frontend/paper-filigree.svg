@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320" fill="none">
+  <defs>
+    <g id="spray" stroke="#4e7354" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M-8 112Q44 101 74 61T153 9"/>
+      <path d="M21 101Q13 84 4 84Q6 98 21 101ZM37 93Q53 98 66 86Q49 81 37 93ZM57 76Q46 58 47 48Q61 57 57 76ZM75 60Q93 67 108 52Q91 48 75 60ZM94 42Q82 26 89 15Q100 27 94 42ZM112 29Q131 34 141 21Q123 18 112 29ZM133 17Q137 3 152 0Q147 12 133 17Z"/>
+    </g>
+  </defs>
+  <g opacity=".912" stroke-width="2">
+    <use href="#spray" transform="translate(28 26) rotate(-9 75 60)"/>
+    <use href="#spray" transform="translate(375 265) rotate(157) scale(.84)"/>
+  </g>
+  <g stroke="#69816c" opacity=".708" stroke-width="1.4">
+    <path d="M-20 190Q70 139 132 177T273 176T440 152M-20 195Q70 144 132 182T273 181T440 157M-20 200Q70 149 132 187T273 186T440 162"/>
+  </g>
+</svg>
