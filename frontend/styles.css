@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+:root {
+  font-family: system-ui, sans-serif;
+  background: #eef3f8;
+  color: #172b40;
+}
+
+body { margin: 0; }
+.brand {
+  padding: 1.25rem clamp(1rem, 5vw, 4rem);
+  background: #142c43;
+  color: #fff;
+  font-weight: 700;
+}
+main { padding: clamp(1rem, 6vw, 4rem) 1rem; }
+section {
+  max-width: 25rem;
+  margin: auto;
+  padding: clamp(1rem, 5vw, 2rem);
+  border: 1px solid #c7d4e0;
+  border-radius: 1rem;
+  background: #fff;
+}
+h1 { margin: 0; }
+p { margin: .75rem 0 1.5rem; line-height: 1.5; }
+fieldset { min-width: 0; padding: 0; margin: 0; border: 0; }
+legend { padding: 0; margin-bottom: .75rem; font-weight: 650; }
+label { display: block; margin-bottom: .35rem; }
+input, button {
+  box-sizing: border-box;
+  width: 100%;
+  padding: .7rem;
+  border: 1px solid #97aabd;
+  border-radius: .5rem;
+  font: inherit;
+}
+input { margin-bottom: 1rem; background: #f3f7fa; }
+button { background: #dce6ef; color: #344e66; }
