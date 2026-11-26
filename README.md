@@ -18,6 +18,9 @@ Dự án MVP phát hiện PII (Personally Identifiable Information) và xóa nh�
 
 ## Tài liệu kế hoạch & Backlog chi tiết
 
+* **[Kiến trúc & Thiết kế Hệ thống (System Architecture)](./docs/system-architecture.md)**: Đặc tả đầu vào/đầu ra, luồng xử lý Native/Scanned/Mixed, biên giới bảo mật và các quyết định thiết kế đã chốt.
+* **[Hướng dẫn Môi trường & Phiên bản (OPS-01)](./docs/ops/OPS-01-environment-and-version-control.md)**: Cài đặt môi trường cục bộ, Docker, model registry và kiểm soát secret.
+
 Mọi người theo dõi chi tiết công việc, acceptance criteria và dependencies tại thư mục [`plans/261101-1815-mvp-function-breakdown/`](./plans/261101-1815-mvp-function-breakdown/):
 
 * **[Function Backlog CSV](./plans/261101-1815-mvp-function-breakdown/function-backlog.csv)**: Bảng theo dõi 75 work packages, assignee, reviewer, priority, status.
