@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposed Outcome (Not Yet Implemented): Bilingual PDF PII-Masking System Design</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #05070c;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div class="ak-diagram-root" data-instance-id="0298e212" data-preset="signal-flow" data-theme="dark" data-animation="trace">
+    <style>/* AgentKit Diagram Reader Styles & Presets (Archify-informed) */
+
+.ak-diagram-root {
+  --ak-bg: #ffffff;
+  --ak-surface: #f8fafc;
+  --ak-surface-border: #e2e8f0;
+  --ak-text-primary: #0f172a;
+  --ak-text-secondary: #475569;
+  --ak-text-muted: #94a3b8;
+  --ak-accent: #2563eb;
+  --ak-accent-light: #dbeafe;
+  --ak-node-bg: #ffffff;
+  --ak-node-border: #cbd5e1;
+  --ak-edge-stroke: #64748b;
+  --ak-edge-active: #2563eb;
+  --ak-badge-bg: #f1f5f9;
+  --ak-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --ak-font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ak-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  
+  font-family: var(--ak-font-sans);
+  background-color: var(--ak-bg);
+  color: var(--ak-text-primary);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--ak-surface-border);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Preset: Classic (Light / Dark) */
+.ak-diagram-root[data-preset="classic"][data-theme="light"],
+.ak-diagram-root[data-preset="classic"]:not([data-theme="dark"]) {
+  --ak-bg: #ffffff;
+  --ak-surface: #f8fafc;
+  --ak-surface-border: #e2e8f0;
+  --ak-text-primary: #0f172a;
+  --ak-text-secondary: #475569;
+  --ak-node-bg: #ffffff;
+  --ak-node-border: #cbd5e1;
+  --ak-edge-stroke: #64748b;
+  --ak-edge-active: #2563eb;
+}
+.ak-diagram-root[data-preset="classic"][data-theme="dark"] {
+  --ak-bg: #090d16;
+  --ak-surface: #0f172a;
+  --ak-surface-border: #1e293b;
+  --ak-text-primary: #f8fafc;
+  --ak-text-secondary: #94a3b8;
+  --ak-node-bg: #0f172a;
+  --ak-node-border: #334155;
+  --ak-edge-stroke: #475569;
+  --ak-edge-active: #38bdf8;
+}
+
+/* Preset: Signal Flow (Light / Dark) */
+.ak-diagram-root[data-preset="signal-flow"][data-theme="light"],
+.ak-diagram-root[data-preset="signal-flow"]:not([data-theme="dark"]) {
+  --ak-bg: #f0fdf4;
+  --ak-surface: #dcfce7;
+  --ak-surface-border: #86efac;
+  --ak-text-primary: #14532d;
+  --ak-text-secondary: #166534;
+  --ak-accent: #059669;
+  --ak-node-bg: #ffffff;
+  --ak-node-border: #10b981;
+  --ak-edge-stroke: #059669;
+  --ak-edge-active: #047857;
+}
+.ak-diagram-root[data-preset="signal-flow"][data-theme="dark"] {
+  --ak-bg: #031c18;
+  --ak-surface: #064e3b;
+  --ak-surface-border: #047857;
+  --ak-text-primary: #ecfdf5;
+  --ak-text-secondary: #a7f3d0;
+  --ak-accent: #34d399;
+  --ak-node-bg: #064e3b;
+  --ak-node-border: #10b981;
+  --ak-edge-stroke: #34d399;
+  --ak-edge-active: #6ee7b7;
+}
+
+/* Preset: Blueprint (Light / Dark) */
+.ak-diagram-root[data-preset="blueprint"][data-theme="light"],
+.ak-diagram-root[data-preset="blueprint"]:not([data-theme="dark"]) {
+  --ak-bg: #f0f9ff;
+  --ak-surface: #e0f2fe;
+  --ak-surface-border: #7dd3fc;
+  --ak-text-primary: #0369a1;
+  --ak-text-secondary: #0284c7;
+  --ak-accent: #0284c7;
+  --ak-node-bg: #ffffff;
+  --ak-node-border: #0ea5e9;
+  --ak-edge-stroke: #0284c7;
+  --ak-edge-active: #0369a1;
+  --ak-font-sans: var(--ak-font-mono);
+}
+.ak-diagram-root[data-preset="blueprint"][data-theme="dark"] {
+  --ak-bg: #081d33;
+  --ak-surface: #0c2a4a;
+  --ak-surface-border: #1e4976;
+  --ak-text-primary: #e0f2fe;
+  --ak-text-secondary: #bae6fd;
+  --ak-accent: #38bdf8;
+  --ak-node-bg: #0c213a;
+  --ak-node-border: #38bdf8;
+  --ak-edge-stroke: #7dd3fc;
+  --ak-edge-active: #38bdf8;
+  --ak-font-sans: var(--ak-font-mono);
+}
+
+/* Preset: Editorial (Light / Dark) */
+.ak-diagram-root[data-preset="editorial"][data-theme="light"],
+.ak-diagram-root[data-preset="editorial"]:not([data-theme="dark"]) {
+  --ak-bg: #faf8f5;
+  --ak-surface: #f3efe6;
+  --ak-surface-border: #e2dacb;
+  --ak-text-primary: #1c1917;
+  --ak-text-secondary: #57534e;
+  --ak-accent: #991b1b;
+  --ak-node-bg: #ffffff;
+  --ak-node-border: #d6cfc4;
+  --ak-edge-stroke: #78716c;
+  --ak-edge-active: #991b1b;
+}
+.ak-diagram-root[data-preset="editorial"][data-theme="dark"] {
+  --ak-bg: #1c1917;
+  --ak-surface: #292524;
+  --ak-surface-border: #44403c;
+  --ak-text-primary: #fafaf9;
+  --ak-text-secondary: #d6d3d1;
+  --ak-accent: #ef4444;
+  --ak-node-bg: #292524;
+  --ak-node-border: #78716c;
+  --ak-edge-stroke: #a8a29e;
+  --ak-edge-active: #f87171;
+}
+
+/* Toolbar & Reader Controls */
+.ak-diagram-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: var(--ak-surface);
+  border-bottom: 1px solid var(--ak-surface-border);
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ak-diagram-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ak-text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ak-diagram-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.ak-chapter-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--ak-bg);
+  border: 1px solid var(--ak-surface-border);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+.ak-chapter-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ak-text-secondary);
+}
+
+.ak-diagram-btn {
+  background: var(--ak-bg);
+  border: 1px solid var(--ak-surface-border);
+  color: var(--ak-text-primary);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+.ak-diagram-btn:hover {
+  background-color: var(--ak-surface);
+  border-color: var(--ak-accent);
+}
+.ak-diagram-btn:focus-visible {
+  outline: 2px solid var(--ak-accent);
+  outline-offset: 1px;
+}
+
+.ak-diagram-search-input {
+  background: var(--ak-bg);
+  border: 1px solid var(--ak-surface-border);
+  color: var(--ak-text-primary);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  width: 140px;
+}
+.ak-diagram-search-input:focus {
+  outline: 2px solid var(--ak-accent);
+  border-color: transparent;
+}
+
+/* Main Viewport */
+.ak-diagram-viewport {
+  position: relative;
+  overflow: auto;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: var(--ak-bg);
+}
+
+.ak-diagram-svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Node, Boundary & Edge Styling */
+.ak-node {
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+.ak-node:hover {
+  transform: translateY(-2px);
+}
+.ak-node.is-dimmed {
+  opacity: 0.25;
+}
+.ak-node.is-focused rect,
+.ak-node.is-focused circle {
+  stroke: var(--ak-accent) !important;
+  stroke-width: 3px !important;
+}
+
+.ak-edge path,
+.ak-edge line,
+.ak-edge polyline {
+  transition: stroke 0.2s ease, opacity 0.2s ease;
+}
+.ak-edge.is-dimmed {
+  opacity: 0.15;
+}
+.ak-edge.is-highlighted path,
+.ak-edge.is-highlighted line,
+.ak-edge.is-highlighted polyline {
+  stroke: var(--ak-edge-active) !important;
+  stroke-width: 2.5px !important;
+}
+.ak-edge text {
+  stroke: none !important;
+  stroke-width: 0 !important;
+  stroke-dasharray: none !important;
+  animation: none !important;
+  fill: var(--ak-text-secondary);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Trace Motion Animation (Finite, <= 8s) */
+@keyframes ak-trace-stroke {
+  from {
+    stroke-dashoffset: 200;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.ak-diagram-root[data-animation="trace"] .ak-edge.is-active-trace path,
+.ak-diagram-root[data-animation="trace"] .ak-edge.is-active-trace line,
+.ak-diagram-root[data-animation="trace"] .ak-edge.is-active-trace polyline {
+  stroke-dasharray: 6 4;
+  animation: ak-trace-stroke 2.5s ease-in-out forwards;
+}
+
+/* Presentation Stage (F) */
+.ak-diagram-root.is-presentation {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  border-radius: 0;
+  border: none;
+  height: 100vh;
+  width: 100vw;
+}
+.ak-diagram-root.is-presentation .ak-diagram-viewport {
+  height: calc(100vh - 48px);
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  .ak-node, .ak-edge, .ak-diagram-btn {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+.ak-diagram-root,svg.ak-diagram-svg{--ak-role-client-stroke:#0e7490;--ak-role-client-fill:rgba(14,116,144,0.1);--ak-role-service-stroke:#4f46e5;--ak-role-service-fill:rgba(79,70,229,0.1);--ak-role-data-stroke:#b45309;--ak-role-data-fill:rgba(180,83,9,0.1);--ak-role-queue-stroke:#7c3aed;--ak-role-queue-fill:rgba(124,58,237,0.1);--ak-role-cache-stroke:#c2410c;--ak-role-cache-fill:rgba(194,65,12,0.1);--ak-role-gateway-stroke:#0369a1;--ak-role-gateway-fill:rgba(3,105,161,0.1);--ak-role-security-stroke:#be123c;--ak-role-security-fill:rgba(190,18,60,0.1);--ak-role-external-stroke:#475569;--ak-role-external-fill:rgba(71,85,105,0.1);--ak-role-worker-stroke:#0f766e;--ak-role-worker-fill:rgba(15,118,110,0.1);--ak-role-start-stroke:#047857;--ak-role-start-fill:rgba(4,120,87,0.1);--ak-role-success-stroke:#059669;--ak-role-success-fill:rgba(5,150,105,0.1);--ak-role-failure-stroke:#b91c1c;--ak-role-failure-fill:rgba(185,28,28,0.1);--ak-role-waiting-stroke:#a16207;--ak-role-waiting-fill:rgba(161,98,7,0.1);--ak-role-decision-stroke:#a21caf;--ak-role-decision-fill:rgba(162,28,175,0.1);--ak-role-process-stroke:#1d4ed8;--ak-role-process-fill:rgba(29,78,216,0.1);--ak-role-governance-stroke:#6d28d9;--ak-role-governance-fill:rgba(109,40,217,0.1);--ak-role-transform-stroke:#4338ca;--ak-role-transform-fill:rgba(67,56,202,0.1);--ak-role-filter-stroke:#4d7c0f;--ak-role-filter-fill:rgba(77,124,15,0.1);}
+.ak-diagram-root[data-theme="dark"],svg.ak-diagram-svg[data-theme="dark"]{--ak-role-client-stroke:#22d3ee;--ak-role-client-fill:rgba(34,211,238,0.16);--ak-role-service-stroke:#818cf8;--ak-role-service-fill:rgba(129,140,248,0.16);--ak-role-data-stroke:#fbbf24;--ak-role-data-fill:rgba(251,191,36,0.16);--ak-role-queue-stroke:#a78bfa;--ak-role-queue-fill:rgba(167,139,250,0.16);--ak-role-cache-stroke:#fb923c;--ak-role-cache-fill:rgba(251,146,60,0.16);--ak-role-gateway-stroke:#38bdf8;--ak-role-gateway-fill:rgba(56,189,248,0.16);--ak-role-security-stroke:#fb7185;--ak-role-security-fill:rgba(251,113,133,0.16);--ak-role-external-stroke:#94a3b8;--ak-role-external-fill:rgba(148,163,184,0.16);--ak-role-worker-stroke:#2dd4bf;--ak-role-worker-fill:rgba(45,212,191,0.16);--ak-role-start-stroke:#34d399;--ak-role-start-fill:rgba(52,211,153,0.16);--ak-role-success-stroke:#34d399;--ak-role-success-fill:rgba(52,211,153,0.16);--ak-role-failure-stroke:#f87171;--ak-role-failure-fill:rgba(248,113,113,0.16);--ak-role-waiting-stroke:#facc15;--ak-role-waiting-fill:rgba(250,204,21,0.16);--ak-role-decision-stroke:#e879f9;--ak-role-decision-fill:rgba(232,121,249,0.16);--ak-role-process-stroke:#60a5fa;--ak-role-process-fill:rgba(96,165,250,0.16);--ak-role-governance-stroke:#c4b5fd;--ak-role-governance-fill:rgba(196,181,253,0.16);--ak-role-transform-stroke:#a5b4fc;--ak-role-transform-fill:rgba(165,180,252,0.16);--ak-role-filter-stroke:#a3e635;--ak-role-filter-fill:rgba(163,230,53,0.16);}
+.ak-node[data-family="client"]{--ak-node-stroke:var(--ak-role-client-stroke);--ak-node-fill:var(--ak-role-client-fill);}.ak-legend-item[data-family="client"] .ak-legend-swatch{fill:var(--ak-role-client-fill);stroke:var(--ak-role-client-stroke);}
+.ak-node[data-family="service"]{--ak-node-stroke:var(--ak-role-service-stroke);--ak-node-fill:var(--ak-role-service-fill);}.ak-legend-item[data-family="service"] .ak-legend-swatch{fill:var(--ak-role-service-fill);stroke:var(--ak-role-service-stroke);}
+.ak-node[data-family="data"]{--ak-node-stroke:var(--ak-role-data-stroke);--ak-node-fill:var(--ak-role-data-fill);}.ak-legend-item[data-family="data"] .ak-legend-swatch{fill:var(--ak-role-data-fill);stroke:var(--ak-role-data-stroke);}
+.ak-node[data-family="queue"]{--ak-node-stroke:var(--ak-role-queue-stroke);--ak-node-fill:var(--ak-role-queue-fill);}.ak-legend-item[data-family="queue"] .ak-legend-swatch{fill:var(--ak-role-queue-fill);stroke:var(--ak-role-queue-stroke);}
+.ak-node[data-family="cache"]{--ak-node-stroke:var(--ak-role-cache-stroke);--ak-node-fill:var(--ak-role-cache-fill);}.ak-legend-item[data-family="cache"] .ak-legend-swatch{fill:var(--ak-role-cache-fill);stroke:var(--ak-role-cache-stroke);}
+.ak-node[data-family="gateway"]{--ak-node-stroke:var(--ak-role-gateway-stroke);--ak-node-fill:var(--ak-role-gateway-fill);}.ak-legend-item[data-family="gateway"] .ak-legend-swatch{fill:var(--ak-role-gateway-fill);stroke:var(--ak-role-gateway-stroke);}
+.ak-node[data-family="security"]{--ak-node-stroke:var(--ak-role-security-stroke);--ak-node-fill:var(--ak-role-security-fill);}.ak-legend-item[data-family="security"] .ak-legend-swatch{fill:var(--ak-role-security-fill);stroke:var(--ak-role-security-stroke);}
+.ak-node[data-family="external"]{--ak-node-stroke:var(--ak-role-external-stroke);--ak-node-fill:var(--ak-role-external-fill);}.ak-legend-item[data-family="external"] .ak-legend-swatch{fill:var(--ak-role-external-fill);stroke:var(--ak-role-external-stroke);}
+.ak-node[data-family="worker"]{--ak-node-stroke:var(--ak-role-worker-stroke);--ak-node-fill:var(--ak-role-worker-fill);}.ak-legend-item[data-family="worker"] .ak-legend-swatch{fill:var(--ak-role-worker-fill);stroke:var(--ak-role-worker-stroke);}
+.ak-node[data-family="start"]{--ak-node-stroke:var(--ak-role-start-stroke);--ak-node-fill:var(--ak-role-start-fill);}.ak-legend-item[data-family="start"] .ak-legend-swatch{fill:var(--ak-role-start-fill);stroke:var(--ak-role-start-stroke);}
+.ak-node[data-family="success"]{--ak-node-stroke:var(--ak-role-success-stroke);--ak-node-fill:var(--ak-role-success-fill);}.ak-legend-item[data-family="success"] .ak-legend-swatch{fill:var(--ak-role-success-fill);stroke:var(--ak-role-success-stroke);}
+.ak-node[data-family="failure"]{--ak-node-stroke:var(--ak-role-failure-stroke);--ak-node-fill:var(--ak-role-failure-fill);}.ak-legend-item[data-family="failure"] .ak-legend-swatch{fill:var(--ak-role-failure-fill);stroke:var(--ak-role-failure-stroke);}
+.ak-node[data-family="waiting"]{--ak-node-stroke:var(--ak-role-waiting-stroke);--ak-node-fill:var(--ak-role-waiting-fill);}.ak-legend-item[data-family="waiting"] .ak-legend-swatch{fill:var(--ak-role-waiting-fill);stroke:var(--ak-role-waiting-stroke);}
+.ak-node[data-family="decision"]{--ak-node-stroke:var(--ak-role-decision-stroke);--ak-node-fill:var(--ak-role-decision-fill);}.ak-legend-item[data-family="decision"] .ak-legend-swatch{fill:var(--ak-role-decision-fill);stroke:var(--ak-role-decision-stroke);}
+.ak-node[data-family="process"]{--ak-node-stroke:var(--ak-role-process-stroke);--ak-node-fill:var(--ak-role-process-fill);}.ak-legend-item[data-family="process"] .ak-legend-swatch{fill:var(--ak-role-process-fill);stroke:var(--ak-role-process-stroke);}
+.ak-node[data-family="governance"]{--ak-node-stroke:var(--ak-role-governance-stroke);--ak-node-fill:var(--ak-role-governance-fill);}.ak-legend-item[data-family="governance"] .ak-legend-swatch{fill:var(--ak-role-governance-fill);stroke:var(--ak-role-governance-stroke);}
+.ak-node[data-family="transform"]{--ak-node-stroke:var(--ak-role-transform-stroke);--ak-node-fill:var(--ak-role-transform-fill);}.ak-legend-item[data-family="transform"] .ak-legend-swatch{fill:var(--ak-role-transform-fill);stroke:var(--ak-role-transform-stroke);}
+.ak-node[data-family="filter"]{--ak-node-stroke:var(--ak-role-filter-stroke);--ak-node-fill:var(--ak-role-filter-fill);}.ak-legend-item[data-family="filter"] .ak-legend-swatch{fill:var(--ak-role-filter-fill);stroke:var(--ak-role-filter-stroke);}
+/* ak-diagram core SVG styles: shared by the reader fragment and standalone SVG.
+   Colour comes from --ak-* palette variables and --ak-role-* family tokens. */
+
+.ak-diagram-svg { font-family: var(--ak-font-sans); display: block; }
+.ak-diagram-svg text { user-select: none; }
+
+.ak-canvas { fill: var(--ak-bg); }
+.ak-grid-dot { fill: var(--ak-text-muted); opacity: 0.28; }
+
+.ak-title { font-size: 16px; font-weight: 700; fill: var(--ak-text-primary); letter-spacing: -0.01em; }
+.ak-subtitle { font-size: 11px; font-weight: 500; fill: var(--ak-text-secondary); }
+
+/* Frames: boundaries, lanes, stages */
+.ak-frame { fill: var(--ak-surface); stroke: var(--ak-surface-border); stroke-width: 1; }
+.ak-frame-boundary { fill: transparent; stroke-dasharray: 6 4; stroke-width: 1.5; }
+.ak-frame-stage { stroke-dasharray: 4 3; }
+.ak-frame-label { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; fill: var(--ak-text-secondary); }
+.ak-frame-role { font-size: 10px; fill: var(--ak-text-muted); }
+
+/* Nodes */
+.ak-node { cursor: pointer; }
+.ak-node-mask { fill: var(--ak-node-bg); }
+.ak-node-card { fill: var(--ak-node-fill, var(--ak-node-bg)); stroke: var(--ak-node-stroke, var(--ak-node-border)); stroke-width: 1.5; transition: stroke-width 160ms ease; }
+.ak-node[data-shape="notch"] .ak-node-card { stroke-width: 2; }
+.ak-node-accent { fill: var(--ak-node-stroke, var(--ak-accent)); }
+.ak-sigil path { fill: none; stroke: var(--ak-node-stroke, var(--ak-accent)); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.ak-node-label { font-size: 13px; font-weight: 600; fill: var(--ak-text-primary); }
+.ak-node-sub { font-size: 9.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; fill: var(--ak-text-muted); }
+.ak-node:hover .ak-node-card, .ak-node:focus-visible .ak-node-card { stroke-width: 2.5; }
+.ak-node:focus-visible { outline: none; }
+
+/* Edges */
+.ak-edge-path { fill: none; stroke: var(--ak-edge-stroke); stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; transition: stroke 160ms ease, stroke-width 160ms ease; }
+.ak-edge-dashed { stroke-dasharray: 5 4; }
+.ak-edge[data-tone="failure"] .ak-edge-path { stroke: var(--ak-role-failure-stroke); }
+.ak-edge[data-tone="decision"] .ak-edge-path { stroke: var(--ak-role-decision-stroke); }
+.ak-edge-flow { fill: none; stroke: var(--ak-edge-active); stroke-width: 2.25; stroke-linecap: round; opacity: 0; pointer-events: none; }
+.ak-edge-label-mask { fill: var(--ak-bg); stroke: var(--ak-surface-border); stroke-width: 1; }
+.ak-edge-label text { font-size: 10.5px; font-weight: 500; fill: var(--ak-text-secondary); }
+.ak-arrowhead { fill: var(--ak-edge-stroke); }
+.ak-arrowhead-open { fill: none; stroke: var(--ak-edge-stroke); stroke-width: 1.25; }
+
+/* Sequence extras */
+.ak-lifeline { stroke: var(--ak-edge-stroke); stroke-width: 1.25; stroke-dasharray: 4 4; opacity: 0.55; }
+.ak-activation { fill: var(--ak-accent-light); stroke: var(--ak-accent); stroke-width: 1; }
+
+/* Legend */
+.ak-legend-swatch { stroke-width: 1.5; }
+.ak-legend-item text { font-size: 10.5px; font-weight: 500; fill: var(--ak-text-secondary); }
+
+/* Motion: staggered entrance, edge draw, optional finite trace pass.
+   Total budget stays under 8 s because --step is capped at 40 by the compiler. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-motion="play"] [data-animate="node"] {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ak-node-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: calc(var(--step, 0) * 110ms);
+  }
+  [data-motion="play"] [data-animate="edge"] .ak-edge-path {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: ak-edge-draw 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: calc(var(--step, 0) * 110ms + 140ms);
+  }
+  [data-motion="play"] [data-animate="edge"] .ak-edge-dashed {
+    animation-name: ak-edge-draw-dashed;
+  }
+  [data-motion="play"] [data-animate="edge"] .ak-edge-label {
+    opacity: 0;
+    animation: ak-fade-in 0.4s ease forwards;
+    animation-delay: calc(var(--step, 0) * 110ms + 520ms);
+  }
+  [data-motion="play"] [data-animate="frame"] {
+    opacity: 0;
+    animation: ak-fade-in 0.5s ease forwards;
+  }
+  [data-motion="play"][data-animation="trace"] [data-animate="edge"] .ak-edge-flow,
+  [data-motion="play"] [data-animation="trace"] [data-animate="edge"] .ak-edge-flow {
+    stroke-dasharray: 5 9;
+    animation: ak-edge-flow 1.3s linear 3;
+    animation-delay: calc(var(--step, 0) * 110ms + 900ms);
+  }
+  [data-motion="play"][data-animation="trace"] [data-animate="node"] .ak-node-card,
+  [data-motion="play"] [data-animation="trace"] [data-animate="node"] .ak-node-card {
+    animation: ak-node-pulse 1.6s ease-in-out 1;
+    animation-delay: calc(var(--step, 0) * 110ms + 900ms);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ak-diagram-svg *, .ak-diagram-svg { animation: none !important; transition: none !important; }
+}
+
+@keyframes ak-node-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes ak-edge-draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes ak-edge-draw-dashed {
+  to { stroke-dashoffset: 0; stroke-dasharray: 5 4; }
+}
+@keyframes ak-fade-in {
+  to { opacity: 1; }
+}
+@keyframes ak-edge-flow {
+  0% { stroke-dashoffset: 28; opacity: 0; }
+  15% { opacity: 0.9; }
+  85% { opacity: 0.9; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes ak-node-pulse {
+  0%, 100% { stroke-width: 1.5; }
+  50% { stroke-width: 3; }
+}
+</style>
+    <div class="ak-diagram-toolbar">
+      <h4 class="ak-diagram-title"><span>&#128202;</span> Proposed Outcome (Not Yet Implemented): Bilingual PDF PII-Masking System Design<span class="ak-diagram-subtitle"> - Post-red-team end-state workflow — Zero-egress intake &amp; 3-way page routing, Tesseract 5 VI/EN OCR, visual CropBox coords, singleton ML-service, human review, destructive redaction &amp; zero-PyMuPDF verification</span></h4>
+      <div class="ak-diagram-controls">
+        <input type="text" class="ak-diagram-search-input" placeholder="Search (/) ..." aria-label="Search diagram nodes and descriptions" />
+        <button type="button" class="ak-diagram-btn ak-btn-reach-down" title="Downstream Reach">&#8595; Reach</button>
+        <button type="button" class="ak-diagram-btn ak-btn-reach-up" title="Upstream Reach">&#8593; Reach</button>
+        <button type="button" class="ak-diagram-btn ak-btn-route" title="Route Inspection (R)">&#128205; Route</button>
+        <button type="button" class="ak-diagram-btn ak-btn-lens" title="Role Lens (L)">&#128269; Lens</button>
+        <div class="ak-chapter-controls">
+    <button type="button" class="ak-diagram-btn ak-btn-prev-chapter" title="Previous Chapter ([)">&#8249;</button>
+    <span class="ak-chapter-label">1/5</span>
+    <button type="button" class="ak-diagram-btn ak-btn-next-chapter" title="Next Chapter (])">&#8250;</button>
+  </div>
+        <button type="button" class="ak-diagram-btn ak-btn-motion" title="Replay motion (M)">&#9654; Replay</button>
+        <button type="button" class="ak-diagram-btn ak-btn-theme" title="Toggle Light/Dark">&#9728;&#65039;</button>
+        <button type="button" class="ak-diagram-btn ak-btn-present" title="Presentation Stage (F)">&#9974;</button>
+        <button type="button" class="ak-diagram-btn ak-btn-share" title="Export 1200x630 Share Card">&#128228; Card</button>
+      </div>
+    </div>
+    <div class="ak-diagram-viewport">
+      <svg class="ak-diagram-svg" viewBox="0 0 5455 1026" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Proposed Outcome (Not Yet Implemented): Bilingual PDF PII-Masking System Design" data-diagram-type="workflow" data-preset="signal-flow" data-theme="dark" data-animation="trace" data-motion="play"><title>Proposed Outcome (Not Yet Implemented): Bilingual PDF PII-Masking System Design</title><defs><marker id="ak-arrowhead-0298e212" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path class="ak-arrowhead" d="M0 0L9 3.5L0 7z"/></marker><marker id="ak-arrowhead-open-0298e212" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path class="ak-arrowhead-open" d="M0 0L8 3.5L0 7"/></marker><pattern id="ak-grid-0298e212" width="24" height="24" patternUnits="userSpaceOnUse"><circle class="ak-grid-dot" cx="1" cy="1" r="1"/></pattern></defs><rect class="ak-canvas" x="0" y="0" width="5455" height="1026"/><rect class="ak-canvas-grid" x="0" y="0" width="5455" height="1026" fill="url(#ak-grid-0298e212)"/><g class="ak-header"><text class="ak-title" x="40" y="34">Proposed Outcome (Not Yet Implemented): Bilingual PDF PII-Masking System Design</text><text class="ak-subtitle" x="40" y="52">Post-red-team end-state workflow — Zero-egress intake &amp; 3-way page routing, Tesseract 5 VI/EN OCR, visual CropBox coords, singleton ML-service, human review, destructive redaction &amp; zero-PyMuPDF verification</text></g><g class="ak-lane" data-lane-id="user-ui" data-animate="frame"><rect class="ak-frame ak-frame-lane" x="18" y="92" width="5397" height="110" rx="12"/><text class="ak-frame-label" x="32" y="113">User &amp; React Reviewer UI</text><text class="ak-frame-role" x="219.3" y="113">frontend</text></g><g class="ak-lane" data-lane-id="api-pg" data-animate="frame"><rect class="ak-frame ak-frame-lane" x="18" y="212" width="5397" height="110" rx="12"/><text class="ak-frame-label" x="32" y="233">FastAPI (API) + PostgreSQL (State &amp; SKIP LOCKED Queue)</text><text class="ak-frame-role" x="425.3" y="233">orchestrator</text></g><g class="ak-lane" data-lane-id="extract-worker" data-animate="frame"><rect class="ak-frame ak-frame-lane" x="18" y="332" width="5397" height="278" rx="12"/><text class="ak-frame-label" x="32" y="353">Zero-Egress Worker: Intake, Extraction &amp; OCR</text><text class="ak-frame-role" x="369.7" y="353">worker</text></g><g class="ak-lane" data-lane-id="ml-svc" data-animate="frame"><rect class="ak-frame ak-frame-lane" x="18" y="620" width="5397" height="194" rx="12"/><text class="ak-frame-label" x="32" y="641">Authenticated Singleton ML-Service (VI + EN)</text><text class="ak-frame-role" x="361.7" y="641">system</text></g><g class="ak-lane" data-lane-id="redact-ver" data-animate="frame"><rect class="ak-frame ak-frame-lane" x="18" y="824" width="5397" height="110" rx="12"/><text class="ak-frame-label" x="32" y="845">Redaction (PyMuPDF) &amp; Independent Verifier (Zero-PyMuPDF)</text><text class="ak-frame-role" x="462.3" y="845">system</text></g><g class="ak-edge" data-from="upload" data-to="api-quarantine" data-edge-id="e0" data-kind="forward" data-animate="edge" data-route="263,153 309,153 309,273 355,273" style="--step:1"><path class="ak-edge-path" d="M263 153 L299 153 Q309 153 309 163 L309 263 Q309 273 319 273 L355 273" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M263 153 L299 153 Q309 153 309 163 L309 263 Q309 273 319 273 L355 273" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="246.3" y="132" width="79.5" height="18" rx="9"/><text x="286" y="144.5" text-anchor="middle">HTTPS POST</text></g></g><g class="ak-edge" data-from="api-quarantine" data-to="intake-gate" data-edge-id="e1" data-kind="forward" data-animate="edge" data-route="605,273 651,273 651,477 697,477" style="--step:2"><path class="ak-edge-path" d="M605 273 L641 273 Q651 273 651 283 L651 467 Q651 477 661 477 L697 477" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M605 273 L641 273 Q651 273 651 283 L651 467 Q651 477 661 477 L697 477" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="603.4" y="252" width="49.3" height="18" rx="9"/><text x="628" y="264.5" text-anchor="middle">PG Job</text></g></g><g class="ak-edge" data-from="intake-gate" data-to="reject-invalid" data-edge-id="e2" data-kind="forward" data-animate="edge" data-route="947,470 987,470 987,273 1039,273" style="--step:3"><path class="ak-edge-path" d="M947 470 L977 470 Q987 470 987 460 L987 283 Q987 273 997 273 L1039 273" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M947 470 L977 470 Q987 470 987 460 L987 283 Q987 273 997 273 L1039 273" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="970.3" y="252" width="85.4" height="18" rx="9"/><text x="1013" y="264.5" text-anchor="middle">Invalid / Bomb</text></g></g><g class="ak-edge" data-from="intake-gate" data-to="store-raw" data-edge-id="e3" data-kind="forward" data-animate="edge" data-route="947,484 999,484 999,477 1039,477" style="--step:3"><path class="ak-edge-path" d="M947 484 L995.5 484 Q999 484 999 480.5 L999 480.5 Q999 477 1002.5 477 L1039 477" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M947 484 L995.5 484 Q999 484 999 480.5 L999 480.5 Q999 477 1002.5 477 L1039 477" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="941.8" y="463" width="62.5" height="18" rx="9"/><text x="973" y="475.5" text-anchor="middle">Valid PDF</text></g></g><g class="ak-edge" data-from="store-raw" data-to="page-classify" data-edge-id="e4" data-kind="forward" data-animate="edge" data-route="1289,477 1381,477" style="--step:4"><path class="ak-edge-path" d="M1289 477 L1381 477" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M1289 477 L1381 477" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="1307.2" y="456" width="55.6" height="18" rx="9"/><text x="1335" y="468.5" text-anchor="middle">Per page</text></g></g><g class="ak-edge" data-from="page-classify" data-to="native-extract" data-edge-id="e5" data-kind="forward" data-animate="edge" data-route="1631,463 1671,463 1671,393 1723,393" style="--step:5"><path class="ak-edge-path" d="M1631 463 L1661 463 Q1671 463 1671 453 L1671 403 Q1671 393 1681 393 L1723 393" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M1631 463 L1661 463 Q1671 463 1671 453 L1671 403 Q1671 393 1681 393 L1723 393" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="1671.1" y="372" width="51.8" height="18" rx="9"/><text x="1697" y="384.5" text-anchor="middle">NATIVE</text></g></g><g class="ak-edge" data-from="page-classify" data-to="ocr-raster" data-edge-id="e6" data-kind="forward" data-animate="edge" data-route="1631,477 1723,477" style="--step:5"><path class="ak-edge-path" d="M1631 477 L1723 477" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M1631 477 L1723 477" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="1645.8" y="456" width="62.5" height="18" rx="9"/><text x="1677" y="468.5" text-anchor="middle">SCANNED</text></g></g><g class="ak-edge" data-from="page-classify" data-to="mixed-merge" data-edge-id="e7" data-kind="forward" data-animate="edge" data-route="1631,491 1683,491 1683,561 1723,561" style="--step:5"><path class="ak-edge-path" d="M1631 491 L1673 491 Q1683 491 1683 501 L1683 551 Q1683 561 1693 561 L1723 561" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M1631 491 L1673 491 Q1683 491 1683 501 L1683 551 Q1683 561 1693 561 L1723 561" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="1633.5" y="492" width="47" height="18" rx="9"/><text x="1657" y="504.5" text-anchor="middle">MIXED</text></g></g><g class="ak-edge" data-from="native-extract" data-to="normalize-coord" data-edge-id="e8" data-kind="forward" data-animate="edge" data-route="1973,393 2013,393 2013,463 2065,463" style="--step:6"><path class="ak-edge-path" d="M1973 393 L2003 393 Q2013 393 2013 403 L2013 453 Q2013 463 2023 463 L2065 463" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M1973 393 L2003 393 Q2013 393 2013 403 L2013 453 Q2013 463 2023 463 L2065 463" pathLength="100"/></g><g class="ak-edge" data-from="ocr-raster" data-to="normalize-coord" data-edge-id="e9" data-kind="forward" data-animate="edge" data-route="1973,477 2065,477" style="--step:6"><path class="ak-edge-path" d="M1973 477 L2065 477" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M1973 477 L2065 477" pathLength="100"/></g><g class="ak-edge" data-from="mixed-merge" data-to="normalize-coord" data-edge-id="e10" data-kind="forward" data-animate="edge" data-route="1973,561 2025,561 2025,491 2065,491" style="--step:6"><path class="ak-edge-path" d="M1973 561 L2015 561 Q2025 561 2025 551 L2025 501 Q2025 491 2035 491 L2065 491" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M1973 561 L2015 561 Q2025 561 2025 551 L2025 501 Q2025 491 2035 491 L2065 491" pathLength="100"/></g><g class="ak-edge" data-from="normalize-coord" data-to="lang-route" data-edge-id="e11" data-kind="forward" data-animate="edge" data-route="2315,477 2361,477 2361,723 2407,723" style="--step:7"><path class="ak-edge-path" d="M2315 477 L2351 477 Q2361 477 2361 487 L2361 713 Q2361 723 2371 723 L2407 723" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M2315 477 L2351 477 Q2361 477 2361 487 L2361 713 Q2361 723 2371 723 L2407 723" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="2300.5" y="456" width="75.1" height="18" rx="9"/><text x="2338" y="468.5" text-anchor="middle">Bearer HTTP</text></g></g><g class="ak-edge" data-from="lang-route" data-to="vi-detect" data-edge-id="e12" data-kind="forward" data-animate="edge" data-route="2657,716 2697,716 2697,681 2749,681" style="--step:8"><path class="ak-edge-path" d="M2657 716 L2687 716 Q2697 716 2697 706 L2697 691 Q2697 681 2707 681 L2749 681" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M2657 716 L2687 716 Q2697 716 2697 706 L2697 691 Q2697 681 2707 681 L2749 681" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="2687.9" y="660" width="70.3" height="18" rx="9"/><text x="2723" y="672.5" text-anchor="middle">Vietnamese</text></g></g><g class="ak-edge" data-from="lang-route" data-to="en-detect" data-edge-id="e13" data-kind="forward" data-animate="edge" data-route="2657,730 2709,730 2709,765 2749,765" style="--step:8"><path class="ak-edge-path" d="M2657 730 L2699 730 Q2709 730 2709 740 L2709 755 Q2709 765 2719 765 L2749 765" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M2657 730 L2699 730 Q2709 730 2709 740 L2709 755 Q2709 765 2719 765 L2749 765" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="2658.1" y="709" width="49.9" height="18" rx="9"/><text x="2683" y="721.5" text-anchor="middle">English</text></g></g><g class="ak-edge" data-from="vi-detect" data-to="map-regions" data-edge-id="e14" data-kind="forward" data-animate="edge" data-route="2999,681 3039,681 3039,470 3091,470" style="--step:9"><path class="ak-edge-path" d="M2999 681 L3029 681 Q3039 681 3039 671 L3039 480 Q3039 470 3049 470 L3091 470" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M2999 681 L3029 681 Q3039 681 3039 671 L3039 480 Q3039 470 3049 470 L3091 470" pathLength="100"/></g><g class="ak-edge" data-from="en-detect" data-to="map-regions" data-edge-id="e15" data-kind="forward" data-animate="edge" data-route="2999,765 3051,765 3051,484 3091,484" style="--step:9"><path class="ak-edge-path" d="M2999 765 L3041 765 Q3051 765 3051 755 L3051 494 Q3051 484 3061 484 L3091 484" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M2999 765 L3041 765 Q3051 765 3051 755 L3051 494 Q3051 484 3061 484 L3091 484" pathLength="100"/></g><g class="ak-edge" data-from="map-regions" data-to="human-review" data-edge-id="e16" data-kind="forward" data-animate="edge" data-route="3341,477 3393,477 3393,160 3433,160" style="--step:10"><path class="ak-edge-path" d="M3341 477 L3383 477 Q3393 477 3393 467 L3393 170 Q3393 160 3403 160 L3433 160" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M3341 477 L3383 477 Q3393 477 3393 467 L3393 170 Q3393 160 3403 160 L3433 160" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="3318.1" y="456" width="97.8" height="18" rx="9"/><text x="3367" y="468.5" text-anchor="middle">Overlays + Status</text></g></g><g class="ak-edge" data-from="human-review" data-to="lock-revision" data-edge-id="e17" data-kind="forward" data-animate="edge" data-route="3683,153 3729,153 3729,273 3775,273" style="--step:11"><path class="ak-edge-path" d="M3683 153 L3719 153 Q3729 153 3729 163 L3729 263 Q3729 273 3739 273 L3775 273" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M3683 153 L3719 153 Q3729 153 3729 163 L3729 263 Q3729 273 3739 273 L3775 273" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="3657.3" y="132" width="97.4" height="18" rx="9"/><text x="3706" y="144.5" text-anchor="middle">Confirm all pages</text></g></g><g class="ak-edge" data-from="lock-revision" data-to="redact-engine" data-edge-id="e18" data-kind="forward" data-animate="edge" data-route="4025,273 4071,273 4071,885 4117,885" style="--step:12"><path class="ak-edge-path" d="M4025 273 L4061 273 Q4071 273 4071 283 L4071 875 Q4071 885 4081 885 L4117 885" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M4025 273 L4061 273 Q4071 273 4071 283 L4071 875 Q4071 885 4081 885 L4117 885" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="4017.1" y="252" width="61.9" height="18" rx="9"/><text x="4048" y="264.5" text-anchor="middle">Export job</text></g></g><g class="ak-edge" data-from="redact-engine" data-to="verify-engine" data-edge-id="e19" data-kind="forward" data-animate="edge" data-route="4367,885 4459,885" style="--step:13"><path class="ak-edge-path" d="M4367 885 L4459 885" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M4367 885 L4459 885" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="4380.4" y="864" width="65.2" height="18" rx="9"/><text x="4413" y="876.5" text-anchor="middle">Temp PDF</text></g></g><g class="ak-edge" data-from="verify-engine" data-to="verify-gate" data-edge-id="e20" data-kind="forward" data-animate="edge" data-route="4709,885 4801,885" style="--step:14"><path class="ak-edge-path" d="M4709 885 L4801 885" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M4709 885 L4801 885" pathLength="100"/></g><g class="ak-edge" data-from="verify-gate" data-to="export-ready" data-edge-id="e21" data-kind="forward" data-animate="edge" data-route="5051,878 5091,878 5091,153 5143,153" style="--step:15"><path class="ak-edge-path" d="M5051 878 L5081 878 Q5091 878 5091 868 L5091 163 Q5091 153 5101 153 L5143 153" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M5051 878 L5081 878 Q5091 878 5091 868 L5091 163 Q5091 153 5101 153 L5143 153" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="5096.2" y="132" width="41.7" height="18" rx="9"/><text x="5117" y="144.5" text-anchor="middle">PASS</text></g></g><g class="ak-edge" data-from="verify-gate" data-to="verify-fail" data-edge-id="e22" data-kind="forward" data-animate="edge" data-route="5051,892 5103,892 5103,273 5143,273" style="--step:15"><path class="ak-edge-path" d="M5051 892 L5093 892 Q5103 892 5103 882 L5103 283 Q5103 273 5113 273 L5143 273" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M5051 892 L5093 892 Q5103 892 5103 882 L5103 283 Q5103 273 5113 273 L5143 273" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="5014.3" y="871" width="125.5" height="18" rx="9"/><text x="5077" y="883.5" text-anchor="middle">FAIL / INCONCLUSIVE</text></g></g><g class="ak-edge" data-from="verify-fail" data-to="human-review" data-edge-id="e23" data-kind="back" data-animate="edge" data-route="5393,273 5421,273 5421,100 3381,100 3381,146 3433,146" style="--step:16"><path class="ak-edge-path" d="M5393 273 L5411 273 Q5421 273 5421 263 L5421 110 Q5421 100 5411 100 L3391 100 Q3381 100 3381 110 L3381 136 Q3381 146 3391 146 L3433 146" pathLength="100" marker-end="url(#ak-arrowhead-0298e212)"/><path class="ak-edge-flow" d="M5393 273 L5411 273 Q5421 273 5421 263 L5421 110 Q5421 100 5411 100 L3391 100 Q3381 100 3381 110 L3381 136 Q3381 146 3391 146 L3433 146" pathLength="100"/><g class="ak-edge-label"><rect class="ak-edge-label-mask" x="4355.5" y="79" width="91.1" height="18" rx="9"/><text x="4401" y="91.5" text-anchor="middle">New DRAFT rev</text></g></g><g class="ak-node" data-node-id="upload" data-label="Upload PDF (CSRF + Auth)" data-role="start" data-desc="Authenticated user uploads PDF (&lt;=25 MB, &lt;=100 pages)." data-family="start" data-shape="pill" tabindex="0" data-animate="node" style="--step:0"><rect class="ak-node-mask" x="40" y="132" width="223" height="42" rx="21"/><rect class="ak-node-card" x="40" y="132" width="223" height="42" rx="21"/><g class="ak-sigil" transform="translate(54 145)"><path d="M5 3l8 5-8 5z"/></g><text class="ak-node-label" x="80" y="157.5">Upload PDF (CSRF + Auth)</text></g><g class="ak-node" data-node-id="api-quarantine" data-label="Stream to Quarantine (%PDF- + Size Cap)" data-role="action" data-desc="No native PDF parser in external-network api; enqueue PG SKIP LOCKED job." data-family="process" data-shape="card" tabindex="0" data-animate="node" style="--step:1"><rect class="ak-node-mask" x="355" y="246" width="250" height="54" rx="10"/><rect class="ak-node-card" x="355" y="246" width="250" height="54" rx="10"/><rect class="ak-node-accent" x="356" y="256" width="3" height="34" rx="1.5"/><g class="ak-sigil" transform="translate(369 265)"><path d="M3 4h10M3 8h10M3 12h6"/></g><text class="ak-node-label" x="395" y="271">Stream to Quarantine (%PDF-…</text><text class="ak-node-sub" x="395" y="286">Process</text></g><g class="ak-node" data-node-id="intake-gate" data-label="Deep Intake Gate (Valid, Unencrypted, No Bomb?)" data-role="decision" data-desc="Isolated scrubbed-env subprocess checks pages &lt;=100, xref &lt;=50k, inflation &amp; pixel caps." data-family="decision" data-shape="notch" tabindex="0" data-animate="node" style="--step:2"><rect class="ak-node-mask" x="697" y="450" width="250" height="54" rx="4"/><rect class="ak-node-card" x="697" y="450" width="250" height="54" rx="4"/><g class="ak-sigil" transform="translate(711 469)"><path d="M8 2l6 6-6 6-6-6z"/></g><text class="ak-node-label" x="737" y="475">Deep Intake Gate (Valid, Unen…</text><text class="ak-node-sub" x="737" y="490">Decision</text></g><g class="ak-node" data-node-id="reject-invalid" data-label="Purge Quarantine &amp; Reject" data-role="terminal-failure" data-desc="Malformed, encrypted, oversized, or bomb PDFs rejected cleanly." data-family="failure" data-shape="pill" tabindex="0" data-animate="node" style="--step:3"><rect class="ak-node-mask" x="1039" y="252" width="250" height="42" rx="21"/><rect class="ak-node-card" x="1039" y="252" width="250" height="42" rx="21"/><g class="ak-sigil" transform="translate(1053 265)"><path d="M4 4l8 8M12 4l-8 8"/></g><text class="ak-node-label" x="1079" y="277.5">Purge Quarantine &amp; Reject</text></g><g class="ak-node" data-node-id="store-raw" data-label="Store Immutable Original + SHA-256" data-role="action" data-desc="Atomic move to private storage; original never mutated." data-family="process" data-shape="card" tabindex="0" data-animate="node" style="--step:3"><rect class="ak-node-mask" x="1039" y="450" width="250" height="54" rx="10"/><rect class="ak-node-card" x="1039" y="450" width="250" height="54" rx="10"/><rect class="ak-node-accent" x="1040" y="460" width="3" height="34" rx="1.5"/><g class="ak-sigil" transform="translate(1053 469)"><path d="M3 4h10M3 8h10M3 12h6"/></g><text class="ak-node-label" x="1079" y="475">Store Immutable Original + SH…</text><text class="ak-node-sub" x="1079" y="490">Process</text></g><g class="ak-node" data-node-id="page-classify" data-label="Classify Each Page (Native / Scanned / Mixed)" data-role="decision" data-desc="get_texttrace() (3 Tr invisible OCR) + get_image_info(xrefs=True)." data-family="decision" data-shape="notch" tabindex="0" data-animate="node" style="--step:4"><rect class="ak-node-mask" x="1381" y="450" width="250" height="54" rx="4"/><rect class="ak-node-card" x="1381" y="450" width="250" height="54" rx="4"/><g class="ak-sigil" transform="translate(1395 469)"><path d="M8 2l6 6-6 6-6-6z"/></g><text class="ak-node-label" x="1421" y="475">Classify Each Page (Native /…</text><text class="ak-node-sub" x="1421" y="490">Decision</text></g><g class="ak-node" data-node-id="native-extract" data-label="Native Extract (PyMuPDF + Visual CropBox)" data-role="action" data-desc="set_small_glyph_heights(True), reading order &amp; exact visual CropBox rects." data-family="process" data-shape="card" tabindex="0" data-animate="node" style="--step:5"><rect class="ak-node-mask" x="1723" y="366" width="250" height="54" rx="10"/><rect class="ak-node-card" x="1723" y="366" width="250" height="54" rx="10"/><rect class="ak-node-accent" x="1724" y="376" width="3" height="34" rx="1.5"/><g class="ak-sigil" transform="translate(1737 385)"><path d="M3 4h10M3 8h10M3 12h6"/></g><text class="ak-node-label" x="1763" y="391">Native Extract (PyMuPDF + Vi…</text><text class="ak-node-sub" x="1763" y="406">Process</text></g><g class="ak-node" data-node-id="ocr-raster" data-label="300 DPI Render + Deskew + Tesseract 5 VI/EN" data-role="subprocess" data-desc="vie+eng tessdata_best on CPU; ignores untrusted 3 Tr OCR layers." data-family="service" data-shape="card" tabindex="0" data-animate="node" style="--step:5"><rect class="ak-node-mask" x="1723" y="450" width="250" height="54" rx="10"/><rect class="ak-node-card" x="1723" y="450" width="250" height="54" rx="10"/><rect class="ak-node-accent" x="1724" y="460" width="3" height="34" rx="1.5"/><g class="ak-sigil" transform="translate(1737 469)"><path d="M3 3h10v10H3zM6 6h4M6 8h4M6 10h2"/></g><text class="ak-node-label" x="1763" y="475">300 DPI Render + Deskew + T…</text><text class="ak-node-sub" x="1763" y="490">Service</text></g><g class="ak-node" data-node-id="mixed-merge" data-label="Merge Native + Image OCR (IoU Dedup)" data-role="action" data-desc="Native text + embedded image crop OCR; keep native vs ocr provenance." data-family="process" data-shape="card" tabindex="0" data-animate="node" style="--step:5"><rect class="ak-node-mask" x="1723" y="534" width="250" height="54" rx="10"/><rect class="ak-node-card" x="1723" y="534" width="250" height="54" rx="10"/><rect class="ak-node-accent" x="1724" y="544" width="3" height="34" rx="1.5"/><g class="ak-sigil" transform="translate(1737 553)"><path d="M3 4h10M3 8h10M3 12h6"/></g><text class="ak-node-label" x="1763" y="559">Merge Native + Image OCR (Io…</text><text class="ak-node-sub" x="1763" y="574">Process</text></g><g class="ak-node" data-node-id="normalize-coord" data-label="Normalize Offsets + Stage Safe Preview PNG" data-role="action" data-desc="Char-offset-to-token index, visual CropBox coords &amp; staged 150 DPI previews." data-family="process" data-shape="card" tabindex="0" data-animate="node" style="--step:6"><rect class="ak-node-mask" x="2065" y="450" width="250" height="54" rx="10"/><rect class="ak-node-card" x="2065" y="450" width="250" height="54" rx="10"/><rect class="ak-node-accent" x="2066" y="460" width="3" height="34" rx="1.5"/><g class="ak-sigil" transform="translate(2079 469)"><path d="M3 4h10M3 8h10M3 12h6"/></g><text class="ak-node-label" x="2105" y="475">Normalize Offsets + Stage Saf…</text><text class="ak-node-sub" x="2105" y="490">Process</text></g><g class="ak-node" data-node-id="lang-route" data-label="Route Block Language (VI / EN / Mixed)" data-role="decision" data-desc="Bearer-authenticated singleton ml-service; prevents cross-lang F1 drop." data-family="decision" data-shape="notch" tabindex="0" data-animate="node" style="--step:7"><rect class="ak-node-mask" x="2407" y="696" width="250" height="54" rx="4"/><rect class="ak-node-card" x="2407" y="696" width="250" height="54" rx="4"/><g class="ak-sigil" transform="translate(2421 715)"><path d="M8 2l6 6-6 6-6-6z"/></g><text class="ak-node-label" x="2447" y="721">Route Block Language (VI / E…</text><text class="ak-node-sub" x="2447" y="736">Decision</text></g><g class="ak-node" data-node-id="vi-detect" data-label="VI Hybrid (spacy_vn_19_ner/OPF + vi_rules)" data-role="action" data-desc="Production app/ml_service/rules/vi_rules.py + VN NER -&gt; 6 groups." data-family="process" data-shape="card" tabindex="0" data-animate="node" style="--step:8"><rect class="ak-node-mask" x="2749" y="654" width="250" height="54" rx="10"/><rect class="ak-node-card" x="2749" y="654" width="250" height="54" rx="10"/><rect class="ak-node-accent" x="2750" y="664" width="3" height="34" rx="1.5"/><g class="ak-sigil" transform="translate(2763 673)"><path d="M3 4h10M3 8h10M3 12h6"/></g><text class="ak-node-label" x="2789" y="679">VI Hybrid (spacy_vn_19_ner/…</text><text class="ak-node-sub" x="2789" y="694">Process</text></g><g class="ak-node" data-node-id="en-detect" data-label="EN Hybrid (Presidio/OPF + en_rules)" data-role="action" data-desc="Production app/ml_service/rules/en_rules.py + EN NER -&gt; 6 groups." data-family="process" data-shape="card" tabindex="0" data-animate="node" style="--step:8"><rect class="ak-node-mask" x="2749" y="738" width="250" height="54" rx="10"/><rect class="ak-node-card" x="2749" y="738" width="250" height="54" rx="10"/><rect class="ak-node-accent" x="2750" y="748" width="3" height="34" rx="1.5"/><g class="ak-sigil" transform="translate(2763 757)"><path d="M3 4h10M3 8h10M3 12h6"/></g><text class="ak-node-label" x="2789" y="763">EN Hybrid (Presidio/OPF + en…</text><text class="ak-node-sub" x="2789" y="778">Process</text></g><g class="ak-node" data-node-id="map-regions" data-label="Map Token Offsets -&gt; Visual Rects &amp; Promote Previews" data-role="action" data-desc="Atomic SELECT FOR UPDATE tombstone check before moving previews &amp; committing." data-family="process" data-shape="card" tabindex="0" data-animate="node" style="--step:9"><rect class="ak-node-mask" x="3091" y="450" width="250" height="54" rx="10"/><rect class="ak-node-card" x="3091" y="450" width="250" height="54" rx="10"/><rect class="ak-node-accent" x="3092" y="460" width="3" height="34" rx="1.5"/><g class="ak-sigil" transform="translate(3105 469)"><path d="M3 4h10M3 8h10M3 12h6"/></g><text class="ak-node-label" x="3131" y="475">Map Token Offsets -&gt; Visual…</text><text class="ak-node-sub" x="3131" y="490">Process</text></g><g class="ak-node" data-node-id="human-review" data-label="Human Review + Manual Handwriting Boxes" data-role="wait" data-desc="Safe PNG viewer + SVG viewBox overlays; optimistic revision_no." data-family="waiting" data-shape="card" tabindex="0" data-animate="node" style="--step:10"><rect class="ak-node-mask" x="3433" y="126" width="250" height="54" rx="10"/><rect class="ak-node-card" x="3433" y="126" width="250" height="54" rx="10"/><rect class="ak-node-accent" x="3434" y="136" width="3" height="34" rx="1.5"/><g class="ak-sigil" transform="translate(3447 145)"><path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2zM8 5v3l2 2"/></g><text class="ak-node-label" x="3473" y="151">Human Review + Manual Han…</text><text class="ak-node-sub" x="3473" y="166">Waiting</text></g><g class="ak-node" data-node-id="lock-revision" data-label="Lock Immutable ReviewRevision Snapshot" data-role="action" data-desc="Blocks on failed/unreviewed pages; LOCKED row is never mutated." data-family="process" data-shape="card" tabindex="0" data-animate="node" style="--step:11"><rect class="ak-node-mask" x="3775" y="246" width="250" height="54" rx="10"/><rect class="ak-node-card" x="3775" y="246" width="250" height="54" rx="10"/><rect class="ak-node-accent" x="3776" y="256" width="3" height="34" rx="1.5"/><g class="ak-sigil" transform="translate(3789 265)"><path d="M3 4h10M3 8h10M3 12h6"/></g><text class="ak-node-label" x="3815" y="271">Lock Immutable ReviewRevis…</text><text class="ak-node-sub" x="3815" y="286">Process</text></g><g class="ak-node" data-node-id="redact-engine" data-label="Destructive Redaction (PyMuPDF &gt;=1.25.0)" data-role="subprocess" data-desc="Delete text/outlined paths/pixels, decouple XObjects, recursive hidden-data purge, single %%EOF." data-family="service" data-shape="card" tabindex="0" data-animate="node" style="--step:12"><rect class="ak-node-mask" x="4117" y="858" width="250" height="54" rx="10"/><rect class="ak-node-card" x="4117" y="858" width="250" height="54" rx="10"/><rect class="ak-node-accent" x="4118" y="868" width="3" height="34" rx="1.5"/><g class="ak-sigil" transform="translate(4131 877)"><path d="M3 3h10v10H3zM6 6h4M6 8h4M6 10h2"/></g><text class="ak-node-label" x="4157" y="883">Destructive Redaction (PyMuP…</text><text class="ak-node-sub" x="4157" y="898">Service</text></g><g class="ak-node" data-node-id="verify-engine" data-label="Zero-PyMuPDF Verifier + VER-06 Residual Scan" data-role="subprocess" data-desc="pdfplumber + CTM pikepdf/poppler + qpdf; VER-06 runs on native+scanned only if VER-01..05 PASS." data-family="service" data-shape="card" tabindex="0" data-animate="node" style="--step:13"><rect class="ak-node-mask" x="4459" y="858" width="250" height="54" rx="10"/><rect class="ak-node-card" x="4459" y="858" width="250" height="54" rx="10"/><rect class="ak-node-accent" x="4460" y="868" width="3" height="34" rx="1.5"/><g class="ak-sigil" transform="translate(4473 877)"><path d="M3 3h10v10H3zM6 6h4M6 8h4M6 10h2"/></g><text class="ak-node-label" x="4499" y="883">Zero-PyMuPDF Verifier + VER…</text><text class="ak-node-sub" x="4499" y="898">Service</text></g><g class="ak-node" data-node-id="verify-gate" data-label="VER-01..05 PASS &amp; 0 New Residuals?" data-role="decision" data-desc="Fail-closed gate; FAIL strictly outranks INCONCLUSIVE." data-family="decision" data-shape="notch" tabindex="0" data-animate="node" style="--step:14"><rect class="ak-node-mask" x="4801" y="858" width="250" height="54" rx="4"/><rect class="ak-node-card" x="4801" y="858" width="250" height="54" rx="4"/><g class="ak-sigil" transform="translate(4815 877)"><path d="M8 2l6 6-6 6-6-6z"/></g><text class="ak-node-label" x="4841" y="883">VER-01..05 PASS &amp; 0 New R…</text><text class="ak-node-sub" x="4841" y="898">Decision</text></g><g class="ak-node" data-node-id="verify-fail" data-label="Discard Temp PDF (SUPERSEDED -&gt; New DRAFT on Residual)" data-role="terminal-failure" data-desc="Never mutates LOCKED; new residuals create revision_no + 1 DRAFT." data-family="failure" data-shape="pill" tabindex="0" data-animate="node" style="--step:15"><rect class="ak-node-mask" x="5143" y="252" width="250" height="42" rx="21"/><rect class="ak-node-card" x="5143" y="252" width="250" height="42" rx="21"/><g class="ak-sigil" transform="translate(5157 265)"><path d="M4 4l8 8M12 4l-8 8"/></g><text class="ak-node-label" x="5183" y="277.5">Discard Temp PDF (SUPERSE…</text></g><g class="ak-node" data-node-id="export-ready" data-label="Atomic Publish Clean PDF + Verification Report" data-role="terminal-success" data-desc="SELECT FOR UPDATE tombstone &amp; latest-LOCKED check before publish." data-family="success" data-shape="pill" tabindex="0" data-animate="node" style="--step:15"><rect class="ak-node-mask" x="5143" y="132" width="250" height="42" rx="21"/><rect class="ak-node-card" x="5143" y="132" width="250" height="42" rx="21"/><g class="ak-sigil" transform="translate(5157 145)"><path d="M3 8l3 3 7-7"/></g><text class="ak-node-label" x="5183" y="157.5">Atomic Publish Clean PDF +…</text></g><g class="ak-legend"><g class="ak-legend-item" data-family="service"><rect class="ak-legend-swatch" x="40" y="980" width="12" height="12" rx="3"/><text x="58" y="990">Service</text></g><g class="ak-legend-item" data-family="start"><rect class="ak-legend-swatch" x="115.9" y="980" width="12" height="12" rx="3"/><text x="133.9" y="990">Start</text></g><g class="ak-legend-item" data-family="success"><rect class="ak-legend-swatch" x="178" y="980" width="12" height="12" rx="3"/><text x="196" y="990">Success</text></g><g class="ak-legend-item" data-family="failure"><rect class="ak-legend-swatch" x="258.9" y="980" width="12" height="12" rx="3"/><text x="276.9" y="990">Failure</text></g><g class="ak-legend-item" data-family="waiting"><rect class="ak-legend-swatch" x="332.3" y="980" width="12" height="12" rx="3"/><text x="350.3" y="990">Waiting</text></g><g class="ak-legend-item" data-family="decision"><rect class="ak-legend-swatch" x="407.8" y="980" width="12" height="12" rx="3"/><text x="425.8" y="990">Decision</text></g><g class="ak-legend-item" data-family="process"><rect class="ak-legend-swatch" x="489.4" y="980" width="12" height="12" rx="3"/><text x="507.4" y="990">Process</text></g></g></svg>
+    </div>
+    <script type="application/json" class="ak-diagram-data">{"schema_version":1,"diagram_type":"workflow","meta":{"title":"Proposed Outcome (Not Yet Implemented): Bilingual PDF PII-Masking System Design","subtitle":"Post-red-team end-state workflow — Zero-egress intake \u0026 3-way page routing, Tesseract 5 VI/EN OCR, visual CropBox coords, singleton ML-service, human review, destructive redaction \u0026 zero-PyMuPDF verification","animation":"trace","views":[{"id":"ch1-ingest","title":"1. Quarantine Upload \u0026 Zero-Egress Intake Gate","narrative":"Authenticated user uploads a PDF (\u003c=25 MB) via CSRF-protected API. API checks size \u0026 %PDF- header only (no native parser in api); zero-egress worker validates encryption, \u003c=100 pages, xref \u0026 pixel-bomb limits before storing immutable original.","focus_nodes":["upload","api-quarantine","intake-gate","reject-invalid","store-raw"]},{"id":"ch2-extract","title":"2. Page-Level 3-Way Routing (Native / Scanned / Mixed)","narrative":"Zero-egress worker classifies every page via get_texttrace() \u0026 get_image_info(). Native pages use PyMuPDF visible text; scanned/flattened pages \u0026 untrusted 3 Tr OCR layers use 300 DPI deskew + Tesseract 5 (vie+eng, tessdata_best); mixed pages merge both with IoU dedup.","focus_nodes":["page-classify","native-extract","ocr-raster","mixed-merge","normalize-coord"]},{"id":"ch3-detect","title":"3. Singleton ML-Service (Bilingual VI+EN Detection)","narrative":"Authenticated singleton ml-service routes text blocks by language (VI vs EN vs mixed) to lightweight_cpu (or optional docker-compose.opf.yml) + clean production rules in app/ml_service/rules/, projecting all labels to 6 canonical groups.","focus_nodes":["lang-route","vi-detect","en-detect","map-regions"]},{"id":"ch4-review","title":"4. Human-in-the-Loop Review \u0026 Immutable Revision Lock","narrative":"Reviewer inspects safe preview PNGs with visual CropBox SVG overlays, accepts/rejects detections, draws manual boxes for handwriting/signatures, and locks an immutable ReviewRevision snapshot in PostgreSQL.","focus_nodes":["human-review","lock-revision"]},{"id":"ch5-redact-verify","title":"5. Destructive Redaction \u0026 Zero-PyMuPDF Verification","narrative":"PyMuPDF \u003e=1.25.0 redacts vector/outlined paths \u0026 pixels (decoupling shared XObjects) and purges hidden data. Zero-PyMuPDF verifier (pdfplumber + poppler + pikepdf/qpdf + VER-06) gates atomic tombstone-checked publish or creates immutable SUPERSEDED -\u003e revision_no+1 DRAFT.","focus_nodes":["redact-engine","verify-engine","verify-gate","verify-fail","export-ready"]}]},"lanes":[{"id":"user-ui","label":"User \u0026 React Reviewer UI","role":"frontend"},{"id":"api-pg","label":"FastAPI (API) + PostgreSQL (State \u0026 SKIP LOCKED Queue)","role":"orchestrator"},{"id":"extract-worker","label":"Zero-Egress Worker: Intake, Extraction \u0026 OCR","role":"worker"},{"id":"ml-svc","label":"Authenticated Singleton ML-Service (VI + EN)","role":"system"},{"id":"redact-ver","label":"Redaction (PyMuPDF) \u0026 Independent Verifier (Zero-PyMuPDF)","role":"system"}],"steps":[{"id":"upload","label":"Upload PDF (CSRF + Auth)","kind":"start","lane":"user-ui","description":"Authenticated user uploads PDF (\u003c=25 MB, \u003c=100 pages)."},{"id":"api-quarantine","label":"Stream to Quarantine (%PDF- + Size Cap)","kind":"action","lane":"api-pg","description":"No native PDF parser in external-network api; enqueue PG SKIP LOCKED job."},{"id":"intake-gate","label":"Deep Intake Gate (Valid, Unencrypted, No Bomb?)","kind":"decision","lane":"extract-worker","description":"Isolated scrubbed-env subprocess checks pages \u003c=100, xref \u003c=50k, inflation \u0026 pixel caps."},{"id":"reject-invalid","label":"Purge Quarantine \u0026 Reject","kind":"terminal-failure","lane":"api-pg","description":"Malformed, encrypted, oversized, or bomb PDFs rejected cleanly."},{"id":"store-raw","label":"Store Immutable Original + SHA-256","kind":"action","lane":"extract-worker","description":"Atomic move to private storage; original never mutated."},{"id":"page-classify","label":"Classify Each Page (Native / Scanned / Mixed)","kind":"decision","lane":"extract-worker","description":"get_texttrace() (3 Tr invisible OCR) + get_image_info(xrefs=True)."},{"id":"native-extract","label":"Native Extract (PyMuPDF + Visual CropBox)","kind":"action","lane":"extract-worker","description":"set_small_glyph_heights(True), reading order \u0026 exact visual CropBox rects."},{"id":"ocr-raster","label":"300 DPI Render + Deskew + Tesseract 5 VI/EN","kind":"subprocess","lane":"extract-worker","description":"vie+eng tessdata_best on CPU; ignores untrusted 3 Tr OCR layers."},{"id":"mixed-merge","label":"Merge Native + Image OCR (IoU Dedup)","kind":"action","lane":"extract-worker","description":"Native text + embedded image crop OCR; keep native vs ocr provenance."},{"id":"normalize-coord","label":"Normalize Offsets + Stage Safe Preview PNG","kind":"action","lane":"extract-worker","description":"Char-offset-to-token index, visual CropBox coords \u0026 staged 150 DPI previews."},{"id":"lang-route","label":"Route Block Language (VI / EN / Mixed)","kind":"decision","lane":"ml-svc","description":"Bearer-authenticated singleton ml-service; prevents cross-lang F1 drop."},{"id":"vi-detect","label":"VI Hybrid (spacy_vn_19_ner/OPF + vi_rules)","kind":"action","lane":"ml-svc","description":"Production app/ml_service/rules/vi_rules.py + VN NER -\u003e 6 groups."},{"id":"en-detect","label":"EN Hybrid (Presidio/OPF + en_rules)","kind":"action","lane":"ml-svc","description":"Production app/ml_service/rules/en_rules.py + EN NER -\u003e 6 groups."},{"id":"map-regions","label":"Map Token Offsets -\u003e Visual Rects \u0026 Promote Previews","kind":"action","lane":"extract-worker","description":"Atomic SELECT FOR UPDATE tombstone check before moving previews \u0026 committing."},{"id":"human-review","label":"Human Review + Manual Handwriting Boxes","kind":"wait","lane":"user-ui","description":"Safe PNG viewer + SVG viewBox overlays; optimistic revision_no."},{"id":"lock-revision","label":"Lock Immutable ReviewRevision Snapshot","kind":"action","lane":"api-pg","description":"Blocks on failed/unreviewed pages; LOCKED row is never mutated."},{"id":"redact-engine","label":"Destructive Redaction (PyMuPDF \u003e=1.25.0)","kind":"subprocess","lane":"redact-ver","description":"Delete text/outlined paths/pixels, decouple XObjects, recursive hidden-data purge, single %%EOF."},{"id":"verify-engine","label":"Zero-PyMuPDF Verifier + VER-06 Residual Scan","kind":"subprocess","lane":"redact-ver","description":"pdfplumber + CTM pikepdf/poppler + qpdf; VER-06 runs on native+scanned only if VER-01..05 PASS."},{"id":"verify-gate","label":"VER-01..05 PASS \u0026 0 New Residuals?","kind":"decision","lane":"redact-ver","description":"Fail-closed gate; FAIL strictly outranks INCONCLUSIVE."},{"id":"verify-fail","label":"Discard Temp PDF (SUPERSEDED -\u003e New DRAFT on Residual)","kind":"terminal-failure","lane":"api-pg","description":"Never mutates LOCKED; new residuals create revision_no + 1 DRAFT."},{"id":"export-ready","label":"Atomic Publish Clean PDF + Verification Report","kind":"terminal-success","lane":"user-ui","description":"SELECT FOR UPDATE tombstone \u0026 latest-LOCKED check before publish."}],"transitions":[{"from":"upload","to":"api-quarantine","kind":"normal","label":"HTTPS POST"},{"from":"api-quarantine","to":"intake-gate","kind":"normal","label":"PG Job"},{"from":"intake-gate","to":"reject-invalid","kind":"branch-false","label":"Invalid / Bomb"},{"from":"intake-gate","to":"store-raw","kind":"branch-true","label":"Valid PDF"},{"from":"store-raw","to":"page-classify","kind":"normal","label":"Per page"},{"from":"page-classify","to":"native-extract","kind":"branch-true","label":"NATIVE"},{"from":"page-classify","to":"ocr-raster","kind":"branch-false","label":"SCANNED"},{"from":"page-classify","to":"mixed-merge","kind":"normal","label":"MIXED"},{"from":"native-extract","to":"normalize-coord","kind":"normal"},{"from":"ocr-raster","to":"normalize-coord","kind":"normal"},{"from":"mixed-merge","to":"normalize-coord","kind":"normal"},{"from":"normalize-coord","to":"lang-route","kind":"normal","label":"Bearer HTTP"},{"from":"lang-route","to":"vi-detect","kind":"branch-true","label":"Vietnamese"},{"from":"lang-route","to":"en-detect","kind":"branch-false","label":"English"},{"from":"vi-detect","to":"map-regions","kind":"normal"},{"from":"en-detect","to":"map-regions","kind":"normal"},{"from":"map-regions","to":"human-review","kind":"normal","label":"Overlays + Status"},{"from":"human-review","to":"lock-revision","kind":"normal","label":"Confirm all pages"},{"from":"lock-revision","to":"redact-engine","kind":"normal","label":"Export job"},{"from":"redact-engine","to":"verify-engine","kind":"normal","label":"Temp PDF"},{"from":"verify-engine","to":"verify-gate","kind":"normal"},{"from":"verify-gate","to":"export-ready","kind":"branch-true","label":"PASS"},{"from":"verify-gate","to":"verify-fail","kind":"branch-false","label":"FAIL / INCONCLUSIVE"},{"from":"verify-fail","to":"human-review","kind":"retry","label":"New DRAFT rev"}]}</script>
+    <script>/**
+ * AgentKit Diagram Reader Runtime (Archify-informed)
+ * Pure vanilla JavaScript, zero runtime dependencies.
+ */
+(function() {
+  function escapeXml(unsafe) {
+    if (typeof unsafe !== 'string') return '';
+    return unsafe
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  }
+
+  function initDiagram(container) {
+    if (!container || container.__ak_initialized) return;
+    container.__ak_initialized = true;
+
+    const dataEl = container.querySelector('script[type="application/json"].ak-diagram-data');
+    if (!dataEl) return;
+
+    let irData;
+    try {
+      irData = JSON.parse(dataEl.textContent);
+    } catch (e) {
+      console.error('Failed to parse diagram data:', e);
+      return;
+    }
+
+    const state = {
+      focusedNodeId: null,
+      activeReach: null, // 'upstream' | 'downstream'
+      activeRoute: null,
+      activeLensIndex: -1,
+      currentChapterIndex: 0,
+      isPresentation: false
+    };
+
+    // DOM Elements
+    const root = container;
+    const searchInput = container.querySelector('.ak-diagram-search-input');
+    const nodes = Array.from(container.querySelectorAll('.ak-node'));
+    const edges = Array.from(container.querySelectorAll('.ak-edge'));
+    const themeBtn = container.querySelector('.ak-btn-theme');
+    const presentBtn = container.querySelector('.ak-btn-present');
+    const shareBtn = container.querySelector('.ak-btn-share');
+    const reachDownBtn = container.querySelector('.ak-btn-reach-down');
+    const reachUpBtn = container.querySelector('.ak-btn-reach-up');
+    const routeBtn = container.querySelector('.ak-btn-route');
+    const lensBtn = container.querySelector('.ak-btn-lens');
+    const chapterPrevBtn = container.querySelector('.ak-btn-prev-chapter');
+    const chapterNextBtn = container.querySelector('.ak-btn-next-chapter');
+    const chapterLabel = container.querySelector('.ak-chapter-label');
+    const motionBtn = container.querySelector('.ak-btn-motion');
+    const svgEl = container.querySelector('.ak-diagram-svg');
+
+    // Replay the finite entrance/trace motion by re-arming data-motion on the svg.
+    function replayMotion() {
+      if (!svgEl) return;
+      svgEl.removeAttribute('data-motion');
+      void svgEl.getBoundingClientRect();
+      svgEl.setAttribute('data-motion', 'play');
+    }
+    if (motionBtn) motionBtn.addEventListener('click', replayMotion);
+
+    // Build Graph Adjacency & Distinct Roles
+    const outgoing = new Map();
+    const incoming = new Map();
+    const allRoles = new Set();
+
+    nodes.forEach(n => {
+      const role = n.getAttribute('data-role');
+      if (role) allRoles.add(role);
+    });
+    const rolesList = Array.from(allRoles).sort();
+
+    edges.forEach(edgeEl => {
+      const from = edgeEl.getAttribute('data-from');
+      const to = edgeEl.getAttribute('data-to');
+      const edgeId = edgeEl.getAttribute('data-edge-id') || `${from}->${to}`;
+      if (from && to) {
+        if (!outgoing.has(from)) outgoing.set(from, []);
+        outgoing.get(from).push({ to, edgeEl, edgeId });
+
+        if (!incoming.has(to)) incoming.set(to, []);
+        incoming.get(to).push({ from, edgeEl, edgeId });
+      }
+    });
+
+    function clearHighlights() {
+      nodes.forEach(n => {
+        n.classList.remove('is-focused', 'is-dimmed');
+      });
+      edges.forEach(e => {
+        e.classList.remove('is-highlighted', 'is-dimmed', 'is-active-trace');
+      });
+      state.focusedNodeId = null;
+      state.activeReach = null;
+      state.activeRoute = null;
+    }
+
+    function focusNodes(nodeIds) {
+      const ids = (nodeIds || []).filter(Boolean);
+      clearHighlights();
+      if (ids.length === 0) {
+        state.focusedNodeId = null;
+        return;
+      }
+      state.focusedNodeId = ids[0];
+
+      const focusSet = new Set(ids);
+      const connectedNodeIds = new Set(ids);
+      ids.forEach(id => {
+        (outgoing.get(id) || []).forEach(e => connectedNodeIds.add(e.to));
+        (incoming.get(id) || []).forEach(e => connectedNodeIds.add(e.from));
+      });
+
+      nodes.forEach(n => {
+        const id = n.getAttribute('data-node-id');
+        if (focusSet.has(id)) {
+          n.classList.add('is-focused');
+        } else if (!connectedNodeIds.has(id)) {
+          n.classList.add('is-dimmed');
+        }
+      });
+
+      edges.forEach(e => {
+        const from = e.getAttribute('data-from');
+        const to = e.getAttribute('data-to');
+        if (focusSet.has(from) || focusSet.has(to)) {
+          e.classList.add('is-highlighted');
+        } else {
+          e.classList.add('is-dimmed');
+        }
+      });
+    }
+
+    function focusNode(nodeId) {
+      focusNodes(nodeId ? [nodeId] : []);
+    }
+
+    function traceReach(nodeId, direction) {
+      const targetId = nodeId || state.focusedNodeId || (nodes[0] ? nodes[0].getAttribute('data-node-id') : null);
+      if (!targetId) return;
+      clearHighlights();
+      state.focusedNodeId = targetId;
+      state.activeReach = direction;
+
+      const reachedNodes = new Set([targetId]);
+      const reachedEdges = new Set();
+      const queue = [targetId];
+
+      while (queue.length > 0) {
+        const current = queue.shift();
+        const neighbors = (direction === 'downstream') ? (outgoing.get(current) || []) : (incoming.get(current) || []);
+        neighbors.forEach(item => {
+          const nextNode = (direction === 'downstream') ? item.to : item.from;
+          reachedEdges.add(item.edgeEl);
+          if (!reachedNodes.has(nextNode)) {
+            reachedNodes.add(nextNode);
+            queue.push(nextNode);
+          }
+        });
+      }
+
+      nodes.forEach(n => {
+        const id = n.getAttribute('data-node-id');
+        if (id === targetId) {
+          n.classList.add('is-focused');
+        } else if (!reachedNodes.has(id)) {
+          n.classList.add('is-dimmed');
+        }
+      });
+
+      edges.forEach(e => {
+        if (reachedEdges.has(e)) {
+          e.classList.add('is-highlighted', 'is-active-trace');
+        } else {
+          e.classList.add('is-dimmed');
+        }
+      });
+    }
+
+    function traceShortestRoute(sourceId, targetId) {
+      if (!sourceId || !targetId || sourceId === targetId) return;
+      clearHighlights();
+
+      const queue = [[sourceId]];
+      const visited = new Set([sourceId]);
+      let shortestPath = null;
+
+      while (queue.length > 0) {
+        const path = queue.shift();
+        const current = path[path.length - 1];
+        if (current === targetId) {
+          shortestPath = path;
+          break;
+        }
+        const neighbors = outgoing.get(current) || [];
+        const sorted = [...neighbors].sort((a, b) => a.to.localeCompare(b.to));
+        for (const item of sorted) {
+          if (!visited.has(item.to)) {
+            visited.add(item.to);
+            queue.push([...path, item.to]);
+          }
+        }
+      }
+
+      if (!shortestPath) return;
+
+      const pathNodes = new Set(shortestPath);
+      const pathEdges = new Set();
+
+      for (let i = 0; i < shortestPath.length - 1; i++) {
+        const u = shortestPath[i];
+        const v = shortestPath[i + 1];
+        const edgeObj = (outgoing.get(u) || []).find(e => e.to === v);
+        if (edgeObj) pathEdges.add(edgeObj.edgeEl);
+      }
+
+      nodes.forEach(n => {
+        const id = n.getAttribute('data-node-id');
+        if (!pathNodes.has(id)) n.classList.add('is-dimmed');
+        else if (id === sourceId || id === targetId) n.classList.add('is-focused');
+      });
+
+      edges.forEach(e => {
+        if (pathEdges.has(e)) e.classList.add('is-highlighted', 'is-active-trace');
+        else e.classList.add('is-dimmed');
+      });
+    }
+
+    function cycleRoleLens() {
+      if (rolesList.length === 0) return;
+      state.activeLensIndex = (state.activeLensIndex + 1) % (rolesList.length + 1);
+
+      if (state.activeLensIndex === rolesList.length) {
+        clearHighlights();
+        state.activeLens = null;
+        return;
+      }
+
+      const roleName = rolesList[state.activeLensIndex];
+      clearHighlights();
+      state.activeLens = roleName;
+
+      nodes.forEach(n => {
+        const role = n.getAttribute('data-role');
+        if (role !== roleName) {
+          n.classList.add('is-dimmed');
+        } else {
+          n.classList.add('is-focused');
+        }
+      });
+    }
+
+    function cycleRoute() {
+      if (nodes.length < 2) return;
+      const src = nodes[0].getAttribute('data-node-id');
+      const dst = nodes[nodes.length - 1].getAttribute('data-node-id');
+      traceShortestRoute(src, dst);
+    }
+
+    function togglePresentation() {
+      state.isPresentation = !state.isPresentation;
+      root.classList.toggle('is-presentation', state.isPresentation);
+    }
+
+    function setChapter(index) {
+      const views = (irData.meta && irData.meta.views) || [];
+      if (views.length === 0) return;
+      if (index < 0) index = 0;
+      if (index >= views.length) index = views.length - 1;
+      state.currentChapterIndex = index;
+      const chapter = views[index];
+
+      if (chapterLabel) {
+        chapterLabel.textContent = `${index + 1}/${views.length}: ${chapter.title || chapter.id}`;
+      }
+
+      clearHighlights();
+      if (chapter.focus_nodes && chapter.focus_nodes.length > 0) {
+        focusNodes(chapter.focus_nodes);
+      } else if (chapter.highlight_route && chapter.highlight_route.length >= 2) {
+        traceShortestRoute(chapter.highlight_route[0], chapter.highlight_route[chapter.highlight_route.length - 1]);
+      }
+    }
+    const PRESET_THEME_PALETTES = {
+      'classic:light': {
+        '--ak-bg': '#ffffff', '--ak-surface': '#f8fafc', '--ak-surface-border': '#e2e8f0',
+        '--ak-text-primary': '#0f172a', '--ak-text-secondary': '#475569', '--ak-text-muted': '#94a3b8',
+        '--ak-accent': '#2563eb', '--ak-accent-light': '#dbeafe',
+        '--ak-node-bg': '#ffffff', '--ak-node-border': '#cbd5e1',
+        '--ak-edge-stroke': '#64748b', '--ak-edge-active': '#2563eb',
+        '--ak-badge-bg': '#f1f5f9', '--ak-font-sans': 'system-ui, -apple-system, sans-serif',
+        '--ak-font-mono': 'ui-monospace, monospace'
+      },
+      'classic:dark': {
+        '--ak-bg': '#090d16', '--ak-surface': '#0f172a', '--ak-surface-border': '#1e293b',
+        '--ak-text-primary': '#f8fafc', '--ak-text-secondary': '#94a3b8', '--ak-text-muted': '#64748b',
+        '--ak-accent': '#38bdf8', '--ak-accent-light': '#0369a1',
+        '--ak-node-bg': '#0f172a', '--ak-node-border': '#334155',
+        '--ak-edge-stroke': '#475569', '--ak-edge-active': '#38bdf8',
+        '--ak-badge-bg': '#1e293b', '--ak-font-sans': 'system-ui, -apple-system, sans-serif',
+        '--ak-font-mono': 'ui-monospace, monospace'
+      },
+      'signal-flow:light': {
+        '--ak-bg': '#f0fdf4', '--ak-surface': '#dcfce7', '--ak-surface-border': '#86efac',
+        '--ak-text-primary': '#14532d', '--ak-text-secondary': '#166534', '--ak-text-muted': '#4ade80',
+        '--ak-accent': '#059669', '--ak-accent-light': '#d1fae5',
+        '--ak-node-bg': '#ffffff', '--ak-node-border': '#10b981',
+        '--ak-edge-stroke': '#059669', '--ak-edge-active': '#047857',
+        '--ak-badge-bg': '#dcfce7', '--ak-font-sans': 'system-ui, -apple-system, sans-serif',
+        '--ak-font-mono': 'ui-monospace, monospace'
+      },
+      'signal-flow:dark': {
+        '--ak-bg': '#031c18', '--ak-surface': '#064e3b', '--ak-surface-border': '#047857',
+        '--ak-text-primary': '#ecfdf5', '--ak-text-secondary': '#a7f3d0', '--ak-text-muted': '#34d399',
+        '--ak-accent': '#34d399', '--ak-accent-light': '#065f46',
+        '--ak-node-bg': '#064e3b', '--ak-node-border': '#10b981',
+        '--ak-edge-stroke': '#34d399', '--ak-edge-active': '#6ee7b7',
+        '--ak-badge-bg': '#064e3b', '--ak-font-sans': 'system-ui, -apple-system, sans-serif',
+        '--ak-font-mono': 'ui-monospace, monospace'
+      },
+      'blueprint:light': {
+        '--ak-bg': '#f0f9ff', '--ak-surface': '#e0f2fe', '--ak-surface-border': '#7dd3fc',
+        '--ak-text-primary': '#0369a1', '--ak-text-secondary': '#0284c7', '--ak-text-muted': '#38bdf8',
+        '--ak-accent': '#0284c7', '--ak-accent-light': '#bae6fd',
+        '--ak-node-bg': '#ffffff', '--ak-node-border': '#0ea5e9',
+        '--ak-edge-stroke': '#0284c7', '--ak-edge-active': '#0369a1',
+        '--ak-badge-bg': '#e0f2fe', '--ak-font-sans': 'ui-monospace, monospace',
+        '--ak-font-mono': 'ui-monospace, monospace'
+      },
+      'blueprint:dark': {
+        '--ak-bg': '#081d33', '--ak-surface': '#0c2a4a', '--ak-surface-border': '#1e4976',
+        '--ak-text-primary': '#e0f2fe', '--ak-text-secondary': '#bae6fd', '--ak-text-muted': '#38bdf8',
+        '--ak-accent': '#38bdf8', '--ak-accent-light': '#0369a1',
+        '--ak-node-bg': '#0c213a', '--ak-node-border': '#38bdf8',
+        '--ak-edge-stroke': '#7dd3fc', '--ak-edge-active': '#38bdf8',
+        '--ak-badge-bg': '#0c213a', '--ak-font-sans': 'ui-monospace, monospace',
+        '--ak-font-mono': 'ui-monospace, monospace'
+      },
+      'editorial:light': {
+        '--ak-bg': '#faf8f5', '--ak-surface': '#f3efe6', '--ak-surface-border': '#e2dacb',
+        '--ak-text-primary': '#1c1917', '--ak-text-secondary': '#57534e', '--ak-text-muted': '#a8a29e',
+        '--ak-accent': '#991b1b', '--ak-accent-light': '#fecaca',
+        '--ak-node-bg': '#ffffff', '--ak-node-border': '#d6cfc4',
+        '--ak-edge-stroke': '#78716c', '--ak-edge-active': '#991b1b',
+        '--ak-badge-bg': '#f3efe6', '--ak-font-sans': 'system-ui, serif',
+        '--ak-font-mono': 'ui-monospace, monospace'
+      },
+      'editorial:dark': {
+        '--ak-bg': '#1c1917', '--ak-surface': '#292524', '--ak-surface-border': '#44403c',
+        '--ak-text-primary': '#fafaf9', '--ak-text-secondary': '#d6d3d1', '--ak-text-muted': '#78716c',
+        '--ak-accent': '#ef4444', '--ak-accent-light': '#7f1d1d',
+        '--ak-node-bg': '#292524', '--ak-node-border': '#78716c',
+        '--ak-edge-stroke': '#a8a29e', '--ak-edge-active': '#f87171',
+        '--ak-badge-bg': '#292524', '--ak-font-sans': 'system-ui, serif',
+        '--ak-font-mono': 'ui-monospace, monospace'
+      }
+    };
+
+    function exportShareCard() {
+      const svg = root.querySelector('.ak-diagram-svg');
+      if (!svg) return;
+
+      const title = (irData.meta && irData.meta.title) || 'AgentKit System Map';
+      const preset = root.getAttribute('data-preset') || 'classic';
+      const theme = root.getAttribute('data-theme') || 'light';
+
+      const VAR_WHITELIST = [
+        '--ak-bg', '--ak-surface', '--ak-surface-border',
+        '--ak-text-primary', '--ak-text-secondary', '--ak-text-muted',
+        '--ak-accent', '--ak-accent-light',
+        '--ak-node-bg', '--ak-node-border',
+        '--ak-edge-stroke', '--ak-edge-active',
+        '--ak-badge-bg', '--ak-font-sans', '--ak-font-mono'
+      ];
+
+      const paletteKey = `${preset}:${theme}`;
+      const fallbackPalette = PRESET_THEME_PALETTES[paletteKey] || PRESET_THEME_PALETTES['classic:light'];
+
+      let computed = null;
+      if (typeof window !== 'undefined' && typeof window.getComputedStyle === 'function') {
+        try { computed = window.getComputedStyle(root); } catch (e) { computed = null; }
+      }
+
+      const resolvedVars = {};
+      VAR_WHITELIST.forEach(varName => {
+        let val = '';
+        if (computed && typeof computed.getPropertyValue === 'function') {
+          val = computed.getPropertyValue(varName);
+        }
+        resolvedVars[varName] = (val && val.trim()) ? val.trim() : (fallbackPalette[varName] || '#000000');
+      });
+
+      const cardBg = resolvedVars['--ak-bg'];
+      const cardSurface = resolvedVars['--ak-surface'];
+      const cardBorder = resolvedVars['--ak-surface-border'];
+      const textPrimary = resolvedVars['--ak-text-primary'];
+      const textMuted = resolvedVars['--ak-text-muted'];
+      const accent = resolvedVars['--ak-accent'];
+
+      const cssDeclarations = Object.entries(resolvedVars)
+        .map(([k, v]) => `${k}: ${v};`)
+        .join(' ');
+
+      const styleBlock = `<style>
+        svg {
+          ${cssDeclarations}
+          font-family: var(--ak-font-sans);
+        }
+      </style>`;
+
+      // Construct canonical 1200x630 Share Card SVG with self-contained resolved variables
+      const shareCardSvg = `<svg viewBox="0 0 1200 630" width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          ${styleBlock}
+        </defs>
+        <rect width="1200" height="630" fill="${cardBg}" rx="12" stroke="${cardBorder}" stroke-width="2"/>
+        <g transform="translate(48, 56)">
+          <text x="0" y="0" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="${textPrimary}">${escapeXml(title)}</text>
+          <text x="0" y="28" font-family="system-ui, sans-serif" font-size="14" fill="${textMuted}">AgentKit System Map • Preset: ${escapeXml(preset)} • Theme: ${escapeXml(theme)}</text>
+        </g>
+        <g transform="translate(48, 120)">
+          <rect width="1104" height="450" fill="${cardSurface}" rx="8" stroke="${cardBorder}" stroke-width="1.5"/>
+          <svg x="20" y="20" width="1064" height="410" viewBox="${svg.getAttribute('viewBox') || '0 0 1000 600'}">
+            ${svg.innerHTML}
+          </svg>
+        </g>
+        <g transform="translate(1050, 595)">
+          <text x="0" y="0" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="${accent}">AgentKit • Archify v2.16</text>
+        </g>
+      </svg>`;
+
+      const blob = new Blob([shareCardSvg], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-share-card-1200x630.svg`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Attach Node Click Handlers
+    nodes.forEach(nodeEl => {
+      nodeEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = nodeEl.getAttribute('data-node-id');
+        if (state.focusedNodeId === id) {
+          clearHighlights();
+        } else {
+          focusNode(id);
+        }
+      });
+    });
+
+    const viewport = container.querySelector('.ak-diagram-viewport');
+    if (viewport) {
+      viewport.addEventListener('click', () => {
+        clearHighlights();
+      });
+    }
+
+    // Search Input (Searches Label, ID, Description, Role)
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const q = e.target.value.trim().toLowerCase();
+        if (!q) {
+          clearHighlights();
+          return;
+        }
+        clearHighlights();
+        nodes.forEach(n => {
+          const label = (n.getAttribute('data-label') || '').toLowerCase();
+          const id = (n.getAttribute('data-node-id') || '').toLowerCase();
+          const desc = (n.getAttribute('data-desc') || '').toLowerCase();
+          const role = (n.getAttribute('data-role') || '').toLowerCase();
+          if (label.includes(q) || id.includes(q) || desc.includes(q) || role.includes(q)) {
+            n.classList.remove('is-dimmed');
+            n.classList.add('is-focused');
+          } else {
+            n.classList.add('is-dimmed');
+          }
+        });
+      });
+    }
+
+    // Control Buttons
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const currentTheme = root.getAttribute('data-theme') || 'light';
+        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', nextTheme);
+        themeBtn.textContent = nextTheme === 'dark' ? '☀️' : '🌙';
+      });
+    }
+
+    if (presentBtn) presentBtn.addEventListener('click', togglePresentation);
+    if (shareBtn) shareBtn.addEventListener('click', exportShareCard);
+    if (reachDownBtn) reachDownBtn.addEventListener('click', () => traceReach(null, 'downstream'));
+    if (reachUpBtn) reachUpBtn.addEventListener('click', () => traceReach(null, 'upstream'));
+    if (routeBtn) routeBtn.addEventListener('click', cycleRoute);
+    if (lensBtn) lensBtn.addEventListener('click', cycleRoleLens);
+
+    if (chapterPrevBtn) {
+      chapterPrevBtn.addEventListener('click', () => setChapter(state.currentChapterIndex - 1));
+    }
+    if (chapterNextBtn) {
+      chapterNextBtn.addEventListener('click', () => setChapter(state.currentChapterIndex + 1));
+    }
+
+    // Global Scoped Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      const activeEl = document.activeElement;
+      if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
+        if (e.key === 'Escape') activeEl.blur();
+        return;
+      }
+
+      if (e.key === '/') {
+        if (searchInput) {
+          e.preventDefault();
+          searchInput.focus();
+        }
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        togglePresentation();
+      } else if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault();
+        cycleRoute();
+      } else if (e.key === 'l' || e.key === 'L') {
+        e.preventDefault();
+        cycleRoleLens();
+      } else if (e.key === 'm' || e.key === 'M') {
+        e.preventDefault();
+        replayMotion();
+      } else if (e.key === '[') {
+        e.preventDefault();
+        setChapter(state.currentChapterIndex - 1);
+      } else if (e.key === ']') {
+        e.preventDefault();
+        setChapter(state.currentChapterIndex + 1);
+      } else if (e.key === 'Escape') {
+        if (state.isPresentation) {
+          togglePresentation();
+        } else {
+          clearHighlights();
+        }
+      }
+    });
+
+    if (irData.meta && irData.meta.views && irData.meta.views.length > 0) {
+      setChapter(0);
+    }
+  }
+
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.ak-diagram-root').forEach(initDiagram);
+      });
+    } else {
+      document.querySelectorAll('.ak-diagram-root').forEach(initDiagram);
+    }
+  }
+
+  if (typeof window !== 'undefined') {
+    window.AgentKitDiagram = { init: initDiagram };
+  }
+})();
+</script>
+  </div>
+</body>
+</html>

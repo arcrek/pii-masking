@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Proposed Outcome (Not Yet Implemented): Bilingual PDF PII-Masking System Design",
+    "subtitle": "Post-red-team end-state workflow — Zero-egress intake & 3-way page routing, Tesseract 5 VI/EN OCR, visual CropBox coords, singleton ML-service, human review, destructive redaction & zero-PyMuPDF verification",
+    "animation": "trace",
+    "views": [
+      {
+        "id": "ch1-ingest",
+        "title": "1. Quarantine Upload & Zero-Egress Intake Gate",
+        "narrative": "Authenticated user uploads a PDF (<=25 MB) via CSRF-protected API. API checks size & %PDF- header only (no native parser in api); zero-egress worker validates encryption, <=100 pages, xref & pixel-bomb limits before storing immutable original.",
+        "focus_nodes": ["upload", "api-quarantine", "intake-gate", "reject-invalid", "store-raw"]
+      },
+      {
+        "id": "ch2-extract",
+        "title": "2. Page-Level 3-Way Routing (Native / Scanned / Mixed)",
+        "narrative": "Zero-egress worker classifies every page via get_texttrace() & get_image_info(). Native pages use PyMuPDF visible text; scanned/flattened pages & untrusted 3 Tr OCR layers use 300 DPI deskew + Tesseract 5 (vie+eng, tessdata_best); mixed pages merge both with IoU dedup.",
+        "focus_nodes": ["page-classify", "native-extract", "ocr-raster", "mixed-merge", "normalize-coord"]
+      },
+      {
+        "id": "ch3-detect",
+        "title": "3. Singleton ML-Service (Bilingual VI+EN Detection)",
+        "narrative": "Authenticated singleton ml-service routes text blocks by language (VI vs EN vs mixed) to lightweight_cpu (or optional docker-compose.opf.yml) + clean production rules in app/ml_service/rules/, projecting all labels to 6 canonical groups.",
+        "focus_nodes": ["lang-route", "vi-detect", "en-detect", "map-regions"]
+      },
+      {
+        "id": "ch4-review",
+        "title": "4. Human-in-the-Loop Review & Immutable Revision Lock",
+        "narrative": "Reviewer inspects safe preview PNGs with visual CropBox SVG overlays, accepts/rejects detections, draws manual boxes for handwriting/signatures, and locks an immutable ReviewRevision snapshot in PostgreSQL.",
+        "focus_nodes": ["human-review", "lock-revision"]
+      },
+      {
+        "id": "ch5-redact-verify",
+        "title": "5. Destructive Redaction & Zero-PyMuPDF Verification",
+        "narrative": "PyMuPDF >=1.25.0 redacts vector/outlined paths & pixels (decoupling shared XObjects) and purges hidden data. Zero-PyMuPDF verifier (pdfplumber + poppler + pikepdf/qpdf + VER-06) gates atomic tombstone-checked publish or creates immutable SUPERSEDED -> revision_no+1 DRAFT.",
+        "focus_nodes": ["redact-engine", "verify-engine", "verify-gate", "verify-fail", "export-ready"]
+      }
+    ]
+  },
+  "lanes": [
+    { "id": "user-ui", "label": "User & React Reviewer UI", "role": "frontend" },
+    { "id": "api-pg", "label": "FastAPI (API) + PostgreSQL (State & SKIP LOCKED Queue)", "role": "orchestrator" },
+    { "id": "extract-worker", "label": "Zero-Egress Worker: Intake, Extraction & OCR", "role": "worker" },
+    { "id": "ml-svc", "label": "Authenticated Singleton ML-Service (VI + EN)", "role": "system" },
+    { "id": "redact-ver", "label": "Redaction (PyMuPDF) & Independent Verifier (Zero-PyMuPDF)", "role": "system" }
+  ],
+  "steps": [
+    { "id": "upload", "label": "Upload PDF (CSRF + Auth)", "kind": "start", "lane": "user-ui", "description": "Authenticated user uploads PDF (<=25 MB, <=100 pages)." },
+    { "id": "api-quarantine", "label": "Stream to Quarantine (%PDF- + Size Cap)", "kind": "action", "lane": "api-pg", "description": "No native PDF parser in external-network api; enqueue PG SKIP LOCKED job." },
+    { "id": "intake-gate", "label": "Deep Intake Gate (Valid, Unencrypted, No Bomb?)", "kind": "decision", "lane": "extract-worker", "description": "Isolated scrubbed-env subprocess checks pages <=100, xref <=50k, inflation & pixel caps." },
+    { "id": "reject-invalid", "label": "Purge Quarantine & Reject", "kind": "terminal-failure", "lane": "api-pg", "description": "Malformed, encrypted, oversized, or bomb PDFs rejected cleanly." },
+    { "id": "store-raw", "label": "Store Immutable Original + SHA-256", "kind": "action", "lane": "extract-worker", "description": "Atomic move to private storage; original never mutated." },
+    { "id": "page-classify", "label": "Classify Each Page (Native / Scanned / Mixed)", "kind": "decision", "lane": "extract-worker", "description": "get_texttrace() (3 Tr invisible OCR) + get_image_info(xrefs=True)." },
+    { "id": "native-extract", "label": "Native Extract (PyMuPDF + Visual CropBox)", "kind": "action", "lane": "extract-worker", "description": "set_small_glyph_heights(True), reading order & exact visual CropBox rects." },
+    { "id": "ocr-raster", "label": "300 DPI Render + Deskew + Tesseract 5 VI/EN", "kind": "subprocess", "lane": "extract-worker", "description": "vie+eng tessdata_best on CPU; ignores untrusted 3 Tr OCR layers." },
+    { "id": "mixed-merge", "label": "Merge Native + Image OCR (IoU Dedup)", "kind": "action", "lane": "extract-worker", "description": "Native text + embedded image crop OCR; keep native vs ocr provenance." },
+    { "id": "normalize-coord", "label": "Normalize Offsets + Stage Safe Preview PNG", "kind": "action", "lane": "extract-worker", "description": "Char-offset-to-token index, visual CropBox coords & staged 150 DPI previews." },
+    { "id": "lang-route", "label": "Route Block Language (VI / EN / Mixed)", "kind": "decision", "lane": "ml-svc", "description": "Bearer-authenticated singleton ml-service; prevents cross-lang F1 drop." },
+    { "id": "vi-detect", "label": "VI Hybrid (spacy_vn_19_ner/OPF + vi_rules)", "kind": "action", "lane": "ml-svc", "description": "Production app/ml_service/rules/vi_rules.py + VN NER -> 6 groups." },
+    { "id": "en-detect", "label": "EN Hybrid (Presidio/OPF + en_rules)", "kind": "action", "lane": "ml-svc", "description": "Production app/ml_service/rules/en_rules.py + EN NER -> 6 groups." },
+    { "id": "map-regions", "label": "Map Token Offsets -> Visual Rects & Promote Previews", "kind": "action", "lane": "extract-worker", "description": "Atomic SELECT FOR UPDATE tombstone check before moving previews & committing." },
+    { "id": "human-review", "label": "Human Review + Manual Handwriting Boxes", "kind": "wait", "lane": "user-ui", "description": "Safe PNG viewer + SVG viewBox overlays; optimistic revision_no." },
+    { "id": "lock-revision", "label": "Lock Immutable ReviewRevision Snapshot", "kind": "action", "lane": "api-pg", "description": "Blocks on failed/unreviewed pages; LOCKED row is never mutated." },
+    { "id": "redact-engine", "label": "Destructive Redaction (PyMuPDF >=1.25.0)", "kind": "subprocess", "lane": "redact-ver", "description": "Delete text/outlined paths/pixels, decouple XObjects, recursive hidden-data purge, single %%EOF." },
+    { "id": "verify-engine", "label": "Zero-PyMuPDF Verifier + VER-06 Residual Scan", "kind": "subprocess", "lane": "redact-ver", "description": "pdfplumber + CTM pikepdf/poppler + qpdf; VER-06 runs on native+scanned only if VER-01..05 PASS." },
+    { "id": "verify-gate", "label": "VER-01..05 PASS & 0 New Residuals?", "kind": "decision", "lane": "redact-ver", "description": "Fail-closed gate; FAIL strictly outranks INCONCLUSIVE." },
+    { "id": "verify-fail", "label": "Discard Temp PDF (SUPERSEDED -> New DRAFT on Residual)", "kind": "terminal-failure", "lane": "api-pg", "description": "Never mutates LOCKED; new residuals create revision_no + 1 DRAFT." },
+    { "id": "export-ready", "label": "Atomic Publish Clean PDF + Verification Report", "kind": "terminal-success", "lane": "user-ui", "description": "SELECT FOR UPDATE tombstone & latest-LOCKED check before publish." }
+  ],
+  "transitions": [
+    { "from": "upload", "to": "api-quarantine", "kind": "normal", "label": "HTTPS POST" },
+    { "from": "api-quarantine", "to": "intake-gate", "kind": "normal", "label": "PG Job" },
+    { "from": "intake-gate", "to": "reject-invalid", "kind": "branch-false", "label": "Invalid / Bomb" },
+    { "from": "intake-gate", "to": "store-raw", "kind": "branch-true", "label": "Valid PDF" },
+    { "from": "store-raw", "to": "page-classify", "kind": "normal", "label": "Per page" },
+    { "from": "page-classify", "to": "native-extract", "kind": "branch-true", "label": "NATIVE" },
+    { "from": "page-classify", "to": "ocr-raster", "kind": "branch-false", "label": "SCANNED" },
+    { "from": "page-classify", "to": "mixed-merge", "kind": "normal", "label": "MIXED" },
+    { "from": "native-extract", "to": "normalize-coord", "kind": "normal" },
+    { "from": "ocr-raster", "to": "normalize-coord", "kind": "normal" },
+    { "from": "mixed-merge", "to": "normalize-coord", "kind": "normal" },
+    { "from": "normalize-coord", "to": "lang-route", "kind": "normal", "label": "Bearer HTTP" },
+    { "from": "lang-route", "to": "vi-detect", "kind": "branch-true", "label": "Vietnamese" },
+    { "from": "lang-route", "to": "en-detect", "kind": "branch-false", "label": "English" },
+    { "from": "vi-detect", "to": "map-regions", "kind": "normal" },
+    { "from": "en-detect", "to": "map-regions", "kind": "normal" },
+    { "from": "map-regions", "to": "human-review", "kind": "normal", "label": "Overlays + Status" },
+    { "from": "human-review", "to": "lock-revision", "kind": "normal", "label": "Confirm all pages" },
+    { "from": "lock-revision", "to": "redact-engine", "kind": "normal", "label": "Export job" },
+    { "from": "redact-engine", "to": "verify-engine", "kind": "normal", "label": "Temp PDF" },
+    { "from": "verify-engine", "to": "verify-gate", "kind": "normal" },
+    { "from": "verify-gate", "to": "export-ready", "kind": "branch-true", "label": "PASS" },
+    { "from": "verify-gate", "to": "verify-fail", "kind": "branch-false", "label": "FAIL / INCONCLUSIVE" },
+    { "from": "verify-fail", "to": "human-review", "kind": "retry", "label": "New DRAFT rev" }
+  ]
+}
