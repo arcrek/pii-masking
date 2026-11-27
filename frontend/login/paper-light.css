@@ -1,0 +1,11 @@
+:root {
+  --paper-daylight:
+    radial-gradient(ellipse at 22% 35%, #bbcaaa68, transparent 43%),
+    radial-gradient(ellipse at 77% 67%, #e2c5a254, transparent 36%),
+    linear-gradient(118deg, transparent 35%, #fffdf8b3 50%, transparent 63%);
+}
+
+@keyframes paper-daylight {
+  from { transform: translate(-5%, -2%) rotate(-2deg); }
+  to { transform: translate(5%, 2%) rotate(2deg); }
+}

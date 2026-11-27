@@ -1,0 +1,219 @@
+@import './paper-light.css';
+
+.motion-switch {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.motion-switch:hover {
+  border-color: var(--ink);
+}
+
+.motion-switch:focus-visible {
+  outline: 2px solid var(--rust);
+  outline-offset: 3px;
+}
+
+.glyph {
+  display: inline-block;
+  position: relative;
+}
+
+.shell {
+  isolation: isolate;
+}
+
+.paper-watermark {
+  display: none;
+}
+
+@media (any-hover: hover) and (any-pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .shell[data-motion="on"] .drawing {
+    perspective: 850px;
+  }
+
+  .shell[data-revealing] {
+    --reveal-window: radial-gradient(ellipse 170px 145px at var(--reveal-x) var(--reveal-y),
+        #000 0 35%, #000a 60%, transparent 100%);
+  }
+
+  .shell[data-revealing] .paper-watermark,
+  .shell[data-revealing] .sample::before {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: url('./paper-filigree.svg') 0 0 / 280px 214px repeat;
+    mask-image: var(--reveal-window);
+  }
+
+  .sample {
+    isolation: isolate;
+    clip-path: inset(0 round 8px 26px 8px 8px);
+  }
+
+  /* The opaque sage panel needs its own copy at the same viewport coordinates. */
+  .shell[data-revealing] .sample::before {
+    content: "";
+  }
+
+  /* Keep the engraving legible on the paper around the form, and the form legible over it. */
+  .shell[data-revealing] .login {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .shell[data-revealing] .login::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -18px;
+    pointer-events: none;
+    background: #f8f7f1;
+    filter: blur(9px);
+  }
+}
+
+.shell[data-motion="off"] .sprig {
+  animation: none;
+}
+
+.shell[data-motion="off"] .sheet {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shell[data-motion="on"]::before {
+    content: "";
+    position: fixed;
+    inset: -12%;
+    z-index: -2;
+    pointer-events: none;
+    background: var(--paper-daylight);
+    animation: paper-daylight 12s ease-in-out infinite alternate;
+  }
+
+  .glyph::after {
+    position: absolute;
+    inset: 0;
+    text-align: center;
+    font-family: Consolas, monospace;
+    font-size: .78em;
+    line-height: inherit;
+    pointer-events: none;
+    animation: decode-symbol 240ms steps(1, end) var(--delay) backwards;
+  }
+
+  .glyph>span {
+    animation: reveal-letter 240ms step-end var(--delay) backwards;
+  }
+
+  /* Sweep across one word, leaving the rest of the heading in place. */
+  h1 .glyph {
+    --wave-delay: calc(var(--delay) * 3);
+    animation: letter-wave 3.6s ease-in-out var(--wave-delay) infinite;
+  }
+
+  h1 .glyph>span {
+    animation: letter-hold 3.6s step-end var(--wave-delay) infinite;
+  }
+
+  h1 .glyph::after {
+    animation: letter-cycle 3.6s step-end var(--wave-delay) infinite;
+  }
+
+  @keyframes letter-wave {
+
+    0%,
+    36%,
+    100% {
+      transform: translateY(0);
+    }
+
+    18% {
+      transform: translateY(-.055em);
+    }
+  }
+
+  @keyframes letter-hold {
+
+    0%,
+    11%,
+    100% {
+      opacity: 1;
+    }
+
+    3% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes letter-cycle {
+
+    0%,
+    11%,
+    100% {
+      content: "";
+    }
+
+    3% {
+      content: "/";
+    }
+
+    7% {
+      content: "+";
+    }
+  }
+
+  @keyframes decode-symbol {
+    0% {
+      content: "·";
+    }
+
+    30% {
+      content: "/";
+    }
+
+    60% {
+      content: "+";
+    }
+
+    85% {
+      content: ":";
+    }
+
+    100% {
+      content: "";
+    }
+  }
+
+  @keyframes reveal-letter {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 720px) {
+  .shell header {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-block: 8px;
+  }
+
+  .shell header .studio {
+    display: none;
+  }
+}
