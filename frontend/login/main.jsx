@@ -54,6 +54,20 @@ function usePaperTilt(enabled) {
     const speed = { x: 0, y: 0 }
     let frame = 0
     let previous = 0
+    let wobble
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    function shake(event) {
+      if (reducedMotion.matches || event.pointerType === 'touch') return
+      wobble?.cancel()
+      wobble = paper.animate([
+        { translate: '0 0' },
+        { translate: '-5px -3px' },
+        { translate: '4px 1px' },
+        { translate: '-2px -1px' },
+        { translate: '0 0' },
+      ], { duration: 460, easing: 'ease-out' })
+    }
 
     function tick(now) {
       const dt = Math.min((now - previous) / 1000, 1 / 30)
@@ -90,11 +104,13 @@ function usePaperTilt(enabled) {
     }
     const release = () => aim(0, 0)
     function reset() {
+      wobble?.cancel()
       cancelAnimationFrame(frame)
       frame = 0
       target.x = target.y = angle.x = angle.y = speed.x = speed.y = 0
       paper.style.rotate = ''
     }
+    paper.addEventListener('pointerenter', shake)
     paper.addEventListener('pointermove', follow)
     paper.addEventListener('pointerleave', release)
     paper.addEventListener('pointercancel', release)
@@ -102,6 +118,7 @@ function usePaperTilt(enabled) {
     media.addEventListener('change', reset)
     return () => {
       reset()
+      paper.removeEventListener('pointerenter', shake)
       paper.removeEventListener('pointermove', follow)
       paper.removeEventListener('pointerleave', release)
       paper.removeEventListener('pointercancel', release)
