@@ -20,6 +20,7 @@ try:
     _ARGON2_HASHER = PasswordHasher(time_cost=2, memory_cost=19456, parallelism=1)
 except ImportError:
     _ARGON2_HASHER = None
+    VerifyMismatchError = Exception  # type: ignore[assignment, misc]
 
 # Optionalize bcrypt import consistently
 try:
@@ -54,16 +55,24 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     if not plain_password or not hashed_password:
         return False
 
-    try:
-        if hashed_password.startswith("$argon2id$") or hashed_password.startswith("$argon2i$"):
-            if _ARGON2_HASHER is None:
-                raise RuntimeError("argon2-cffi is required to verify Argon2 password hashes.")
-            return _ARGON2_HASHER.verify(hashed_password, plain_password)
+    is_argon2 = hashed_password.startswith("$argon2id$") or hashed_password.startswith("$argon2i$")
 
-        if bcrypt is None:
-            raise RuntimeError("bcrypt is required to verify bcrypt password hashes.")
+    if is_argon2:
+        if _ARGON2_HASHER is None:
+            raise RuntimeError("argon2-cffi is required to verify Argon2 password hashes.")
+        try:
+            return _ARGON2_HASHER.verify(hashed_password, plain_password)
+        except VerifyMismatchError:
+            return False
+        except (ValueError, TypeError):
+            return False
+
+    # Otherwise assume bcrypt hash
+    if bcrypt is None:
+        raise RuntimeError("bcrypt is required to verify bcrypt password hashes.")
+    try:
         return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
-    except Exception:
+    except (ValueError, TypeError):
         return False
 
 

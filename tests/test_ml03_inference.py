@@ -39,8 +39,8 @@ class TestML03Inference(unittest.TestCase):
             self.assertGreater(e.score, 0.0)
 
     def test_single_text_detection_english_formatted_iban(self) -> None:
-        """English PII and space-formatted IBAN must be detected cleanly without partial credit card masking."""
-        text = "Please transfer fees to IBAN: DE89 3704 0044 0532 0130 00 or call +1-202-555-0199."
+        """English PII and space-formatted IBAN must be detected cleanly without partial credit card masking, and short codes must not match."""
+        text = "Please transfer fees to IBAN: DE89 3704 0044 0532 0130 00 or call +1-202-555-0199. Order PO26 1001 and ID01 2026."
         entities = self.engine.predict(text, lang_hint="en")
         self.assertGreater(len(entities), 0)
 
@@ -53,6 +53,11 @@ class TestML03Inference(unittest.TestCase):
         self.assertEqual(len(iban_entities), 1)
         self.assertEqual(iban_entities[0].text, "DE89 3704 0044 0532 0130 00")
         self.assertEqual(text[iban_entities[0].start:iban_entities[0].end], "DE89 3704 0044 0532 0130 00")
+
+        # Short codes PO26 1001 and ID01 2026 must NOT match IBAN_CODE
+        all_matched_texts = [e.text for e in entities]
+        self.assertNotIn("PO26 1001", all_matched_texts)
+        self.assertNotIn("ID01 2026", all_matched_texts)
 
     def test_vietnamese_tax_id_and_idcard_context_anchored(self) -> None:
         """Tax ID and CMND require context anchors to avoid false positives on arbitrary numbers."""

@@ -34,6 +34,26 @@ class TestAuthAndSession(unittest.TestCase):
         self.assertFalse(verify_password("", hashed))
         self.assertFalse(verify_password(raw_pw, ""))
 
+    def test_be01_verify_password_missing_library_raises_runtime_error(self) -> None:
+        """verify_password must fail fast with RuntimeError when required backend is unavailable."""
+        import app.security.auth as auth_mod
+        orig_argon = auth_mod._ARGON2_HASHER
+        orig_bcrypt = auth_mod.bcrypt
+
+        try:
+            # Missing argon2 backend
+            auth_mod._ARGON2_HASHER = None
+            with self.assertRaises(RuntimeError):
+                verify_password("test", "$argon2id$v=19$m=19456,t=2,p=1$fakehash")
+
+            # Missing bcrypt backend
+            auth_mod.bcrypt = None
+            with self.assertRaises(RuntimeError):
+                verify_password("test", "$2b$12$fakehashfakehashfakehashfakeha")
+        finally:
+            auth_mod._ARGON2_HASHER = orig_argon
+            auth_mod.bcrypt = orig_bcrypt
+
     def test_be01_login_rate_limiter_lockout(self) -> None:
         limiter = LoginRateLimiter(max_attempts=3, window_seconds=10, lockout_seconds=30)
         username = "test_user"
