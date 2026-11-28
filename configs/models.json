@@ -1,7 +1,8 @@
 {
   "registry_version": "1.0.0",
-  "updated_at": "2026-11-14",
+  "updated_at": "2026-11-28",
   "default_model": "spacy_vn_19_ner",
+  "taxonomy_version": "1.0.0",
   "models": [
     {
       "id": "spacy_vn_19_ner",
@@ -31,10 +32,21 @@
       "type": "rule-based",
       "framework": "regex",
       "language": "vi",
-      "path": "evaluation/vn_rules.py",
+      "path": "app/ml_service/rules/vn_rules.py",
       "label_space": "checkpoints/opf_vn_19_label_space.json",
       "label_count": 19,
       "description": "Deterministic regular expression and algorithmic validator for Vietnamese PII"
+    },
+    {
+      "id": "en_rules_25",
+      "version": "1.0.0",
+      "type": "rule-based",
+      "framework": "regex",
+      "language": "en",
+      "path": "app/ml_service/rules/en_rules.py",
+      "label_space": "checkpoints/en_gravitee_25_label_space.json",
+      "label_count": 25,
+      "description": "Deterministic regular expression and algorithmic validator for English PII"
     }
   ]
 }

@@ -58,6 +58,7 @@ class ModelRegistry:
             data = json.load(f)
 
         self.registry_version = data.get("registry_version", "1.0.0")
+        self.taxonomy_version = data.get("taxonomy_version", "1.0.0")
         self.default_model = data.get("default_model", "spacy_vn_19_ner")
 
         for item in data.get("models", []):
