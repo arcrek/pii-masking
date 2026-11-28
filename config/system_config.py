@@ -121,10 +121,10 @@ class SystemConfig:
     def validate_security(self) -> List[str]:
         """Validate security posture; returns list of violation messages."""
         violations = []
-        if self.app_env == "production":
+        if self.app_env in ("production", "staging"):
             if "change-this" in self.jwt_secret_key or len(self.jwt_secret_key) < 32:
                 violations.append(
-                    "Production requires a robust, non-default JWT_SECRET_KEY of at least 32 characters."
+                    f"{self.app_env.capitalize()} requires a robust, non-default JWT_SECRET_KEY of at least 32 characters."
                 )
         if self.max_file_size_mb <= 0 or self.max_file_size_mb > 100:
             violations.append("MAX_FILE_SIZE_MB must be between 1 and 100 MB.")

@@ -20,17 +20,14 @@ US_SSN_RE = re.compile(r"\b\d{3}-\d{2}-\d{4}\b")
 # Credit Card Numbers
 CREDIT_CARD_RE = re.compile(r"\b(?:\d{4}[ -]?){3}\d{4}\b")
 
-# IPv4 Address
-IP_ADDR_RE = re.compile(r"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b")
-
 # Date time pattern
 DATE_TIME_RE = re.compile(
     r"\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{2,4}|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2},? \d{4})\b",
     re.IGNORECASE,
 )
 
-# IBAN Code
-IBAN_RE = re.compile(r"\b[A-Z]{2}\d{2}[A-Z0-9]{4}\d{7}([A-Z0-9]?){0,16}\b")
+# IBAN Code (handles space formatting e.g. DE89 3704 0044 0532 0130 00 without ReDoS)
+IBAN_RE = re.compile(r"\b[A-Z]{2}\d{2}(?:[ ]?[A-Z0-9]{4}){1,7}(?:[ ]?[A-Z0-9]{1,4})?\b")
 
 
 def extract_en_production_rules(text: str) -> List[Dict[str, Any]]:
@@ -70,23 +67,23 @@ def extract_en_production_rules(text: str) -> List[Dict[str, Any]]:
             "source": "rule",
         })
 
-    # 4. Credit Card
+    # 4. IBAN Code (extracted before credit card so longer IBAN spans take precedence)
+    for m in IBAN_RE.finditer(text):
+        spans.append({
+            "start": m.start(),
+            "end": m.end(),
+            "raw_label": "IBAN_CODE",
+            "score": 0.99,
+            "source": "rule",
+        })
+
+    # 5. Credit Card
     for m in CREDIT_CARD_RE.finditer(text):
         spans.append({
             "start": m.start(),
             "end": m.end(),
             "raw_label": "CREDIT_CARD",
             "score": 0.99,
-            "source": "rule",
-        })
-
-    # 5. IBAN Code
-    for m in IBAN_RE.finditer(text):
-        spans.append({
-            "start": m.start(),
-            "end": m.end(),
-            "raw_label": "IBAN_CODE",
-            "score": 0.95,
             "source": "rule",
         })
 

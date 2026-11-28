@@ -64,9 +64,13 @@ class TestSystemConfig(unittest.TestCase):
             self.assertNotIn("INVALID_LINE", parsed)
 
     def test_security_validation_production_rejects_weak_jwt(self) -> None:
-        cfg = SystemConfig(app_env="production", jwt_secret_key="change-this-insecure-key")
-        violations = cfg.validate_security()
-        self.assertTrue(any("Production requires a robust" in v for v in violations))
+        cfg_prod = SystemConfig(app_env="production", jwt_secret_key="change-this-insecure-key")
+        violations_prod = cfg_prod.validate_security()
+        self.assertTrue(any("Production requires a robust" in v for v in violations_prod))
+
+        cfg_staging = SystemConfig(app_env="staging", jwt_secret_key="change-this-insecure-key")
+        violations_staging = cfg_staging.validate_security()
+        self.assertTrue(any("Staging requires a robust" in v for v in violations_staging))
 
     def test_security_validation_valid_configuration(self) -> None:
         cfg = SystemConfig(

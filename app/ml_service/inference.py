@@ -87,8 +87,17 @@ class PiiInferenceEngine:
                 logger.warning("Could not load spacy_vn_19_ner from %s: %s", ckpt_path, e)
 
     def detect_language(self, text: str) -> str:
-        """Heuristic language detection: 'vi' or 'en'."""
-        if VI_DIACRITICS_REGEX.search(text):
+        """Heuristic language detection: 'vi', 'en', or 'mixed'.
+
+        Returns:
+            'vi' if text has Vietnamese diacritics without prominent English tokens.
+            'en' if purely Latin ASCII without Vietnamese diacritics.
+            'mixed' if Vietnamese text also contains standard English structural words.
+        """
+        has_vn = bool(VI_DIACRITICS_REGEX.search(text))
+        if has_vn:
+            if re.search(r"\b(?:the|and|or|in|at|on|for|with|to|from|is|are|was|were|contract|agreement|passport|email|phone|date)\b", text, re.IGNORECASE):
+                return "mixed"
             return "vi"
         return "en"
 
@@ -96,17 +105,19 @@ class PiiInferenceEngine:
         """Run deterministic rule-based detection using clean production extractors."""
         results: List[Dict[str, Any]] = []
 
-        if lang == "vi":
-            try:
-                results.extend(extract_vn_production_rules(text))
-            except Exception as e:
-                logger.error("Error executing Vietnamese production rules: %s", e)
-                raise
-        elif lang == "en":
+        if lang == "en":
             try:
                 results.extend(extract_en_production_rules(text))
             except Exception as e:
                 logger.error("Error executing English production rules: %s", e)
+                raise
+        elif lang == "vi":
+            try:
+                results.extend(extract_vn_production_rules(text))
+                # Vietnamese documents frequently contain foreign IBANs, US SSNs, and cards
+                results.extend(extract_en_production_rules(text))
+            except Exception as e:
+                logger.error("Error executing Vietnamese/dual production rules: %s", e)
                 raise
         else:
             # Dual pass for mixed text
@@ -132,7 +143,9 @@ class PiiInferenceEngine:
             doc = self._spacy_nlp(text)
             results: List[Dict[str, Any]] = []
             for ent in doc.ents:
-                # Use model-provided score or 1.0 indicator
+                # Note: spaCy Span objects do not provide calibrated probabilities or
+                # confidence scores without a separate span scorer or threshold component.
+                # We use 1.0 as a non-probabilistic detection sentinel indicator.
                 score = getattr(ent, "confidence", 1.0)
                 results.append({
                     "start": ent.start_char,

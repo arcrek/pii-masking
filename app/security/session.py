@@ -50,6 +50,8 @@ class SessionManager:
         self.secret_key = self.config.jwt_secret_key
         if not self.secret_key or len(self.secret_key.strip()) < 16:
             raise ValueError("JWT secret key must be non-empty and at least 16 bytes.")
+        if self.config.app_env in ("production", "staging") and "change-this" in self.secret_key:
+            raise ValueError(f"Insecure default JWT secret cannot be used in {self.config.app_env} environment.")
         self.algorithm = self.config.jwt_algorithm
         self.expire_minutes = self.config.access_token_expire_minutes
 

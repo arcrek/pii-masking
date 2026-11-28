@@ -13,6 +13,7 @@ from app.security.auth import (
 from app.security.session import (
     SessionManager,
 )
+from config.system_config import SystemConfig
 
 
 class TestAuthAndSession(unittest.TestCase):
@@ -67,7 +68,6 @@ class TestAuthAndSession(unittest.TestCase):
 
     def test_be01_lockout_persists_past_window_seconds(self) -> None:
         """Lockout must NOT be cleared early when time exceeds window_seconds (Critical Finding 5)."""
-        # Short window of 0.1s, long lockout of 1.0s
         limiter = LoginRateLimiter(max_attempts=2, window_seconds=0.1, lockout_seconds=1.0)
         username = "brute_force_user"
         ip = "10.10.10.10"
@@ -91,6 +91,18 @@ class TestAuthAndSession(unittest.TestCase):
         self.assertIsNotNone(rem)
         self.assertGreater(rem, 0)
 
+    def test_be01_rate_limiter_worst_case_eviction(self) -> None:
+        """Rate limiter strictly caps tracked keys under distributed spray (Suggestion 3)."""
+        max_keys = 20
+        limiter = LoginRateLimiter(max_attempts=5, window_seconds=300.0, lockout_seconds=900.0, max_tracked_keys=max_keys)
+
+        # Insert 30 distinct keys within window (none are expired)
+        for i in range(30):
+            limiter.record_failure(f"user_{i}", f"10.0.0.{i}")
+
+        # Eviction must keep tracked keys under max_tracked_keys
+        self.assertLessEqual(len(limiter._records), max_keys)
+
     def test_be02_session_creation_and_validation(self) -> None:
         session_mgr = SessionManager()
         session_data = session_mgr.create_session(
@@ -110,6 +122,23 @@ class TestAuthAndSession(unittest.TestCase):
         self.assertEqual(payload["sub"], "u-001")
         self.assertEqual(payload["username"], "vinh_lead")
         self.assertEqual(payload["role"], "lead")
+
+    def test_be02_session_manager_rejects_placeholder_secret_in_prod_and_staging(self) -> None:
+        """SessionManager must fail closed on default placeholder dev secrets in prod and staging."""
+        # Production with dev secret -> ValueError
+        prod_cfg = SystemConfig(app_env="production", jwt_secret_key="change-this-insecure-secret-key-for-local-dev-only-32bytes")
+        with self.assertRaises(ValueError):
+            SessionManager(config=prod_cfg)
+
+        # Staging with dev secret -> ValueError
+        staging_cfg = SystemConfig(app_env="staging", jwt_secret_key="change-this-insecure-secret-key-for-local-dev-only-32bytes")
+        with self.assertRaises(ValueError):
+            SessionManager(config=staging_cfg)
+
+        # Dev with dev secret -> Allowed
+        dev_cfg = SystemConfig(app_env="development", jwt_secret_key="change-this-insecure-secret-key-for-local-dev-only-32bytes")
+        mgr = SessionManager(config=dev_cfg)
+        self.assertIsNotNone(mgr)
 
     def test_be02_session_revocation_on_logout(self) -> None:
         session_mgr = SessionManager()
@@ -157,7 +186,6 @@ class TestAuthAndSession(unittest.TestCase):
     def test_be02_token_expiration(self) -> None:
         """Expired tokens must fail validation with TOKEN_EXPIRED."""
         session_mgr = SessionManager()
-        # Create session with negative duration to force instant expiration
         session_mgr.expire_minutes = -1
         session_data = session_mgr.create_session(user_id="u-exp", username="expired_user")
         token = session_data["access_token"]

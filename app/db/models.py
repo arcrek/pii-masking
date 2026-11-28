@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS jobs (
 );
 
 -- Partial index for active jobs
-CREATE INDEX IF NOT EXISTS idx_jobs_active ON jobs (status, created_at) WHERE status IN ('QUEUED', 'RUNNING');
+CREATE INDEX IF NOT EXISTS idx_jobs_active ON jobs (status, available_at) WHERE status IN ('QUEUED', 'RUNNING');
 
 -- Partial unique index for idempotency: failed/cancelled jobs can be retried cleanly (Finding 9)
 CREATE UNIQUE INDEX IF NOT EXISTS uq_jobs_active_idempotency ON jobs (idempotency_key) WHERE status IN ('QUEUED', 'RUNNING', 'SUCCEEDED');

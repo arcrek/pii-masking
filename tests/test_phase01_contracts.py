@@ -206,6 +206,7 @@ class TestPhase01Contracts(unittest.TestCase):
     def test_core03_database_ddl_and_partial_indexes(self) -> None:
         self.assertIn("uq_one_draft_per_doc", SQL_SCHEMA_DDL)
         self.assertIn("uq_jobs_active_idempotency", SQL_SCHEMA_DDL)
+        self.assertIn("idx_jobs_active ON jobs (status, available_at)", SQL_SCHEMA_DDL)
         self.assertIn("deleted_at TIMESTAMP WITH TIME ZONE", SQL_SCHEMA_DDL)
         self.assertIn("max_attempts INTEGER NOT NULL DEFAULT 3", SQL_SCHEMA_DDL)
 

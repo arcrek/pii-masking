@@ -1,17 +1,17 @@
-"""Authentication and Demo Account Management (BE-01).
+"""Authentication and password hashing utilities (BE-01).
 
 Implements:
-- Argon2id password hashing (via argon2-cffi) with bcrypt compatibility fallback
+- Argon2id password hashing with bcrypt fallback
+- Monotonic clock rate-limiting for failed login attempts
 - Constant-time password verification
-- Brute-force login rate limiting with monotonic clock and memory-bounded cleanup
-- Seeding of standard demo accounts without committed plaintext credentials
+- Memory-bounded eviction to prevent DoS
 """
 
 from __future__ import annotations
 
 import time
 import threading
-from typing import Dict, Tuple, Optional
+from typing import Tuple, Optional, Dict
 
 # Prefer Argon2id per System Architecture (system-architecture.md §6 & R2.3)
 try:
@@ -21,7 +21,11 @@ try:
 except ImportError:
     _ARGON2_HASHER = None
 
-import bcrypt
+# Optionalize bcrypt import consistently
+try:
+    import bcrypt
+except ImportError:
+    bcrypt = None
 
 
 def hash_password(password: str) -> str:
@@ -35,6 +39,9 @@ def hash_password(password: str) -> str:
     if _ARGON2_HASHER is not None:
         return _ARGON2_HASHER.hash(password)
 
+    if bcrypt is None:
+        raise RuntimeError("No secure password hashing library available (argon2-cffi or bcrypt required).")
+
     if len(encoded) > 72:
         raise ValueError("Password exceeds maximum bcrypt length of 72 bytes.")
     salt = bcrypt.gensalt(rounds=12)
@@ -43,36 +50,30 @@ def hash_password(password: str) -> str:
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    """Verify a plaintext password against Argon2id or bcrypt in constant time."""
+    """Verify a plaintext password against a stored Argon2id or bcrypt hash."""
     if not plain_password or not hashed_password:
         return False
 
-    # Check Argon2id prefix
-    if hashed_password.startswith("$argon2"):
-        if _ARGON2_HASHER is not None:
-            try:
-                return _ARGON2_HASHER.verify(hashed_password, plain_password)
-            except VerifyMismatchError:
-                return False
-            except Exception:
-                return False
-        return False
-
-    # Fallback bcrypt
     try:
+        if hashed_password.startswith("$argon2id$") or hashed_password.startswith("$argon2i$"):
+            if _ARGON2_HASHER is None:
+                raise RuntimeError("argon2-cffi is required to verify Argon2 password hashes.")
+            return _ARGON2_HASHER.verify(hashed_password, plain_password)
+
+        if bcrypt is None:
+            raise RuntimeError("bcrypt is required to verify bcrypt password hashes.")
         return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
     except Exception:
         return False
 
 
 class LoginRateLimiter:
-    """Thread-safe login rate limiter keyed by (username, client_ip) using monotonic clock.
+    """In-memory rate limiter for failed login attempts by (username, client_ip).
 
     Rules:
-    - Max 5 consecutive failed attempts per 5-minute window.
-    - If exceeded, locks out the combination for 15 minutes.
-    - Active lockouts cannot be cleared prematurely by window expiration.
-    - Periodic pruning prevents unbounded memory growth under spray.
+    - Lockout occurs after max_attempts within window_seconds.
+    - Active lockout lasts lockout_seconds and cannot be cleared by window expiration.
+    - Memory is strictly bounded to max_tracked_keys via LRU/FIFO eviction.
     """
 
     def __init__(
@@ -94,15 +95,28 @@ class LoginRateLimiter:
         return f"{username.strip().lower()}::{client_ip.strip()}"
 
     def _prune_expired_locked(self, now: float) -> None:
-        """Remove old records where lockout and window have both expired."""
+        """Remove old records where lockout and window have both expired.
+
+        If still over max_tracked_keys, evict oldest entries by first_time
+        to strictly bound memory and O(N) scan time under distributed spray.
+        """
         if len(self._records) < self.max_tracked_keys:
             return
+
         keys_to_delete = []
         for key, (_, first_time, locked_until) in self._records.items():
             if locked_until <= now and (now - first_time > self.window_seconds):
                 keys_to_delete.append(key)
         for key in keys_to_delete:
             del self._records[key]
+
+        # Worst-case bound: if still exceeding max_tracked_keys, evict oldest entries
+        if len(self._records) >= self.max_tracked_keys:
+            sorted_keys = sorted(self._records.keys(), key=lambda k: self._records[k][1])
+            # Evict excess plus 10% headroom
+            excess = len(self._records) - int(self.max_tracked_keys * 0.9)
+            for k in sorted_keys[:excess]:
+                del self._records[k]
 
     def is_locked(self, username: str, client_ip: str) -> Tuple[bool, Optional[int]]:
         """Check if account is currently locked out.
@@ -148,7 +162,7 @@ class LoginRateLimiter:
 
             count, first_time, locked_until = record
 
-            # Critical Fix (Finding 5): Active lockout must NEVER be reset early by window_seconds expiration
+            # Critical Fix: Active lockout must NEVER be reset early by window_seconds expiration
             if locked_until > now:
                 return True, count
 
@@ -172,7 +186,7 @@ class LoginRateLimiter:
             return False, new_count
 
     def record_success(self, username: str, client_ip: str) -> None:
-        """Clear failed attempts upon successful login."""
+        """Reset failed login attempts on successful login."""
         key = self._make_key(username, client_ip)
         with self._lock:
             self._records.pop(key, None)

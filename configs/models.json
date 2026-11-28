@@ -32,7 +32,7 @@
       "type": "rule-based",
       "framework": "regex",
       "language": "vi",
-      "path": "evaluation/vn_rules.py",
+      "path": "app/ml_service/rules/vn_rules.py",
       "label_space": "checkpoints/opf_vn_19_label_space.json",
       "label_count": 19,
       "description": "Deterministic regular expression and algorithmic validator for Vietnamese PII"
