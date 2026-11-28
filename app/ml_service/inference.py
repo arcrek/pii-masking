@@ -1,21 +1,27 @@
 """PII Inference Engine for Bilingual Detection (ML-03).
 
-Acceptance Criteria for ML-03:
-- Nhận normalized text, trả entity spans, label, score và model version.
-- Batch/empty/long text xử lý được mà không lỗi.
-- Score không tự coi là probability (giữ nguyên score gốc).
-- Model load được ngoài Colab (chạy cục bộ bằng checkpoint và rule engine).
+Production hardening:
+- Uses clean rules from app.ml_service.rules (no benchmark shortcuts)
+- Dispatches models based on language (Vietnamese model only runs on Vietnamese/mixed text)
+- Excluded labels are filtered BEFORE deduplication to prevent shadowing of valid PII
+- Proper chunk overlap validation and boundary-safe sliding window deduplication
+- Explicit logging instead of silent exception swallowing
 """
 
 from __future__ import annotations
 
 import re
 import uuid
+import logging
 from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 
-from app.contracts.pii_taxonomy import map_raw_label, CanonicalGroup
+from app.contracts.pii_taxonomy import map_raw_label
+from app.ml_service.rules.vn_rules import extract_vn_production_rules
+from app.ml_service.rules.en_rules import extract_en_production_rules
+
+logger = logging.getLogger(__name__)
 
 # Detect Vietnamese diacritics
 VI_DIACRITICS_REGEX = re.compile(
@@ -32,7 +38,7 @@ class DetectedEntitySpan:
     end: int
     text: str
     raw_label: str
-    canonical_group: Optional[str]
+    canonical_group: str
     score: float
     source: str
     model_version: str
@@ -42,7 +48,7 @@ class DetectedEntitySpan:
 
 
 class PiiInferenceEngine:
-    """Engine for running PII inference on normalized text."""
+    """Production-grade engine for running bilingual PII inference on normalized text."""
 
     def __init__(
         self,
@@ -51,6 +57,11 @@ class PiiInferenceEngine:
         max_chunk_chars: int = 1500,
         chunk_overlap: int = 200,
     ) -> None:
+        if chunk_overlap <= 0 or chunk_overlap >= max_chunk_chars:
+            raise ValueError(
+                f"chunk_overlap ({chunk_overlap}) must be > 0 and strictly < max_chunk_chars ({max_chunk_chars})."
+            )
+
         if repo_root is None:
             self.repo_root = Path(__file__).resolve().parent.parent.parent
         else:
@@ -63,15 +74,17 @@ class PiiInferenceEngine:
         self._try_load_spacy_model()
 
     def _try_load_spacy_model(self) -> None:
-        """Attempt to load the spaCy model from checkpoints outside Colab."""
+        """Attempt to load the Vietnamese spaCy model from checkpoints."""
         ckpt_path = self.repo_root / "checkpoints" / "spacy_vn_19_ner"
         if ckpt_path.is_dir():
             try:
                 import spacy
                 self._spacy_nlp = spacy.load(str(ckpt_path))
-            except Exception:
-                # spacy not installed or checkpoint format incompatible with host python
-                self._spacy_nlp = None
+                logger.info("Successfully loaded spacy_vn_19_ner model from %s", ckpt_path)
+            except ImportError:
+                logger.info("spaCy package not installed; running in rule-based mode.")
+            except Exception as e:
+                logger.warning("Could not load spacy_vn_19_ner from %s: %s", ckpt_path, e)
 
     def detect_language(self, text: str) -> str:
         """Heuristic language detection: 'vi' or 'en'."""
@@ -80,63 +93,65 @@ class PiiInferenceEngine:
         return "en"
 
     def _extract_rules(self, text: str, lang: str) -> List[Dict[str, Any]]:
-        """Run deterministic rule-based detection."""
+        """Run deterministic rule-based detection using clean production extractors."""
         results: List[Dict[str, Any]] = []
 
         if lang == "vi":
             try:
-                from evaluation.vn_rules import extract_vn_deterministic_spans
-                raw_spans = extract_vn_deterministic_spans(text)
-                for s in raw_spans:
-                    results.append({
-                        "start": s["start"],
-                        "end": s["end"],
-                        "raw_label": s["label"],
-                        "score": s.get("score", 1.0),
-                        "source": "rule",
-                    })
-            except Exception:
-                pass
-        else:
+                results.extend(extract_vn_production_rules(text))
+            except Exception as e:
+                logger.error("Error executing Vietnamese production rules: %s", e)
+                raise
+        elif lang == "en":
             try:
-                from evaluation.hybrid_rules import extract_deterministic_spans
-                raw_spans = extract_deterministic_spans(text)
-                for s in raw_spans:
-                    results.append({
-                        "start": s["start"],
-                        "end": s["end"],
-                        "raw_label": s["label"],
-                        "score": s.get("score", 1.0),
-                        "source": "rule",
-                    })
-            except Exception:
-                pass
+                results.extend(extract_en_production_rules(text))
+            except Exception as e:
+                logger.error("Error executing English production rules: %s", e)
+                raise
+        else:
+            # Dual pass for mixed text
+            try:
+                results.extend(extract_vn_production_rules(text))
+                results.extend(extract_en_production_rules(text))
+            except Exception as e:
+                logger.error("Error executing dual-pass rules: %s", e)
+                raise
 
         return results
 
-    def _extract_model(self, text: str) -> List[Dict[str, Any]]:
-        """Run neural NER model if available."""
+    def _extract_model(self, text: str, lang: str) -> List[Dict[str, Any]]:
+        """Run neural NER model only when language matches model capability."""
+        # Never run Vietnamese NER model on pure English text
+        if lang == "en":
+            return []
+
         if self._spacy_nlp is None:
             return []
 
-        doc = self._spacy_nlp(text)
-        results: List[Dict[str, Any]] = []
-        for ent in doc.ents:
-            results.append({
-                "start": ent.start_char,
-                "end": ent.end_char,
-                "raw_label": ent.label_,
-                "score": 0.85,  # Raw non-probabilistic indicator score
-                "source": "model",
-            })
-        return results
+        try:
+            doc = self._spacy_nlp(text)
+            results: List[Dict[str, Any]] = []
+            for ent in doc.ents:
+                # Use model-provided score or 1.0 indicator
+                score = getattr(ent, "confidence", 1.0)
+                results.append({
+                    "start": ent.start_char,
+                    "end": ent.end_char,
+                    "raw_label": ent.label_,
+                    "score": float(score),
+                    "source": "model",
+                })
+            return results
+        except Exception as e:
+            logger.error("Error during spaCy model inference: %s", e)
+            raise
 
     def _deduplicate_spans(self, spans: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Deduplicate overlapping spans: prefer longer match or higher score."""
         if not spans:
             return []
 
-        # Sort by start asc, length desc, score desc
+        # Sort by start asc, length desc (so longer span is considered first), score desc
         sorted_spans = sorted(
             spans,
             key=lambda x: (x["start"], -(x["end"] - x["start"]), -x.get("score", 0.0)),
@@ -148,18 +163,24 @@ class PiiInferenceEngine:
             overlap = False
             for d in deduped:
                 d_start, d_end = d["start"], d["end"]
-                # Exact or containment overlap
+                # If current span is within or equal to existing span
                 if s_start >= d_start and s_end <= d_end:
                     overlap = True
                     break
+                # If existing span is strictly within current span, replace existing
                 if d_start >= s_start and d_end <= s_end:
-                    # Current span is strictly wider, replace
                     deduped.remove(d)
                     break
-                # Partial intersection
+                # Partial intersection: preserve longer match
                 if not (s_end <= d_start or s_start >= d_end):
-                    overlap = True
-                    break
+                    curr_len = s_end - s_start
+                    prev_len = d_end - d_start
+                    if curr_len > prev_len:
+                        deduped.remove(d)
+                        break
+                    else:
+                        overlap = True
+                        break
             if not overlap:
                 deduped.append(span)
 
@@ -172,22 +193,28 @@ class PiiInferenceEngine:
 
         lang = self.detect_language(chunk_text) if lang_hint == "auto" else lang_hint
 
-        # 1. Run deterministic rules
+        # 1. Extract rules and model outputs
         rule_spans = self._extract_rules(chunk_text, lang)
+        model_spans = self._extract_model(chunk_text, lang)
+        combined_raw = rule_spans + model_spans
 
-        # 2. Run model inference if loaded
-        model_spans = self._extract_model(chunk_text)
-
-        # 3. Combine and deduplicate
-        combined = self._deduplicate_spans(rule_spans + model_spans)
-
-        entities: List[DetectedEntitySpan] = []
-        for s in combined:
+        # 2. Critical Fix: Filter EXCLUDED_LABELS BEFORE deduplication
+        # This prevents an excluded label (e.g. TITLE, URL) from shadowing valid PII (e.g. PERSON, EMAIL)
+        valid_pii_candidates: List[Dict[str, Any]] = []
+        for s in combined_raw:
             raw_lbl = s["raw_label"]
             group, is_excluded = map_raw_label(raw_lbl)
-            if is_excluded:
+            if is_excluded or group is None:
                 continue
+            s_copy = dict(s)
+            s_copy["canonical_group"] = group.value
+            valid_pii_candidates.append(s_copy)
 
+        # 3. Deduplicate valid PII candidates
+        deduped = self._deduplicate_spans(valid_pii_candidates)
+
+        entities: List[DetectedEntitySpan] = []
+        for s in deduped:
             abs_start = s["start"] + offset
             abs_end = s["end"] + offset
             span_text = chunk_text[s["start"]:s["end"]]
@@ -198,8 +225,8 @@ class PiiInferenceEngine:
                     start=abs_start,
                     end=abs_end,
                     text=span_text,
-                    raw_label=raw_lbl,
-                    canonical_group=group.value if group else None,
+                    raw_label=s["raw_label"],
+                    canonical_group=s["canonical_group"],
                     score=float(s.get("score", 1.0)),
                     source=s.get("source", "rule"),
                     model_version=self.model_version,
@@ -209,15 +236,14 @@ class PiiInferenceEngine:
         return entities
 
     def predict(self, text: str, lang_hint: str = "auto") -> List[DetectedEntitySpan]:
-        """Run PII detection on normalized text of arbitrary length."""
+        """Run PII detection on normalized text of arbitrary length with safe windowing."""
         if not text or not text.strip():
             return []
 
-        # If text is within chunk limit, process directly
         if len(text) <= self.max_chunk_chars:
             return self.predict_chunk(text, offset=0, lang_hint=lang_hint)
 
-        # Long text processing: sliding window
+        # Sliding window with overlap
         step = self.max_chunk_chars - self.chunk_overlap
         all_entities: List[DetectedEntitySpan] = []
 
@@ -226,35 +252,20 @@ class PiiInferenceEngine:
             chunk_entities = self.predict_chunk(chunk, offset=i, lang_hint=lang_hint)
             all_entities.extend(chunk_entities)
 
-        # Deduplicate across chunk boundaries
-        entity_dicts = [e.to_dict() for e in all_entities]
-        # Adapt for deduplicate_spans
+        # Deduplicate across sliding window boundaries, preserving longer matches
         formatted_for_dedup = [
             {
-                "start": e["start"],
-                "end": e["end"],
-                "score": e["score"],
-                "raw_label": e["raw_label"],
+                "start": e.start,
+                "end": e.end,
+                "score": e.score,
+                "raw_label": e.raw_label,
                 "orig": e,
             }
-            for e in entity_dicts
+            for e in all_entities
         ]
         deduped = self._deduplicate_spans(formatted_for_dedup)
 
-        return [
-            DetectedEntitySpan(
-                entity_id=d["orig"]["entity_id"],
-                start=d["start"],
-                end=d["end"],
-                text=d["orig"]["text"],
-                raw_label=d["orig"]["raw_label"],
-                canonical_group=d["orig"]["canonical_group"],
-                score=d["orig"]["score"],
-                source=d["orig"]["source"],
-                model_version=d["orig"]["model_version"],
-            )
-            for d in deduped
-        ]
+        return [d["orig"] for d in deduped]
 
     def predict_batch(self, texts: List[str], lang_hint: str = "auto") -> List[List[DetectedEntitySpan]]:
         """Run batch detection on a list of texts."""

@@ -9,9 +9,8 @@ Coordinates Invariant:
 
 from __future__ import annotations
 
-import math
 from dataclasses import dataclass
-from typing import Tuple, List, Optional
+from typing import Tuple
 
 
 @dataclass(frozen=True)
@@ -60,6 +59,10 @@ class UnrotRect:
     x1: float
     y1: float
 
+    def __post_init__(self) -> None:
+        if self.x0 > self.x1 or self.y0 > self.y1:
+            raise ValueError(f"Invalid unrotated bounds: ({self.x0}, {self.y0}, {self.x1}, {self.y1})")
+
     def as_tuple(self) -> Tuple[float, float, float, float]:
         return (self.x0, self.y0, self.x1, self.y1)
 
@@ -74,8 +77,8 @@ def visual_to_unrot_rect(
 
     Args:
         visual_rect: (x0, y0, x1, y1) in visual top-left coordinates.
-        unrot_width: Width of the unrotated page in points.
-        unrot_height: Height of the unrotated page in points.
+        unrot_width: Width of the unrotated page in points (W).
+        unrot_height: Height of the unrotated page in points (H).
         rotation_deg: Clockwise rotation in degrees (0, 90, 180, 270).
 
     Returns:
@@ -92,27 +95,34 @@ def visual_to_unrot_rect(
         ux0, uy0, ux1, uy1 = vx0, vy0, vx1, vy1
     elif rot == 90:
         # 90 deg CW: visual_w = unrot_h, visual_h = unrot_w
-        # visual x -> unrot y, visual y -> unrot_w - x
-        ux0 = unrot_width - vy1
-        uy0 = vx0
-        ux1 = unrot_width - vy0
-        uy1 = vx1
+        # Forward: vx = H - uy, vy = ux
+        # Inverse: ux = vy, uy = H - vx
+        ux0 = vy0
+        uy0 = unrot_height - vx1
+        ux1 = vy1
+        uy1 = unrot_height - vx0
     elif rot == 180:
-        # 180 deg CW:
+        # 180 deg CW: visual_w = unrot_w, visual_h = unrot_h
+        # Forward: vx = W - ux, vy = H - uy
+        # Inverse: ux = W - vx, uy = H - vy
         ux0 = unrot_width - vx1
         uy0 = unrot_height - vy1
         ux1 = unrot_width - vx0
         uy1 = unrot_height - vy0
     elif rot == 270:
-        # 270 deg CW:
-        ux0 = vy0
-        uy0 = unrot_height - vx1
-        ux1 = vy1
-        uy1 = unrot_height - vx0
+        # 270 deg CW: visual_w = unrot_h, visual_h = unrot_w
+        # Forward: vx = uy, vy = W - ux
+        # Inverse: ux = W - vy, uy = vx
+        ux0 = unrot_width - vy1
+        uy0 = vx0
+        ux1 = unrot_width - vy0
+        uy1 = vx1
     else:
         raise ValueError(f"Unsupported rotation angle: {rotation_deg}. Must be 0, 90, 180, or 270.")
 
-    return UnrotRect(min(ux0, ux1), min(uy0, uy1), max(ux0, ux1), max(uy0, uy1))
+    min_x, max_x = min(ux0, ux1), max(ux0, ux1)
+    min_y, max_y = min(uy0, uy1), max(uy0, uy1)
+    return UnrotRect(min_x, min_y, max_x, max_y)
 
 
 def unrot_to_visual_rect(
@@ -132,25 +142,30 @@ def unrot_to_visual_rect(
     if rot == 0:
         vx0, vy0, vx1, vy1 = ux0, uy0, ux1, uy1
     elif rot == 90:
-        # Invert 90 deg CW
-        vx0 = uy0
-        vy0 = unrot_width - ux1
-        vx1 = uy1
-        vy1 = unrot_width - ux0
+        # 90 deg CW: visual_w = unrot_h, visual_h = unrot_w
+        # vx = H - uy, vy = ux
+        vx0 = unrot_height - uy1
+        vy0 = ux0
+        vx1 = unrot_height - uy0
+        vy1 = ux1
     elif rot == 180:
+        # 180 deg CW:
         vx0 = unrot_width - ux1
         vy0 = unrot_height - uy1
         vx1 = unrot_width - ux0
         vy1 = unrot_height - uy0
     elif rot == 270:
-        vx0 = unrot_height - uy1
-        vy0 = ux0
-        vx1 = unrot_height - uy0
-        vy1 = ux1
+        # 270 deg CW:
+        vx0 = uy0
+        vy0 = unrot_width - ux1
+        vx1 = uy1
+        vy1 = unrot_width - ux0
     else:
         raise ValueError(f"Unsupported rotation angle: {rotation_deg}. Must be 0, 90, 180, or 270.")
 
-    return VisualRect(min(vx0, vx1), min(vy0, vy1), max(vx0, vx1), max(vy0, vy1))
+    min_x, max_x = min(vx0, vx1), max(vx0, vx1)
+    min_y, max_y = min(vy0, vy1), max(vy0, vy1)
+    return VisualRect(min_x, min_y, max_x, max_y)
 
 
 def clamp_and_pad_rect(
@@ -160,8 +175,11 @@ def clamp_and_pad_rect(
     padding: float = 1.5,
 ) -> VisualRect:
     """Add safety padding in points and clamp strictly to page visual boundary."""
-    x0 = max(0.0, rect.x0 - padding)
-    y0 = max(0.0, rect.y0 - padding)
-    x1 = min(max_width, rect.x1 + padding)
-    y1 = min(max_height, rect.y1 + padding)
-    return VisualRect(x0=x0, y0=y0, x1=x1, y1=y1)
+    # Guard against completely out-of-bounds rects
+    clamped_x0 = max(0.0, min(rect.x0 - padding, max_width))
+    clamped_y0 = max(0.0, min(rect.y0 - padding, max_height))
+    clamped_x1 = max(clamped_x0, min(rect.x1 + padding, max_width))
+    clamped_y1 = max(clamped_y0, min(rect.y1 + padding, max_height))
+
+    # If collapsed at border, ensure minimal non-negative span
+    return VisualRect(x0=clamped_x0, y0=clamped_y0, x1=clamped_x1, y1=clamped_y1)

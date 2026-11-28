@@ -7,7 +7,7 @@ from app.ml_service.inference import PiiInferenceEngine
 
 
 class TestML03Inference(unittest.TestCase):
-    """Test suite verifying ML-03 acceptance criteria."""
+    """Test suite verifying ML-03 acceptance criteria and edge cases."""
 
     def setUp(self) -> None:
         self.engine = PiiInferenceEngine()
@@ -48,6 +48,33 @@ class TestML03Inference(unittest.TestCase):
 
         for e in entities:
             self.assertEqual(text[e.start:e.end], e.text)
+
+    def test_vietnamese_model_not_run_on_english_text(self) -> None:
+        """Vietnamese spaCy model must NOT run on English text (Critical Finding 6)."""
+        en_text = "John Smith can be reached at john.smith@company.com or 555-123-4567 in Seattle."
+        # Model extraction method directly returns empty list for English
+        model_results = self.engine._extract_model(en_text, lang="en")
+        self.assertEqual(model_results, [])
+
+        # End-to-end predict with lang_hint="en" must still detect English rules
+        entities = self.engine.predict(en_text, lang_hint="en")
+        self.assertGreater(len(entities), 0)
+        labels = {e.canonical_group for e in entities}
+        self.assertIn("EMAIL", labels)
+
+    def test_excluded_labels_do_not_shadow_valid_pii(self) -> None:
+        """Excluded labels (e.g., URL) must be filtered BEFORE deduplication so they do not shadow valid PII (Critical Finding 6)."""
+        # Text containing both a URL and an EMAIL
+        text = "Visit https://portal.example.org/contact or write to officer.safe@example.org for inquiries."
+        entities = self.engine.predict(text, lang_hint="en")
+
+        groups = [e.canonical_group for e in entities]
+        # EMAIL must be detected and not shadowed
+        self.assertIn("EMAIL", groups)
+        # Excluded label URL must not be present in final entities
+        for e in entities:
+            self.assertNotEqual(e.raw_label, "URL")
+            self.assertNotEqual(e.canonical_group, "URL")
 
     def test_long_text_sliding_window_handling(self) -> None:
         """Long text exceeding chunk limit must be segmented, offset-aligned, and deduplicated."""

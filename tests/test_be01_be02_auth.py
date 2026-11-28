@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-import unittest
 import time
+import unittest
+
 from app.security.auth import (
     hash_password,
     verify_password,
@@ -22,7 +23,11 @@ class TestAuthAndSession(unittest.TestCase):
         hashed = hash_password(raw_pw)
 
         self.assertNotEqual(raw_pw, hashed)
-        self.assertTrue(hashed.startswith("$2b$") or hashed.startswith("$2a$"))
+        # Supports Argon2id ($argon2id$) or bcrypt ($2b$ / $2a$)
+        self.assertTrue(
+            hashed.startswith("$argon2id$") or hashed.startswith("$2b$") or hashed.startswith("$2a$"),
+            f"Expected Argon2id or bcrypt hash prefix, got {hashed[:15]}",
+        )
         self.assertTrue(verify_password(raw_pw, hashed))
         self.assertFalse(verify_password("WrongPassword123", hashed))
         self.assertFalse(verify_password("", hashed))
@@ -59,6 +64,32 @@ class TestAuthAndSession(unittest.TestCase):
         limiter.record_success(username, ip)
         locked_after_success, _ = limiter.is_locked(username, ip)
         self.assertFalse(locked_after_success)
+
+    def test_be01_lockout_persists_past_window_seconds(self) -> None:
+        """Lockout must NOT be cleared early when time exceeds window_seconds (Critical Finding 5)."""
+        # Short window of 0.1s, long lockout of 1.0s
+        limiter = LoginRateLimiter(max_attempts=2, window_seconds=0.1, lockout_seconds=1.0)
+        username = "brute_force_user"
+        ip = "10.10.10.10"
+
+        limiter.record_failure(username, ip)
+        is_locked, count = limiter.record_failure(username, ip)
+        self.assertTrue(is_locked)
+        self.assertEqual(count, 2)
+
+        # Wait for window_seconds to elapse, but stay inside lockout_seconds
+        time.sleep(0.15)
+
+        # Calling record_failure again MUST keep the account locked and not reset count
+        is_still_locked, attempts = limiter.record_failure(username, ip)
+        self.assertTrue(is_still_locked)
+        self.assertEqual(attempts, 2)
+
+        # is_locked must also still report locked
+        locked, rem = limiter.is_locked(username, ip)
+        self.assertTrue(locked)
+        self.assertIsNotNone(rem)
+        self.assertGreater(rem, 0)
 
     def test_be02_session_creation_and_validation(self) -> None:
         session_mgr = SessionManager()
@@ -99,6 +130,55 @@ class TestAuthAndSession(unittest.TestCase):
         self.assertFalse(is_valid_after)
         self.assertIsNone(payload)
         self.assertEqual(err, "SESSION_REVOKED")
+
+    def test_be02_revoke_user_sessions(self) -> None:
+        """Revoking all sessions for a specific user invalidates all their active tokens."""
+        session_mgr = SessionManager()
+        s1 = session_mgr.create_session(user_id="u-bulk-01", username="user1")
+        s2 = session_mgr.create_session(user_id="u-bulk-01", username="user1")
+        s3 = session_mgr.create_session(user_id="u-other-02", username="user2")
+
+        revoked_count = session_mgr.revoke_user_sessions("u-bulk-01")
+        self.assertEqual(revoked_count, 2)
+
+        # Both user1 tokens are revoked
+        v1, _, err1 = session_mgr.validate_token(s1["access_token"])
+        v2, _, err2 = session_mgr.validate_token(s2["access_token"])
+        self.assertFalse(v1)
+        self.assertEqual(err1, "SESSION_REVOKED")
+        self.assertFalse(v2)
+        self.assertEqual(err2, "SESSION_REVOKED")
+
+        # user2 token remains valid
+        v3, _, err3 = session_mgr.validate_token(s3["access_token"])
+        self.assertTrue(v3)
+        self.assertIsNone(err3)
+
+    def test_be02_token_expiration(self) -> None:
+        """Expired tokens must fail validation with TOKEN_EXPIRED."""
+        session_mgr = SessionManager()
+        # Create session with negative duration to force instant expiration
+        session_mgr.expire_minutes = -1
+        session_data = session_mgr.create_session(user_id="u-exp", username="expired_user")
+        token = session_data["access_token"]
+
+        is_valid, payload, err = session_mgr.validate_token(token)
+        self.assertFalse(is_valid)
+        self.assertIsNone(payload)
+        self.assertEqual(err, "TOKEN_EXPIRED")
+
+    def test_be02_purge_expired_sessions(self) -> None:
+        """Purging expired sessions removes them from in-memory storage."""
+        session_mgr = SessionManager()
+        session_mgr.expire_minutes = -5
+        s1 = session_mgr.create_session(user_id="u-p1", username="purge1")
+        session_mgr.expire_minutes = 60
+        s2 = session_mgr.create_session(user_id="u-p2", username="active2")
+
+        purged = session_mgr.purge_expired_sessions()
+        self.assertGreaterEqual(purged, 1)
+        self.assertNotIn(s1["jti"], session_mgr._sessions)
+        self.assertIn(s2["jti"], session_mgr._sessions)
 
     def test_be02_tampered_or_invalid_token(self) -> None:
         session_mgr = SessionManager()

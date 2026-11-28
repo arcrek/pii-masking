@@ -5,6 +5,7 @@ Implements:
 - Token expiration verification
 - Server-side token revocation on logout
 - Strict rejection of revoked, tampered, or expired sessions
+- Safe config loading via get_config() with security validation
 """
 
 from __future__ import annotations
@@ -16,7 +17,7 @@ from dataclasses import dataclass, asdict
 from typing import Dict, Optional, Tuple, Any
 import jwt
 
-from config.system_config import SystemConfig
+from config.system_config import SystemConfig, get_config
 
 
 @dataclass
@@ -40,7 +41,12 @@ class SessionManager:
     """Manages active sessions, tokens, and server-side revocation list."""
 
     def __init__(self, config: Optional[SystemConfig] = None) -> None:
-        self.config = config or SystemConfig()
+        self.config = config or get_config()
+        # Security validation (Finding 4)
+        sec_violations = self.config.validate_security()
+        if sec_violations:
+            raise ValueError(f"Security validation failed for session manager: {sec_violations}")
+
         self.secret_key = self.config.jwt_secret_key
         if not self.secret_key or len(self.secret_key.strip()) < 16:
             raise ValueError("JWT secret key must be non-empty and at least 16 bytes.")
@@ -58,10 +64,12 @@ class SessionManager:
         role: str = "reviewer",
         ip_address: str = "127.0.0.1",
         user_agent: str = "",
+        custom_expire_minutes: Optional[int] = None,
     ) -> Dict[str, Any]:
         """Issue an access token and register an active session."""
         now = time.time()
-        expires_at = now + (self.expire_minutes * 60)
+        mins = custom_expire_minutes if custom_expire_minutes is not None else self.expire_minutes
+        expires_at = now + (mins * 60)
         jti = str(uuid.uuid4())
         session_id = str(uuid.uuid4())
 
@@ -95,7 +103,7 @@ class SessionManager:
         return {
             "access_token": token,
             "token_type": "Bearer",
-            "expires_in": int(self.expire_minutes * 60),
+            "expires_in": int(mins * 60),
             "session_id": session_id,
             "jti": jti,
         }
@@ -125,7 +133,6 @@ class SessionManager:
         with self._lock:
             record = self._sessions.get(jti)
             if not record:
-                # Session not found in registry (revoked or expired)
                 return False, None, "SESSION_NOT_FOUND"
 
             if record.is_revoked:

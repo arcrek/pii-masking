@@ -5,11 +5,11 @@ Schema covers:
 - sessions: Active login sessions with revocation support
 - login_rate_limits: Login rate-limiting entries keyed by (username, client_ip)
 - documents: Uploaded documents with soft deletion (deleted_at)
-- document_pages: Page-level metadata, classification, quality
-- detected_entities: Raw PII entities detected by ML/rules
-- review_revisions: Document review revision snapshots (DRAFT, LOCKED, SUPERSEDED)
-- review_regions: Reviewer approved/modified redaction regions
-- jobs: Asynchronous processing jobs with max_attempts and idempotency
+- document_pages: Page-level metadata, unrot_width, unrot_height, mediabox, cropbox
+- detected_entities: Raw PII entities detected by ML/rules with text_hash
+- review_revisions: Document review revision snapshots with pipeline_version and model_version
+- review_regions: Reviewer approved/modified redaction regions (default status PROPOSED)
+- jobs: Asynchronous processing jobs with available_at, max_attempts, and idempotency
 - export_artifacts: Generated redacted PDF artifacts with checksum
 - verification_reports: Independent verification results
 - audit_logs: PII-free operational audit logging
@@ -18,8 +18,8 @@ Schema covers:
 from __future__ import annotations
 
 import datetime
-from dataclasses import dataclass, field
-from typing import Optional, List, Dict, Any
+from dataclasses import dataclass
+from typing import Optional
 
 # PostgreSQL 16 DDL Scripts with Partial Unique Indexes
 SQL_SCHEMA_DDL = """
@@ -73,9 +73,13 @@ CREATE TABLE IF NOT EXISTS document_pages (
     page_number INTEGER NOT NULL,
     classification VARCHAR(32) NOT NULL, -- NATIVE, SCANNED_FLATTENED, MIXED
     quality VARCHAR(32) NOT NULL DEFAULT 'OK', -- OK, NEEDS_ATTENTION, FAILED
+    unrot_width DOUBLE PRECISION NOT NULL,
+    unrot_height DOUBLE PRECISION NOT NULL,
     visual_width DOUBLE PRECISION NOT NULL,
     visual_height DOUBLE PRECISION NOT NULL,
     rotation_deg INTEGER NOT NULL DEFAULT 0,
+    mediabox JSONB,
+    cropbox JSONB,
     has_untrusted_ocr_layer BOOLEAN NOT NULL DEFAULT FALSE,
     preview_path VARCHAR(512),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -91,6 +95,7 @@ CREATE TABLE IF NOT EXISTS detected_entities (
     canonical_group VARCHAR(32) NOT NULL,
     char_start INTEGER NOT NULL,
     char_end INTEGER NOT NULL,
+    text_hash VARCHAR(64),
     confidence_score DOUBLE PRECISION NOT NULL,
     source VARCHAR(32) NOT NULL, -- rule, model, hybrid
     model_version VARCHAR(32) NOT NULL,
@@ -102,6 +107,8 @@ CREATE TABLE IF NOT EXISTS review_revisions (
     document_id VARCHAR(36) NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
     revision_no INTEGER NOT NULL DEFAULT 1,
     status VARCHAR(32) NOT NULL DEFAULT 'DRAFT', -- DRAFT, LOCKED, SUPERSEDED
+    pipeline_version VARCHAR(32) NOT NULL DEFAULT '1.0.0',
+    model_version VARCHAR(32) NOT NULL DEFAULT '1.0.0',
     locked_by_user_id VARCHAR(36) REFERENCES users(id),
     locked_at TIMESTAMP WITH TIME ZONE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -118,7 +125,7 @@ CREATE TABLE IF NOT EXISTS review_regions (
     page_number INTEGER NOT NULL,
     canonical_group VARCHAR(32) NOT NULL,
     visual_rects JSONB NOT NULL, -- array of [x0, y0, x1, y1]
-    status VARCHAR(32) NOT NULL DEFAULT 'ACCEPTED', -- ACCEPTED, REJECTED, MANUAL
+    status VARCHAR(32) NOT NULL DEFAULT 'PROPOSED', -- PROPOSED, ACCEPTED, REJECTED, MANUAL
     provenance VARCHAR(32) NOT NULL DEFAULT 'auto', -- auto, manual
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -131,6 +138,7 @@ CREATE TABLE IF NOT EXISTS jobs (
     status VARCHAR(32) NOT NULL DEFAULT 'QUEUED', -- QUEUED, RUNNING, SUCCEEDED, FAILED, CANCELLED
     attempt INTEGER NOT NULL DEFAULT 0,
     max_attempts INTEGER NOT NULL DEFAULT 3, -- Finding 9
+    available_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     lease_expires_at TIMESTAMP WITH TIME ZONE,
     idempotency_key VARCHAR(128),
     error_message TEXT,
